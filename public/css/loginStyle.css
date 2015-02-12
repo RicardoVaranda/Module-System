@@ -1,0 +1,199 @@
+@font-face{	font-family: segoelight;src:url('../fonts/segoelight.ttf'),url('../fonts/segoelight.eot'),url('../fonts/segoelight.woff');}
+@font-face{	font-family: segoe;	src:url('../fonts/segoeui.ttf'),url('../fonts/segoeui.eot'); }
+h1,h2,h3,h4,h5,h6,p{margin:0px;padding:0px;font-weight:normal;}
+input{outline:none;} ::selection{background: rgba(0,0,0,0.3)}
+body{
+	font-family: segoe;
+	overflow: hidden;
+}
+.fullScreenItem{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0%;
+	left: 0%;
+}
+#loginPage{
+	opacity: 1;
+	z-index: 0;
+	-webkit-transition-duration: 0.35s;
+	-moz-transition-duration: 0.35s;
+	-ms-transition-duration: 0.35s;
+	-o-transition-duration: 0.35s;
+	-webkit-transform: perspective(1000) rotateY(0deg);
+	-moz-transform: perspective(1000) rotateY(0deg);
+	-ms-transform: perspective(1000) rotateY(0deg);
+	-o-transform: perspective(1000) rotateY(0deg);
+}
+.flipped{
+	opacity: 0 !important;
+	-webkit-transform: perspective(650) rotateY(130deg) !important;
+	-moz-transform: perspective(650) rotateY(130deg) !important;
+	-ms-transform: perspective(650) rotateY(130deg) !important;
+	-o-transform: perspective(650) rotateY(130deg) !important;
+}
+#loginCover{
+	background-color: #333 !important;
+	background-size: cover !important;
+	box-shadow: inset 0px 0px 100px rgba(0,0,0,0.7), 0px 0px 100px rgba(0,0,0,0.3);
+	z-index: 2;
+	cursor: default;
+}
+#loginFormCenter{
+	width: 100%;
+	height: auto;
+	text-align: center;
+	margin-top: 10%;
+}
+#loginFormContainer{
+	width: 550px;
+	height: 200px;
+	margin: auto;
+	background: rgb(181, 24, 69);
+}
+#loginFormContainer img{
+	width: 200px;
+	height: 200px;
+	float: left;
+}
+#loginFormContainer #rightContainer{
+	width: 330px;
+	height: 200px;
+	float: right;
+	text-align: left;
+}
+#loginFormContainer #rightContainer h1{
+	font-family: segoe;
+	color: white;
+	font-size: 38px;
+	outline: none;
+}
+#loginFormContainer #rightContainer h4{
+	color: rgba(255,255,255,0.6);
+	font-size: 18px;
+	font-family: segoelight;
+}
+form{
+	width: 100%;
+	background: white;
+	height: 34px;
+	margin-top: 10px;
+}
+#pass{
+	width: 264px;
+	height: 100%;
+	padding: 5px;
+	padding-left: 9px;
+	font-size: 18px;
+	font-family: segoe;
+	float: left;
+	border: none;
+}
+#submit{
+	width: 30px;
+	height: 30px;
+	background-image:url(../images/submit.png);
+	font-size: 20px;
+	float: left;
+	border: none;
+	margin: 2px;
+}
+#submit:hover{
+	background-color: rgb(12, 142, 184);
+}
+#submit:active{
+	background-color: rgb(1, 166, 218);
+}
+#showPass{
+	float: left;
+	margin: 2px;
+	margin-right: 0px;
+	width: 30px;
+	height: 30px;
+	background: url(../images/eye_normal.jpg);
+}
+#showPass:hover{
+	background: url(../images/eye_hover.jpg);
+}
+#showPass:active{
+	background: url(../images/eye_active.jpg);
+}
+p{
+	font-family: segoelight;
+	color: white;
+	font-size: 40px;
+	position: absolute;
+	bottom: 90px;
+	left: 60px;
+	text-shadow: 0px 0px 25px rgba(0,0,0,0.3);
+}
+#Time{
+	font-family: segoe;
+	font-size: 130px;
+	bottom: 130px;
+	left: 50px;
+}
+.bottomBar{
+	position: absolute;
+	bottom: 25px;
+}
+#leftBar{	left:25px;	}
+#rightBar{	right:30px;	}
+#leftBar img{
+	margin-left: 10px;
+	float: left;
+}
+#rightBar img{
+	margin-right: 10px;
+	float: right;
+}
+.bottomBar img{
+	/*-webkit-transition-duration: 0.35s;
+	-moz-transition-duration: 0.35s;
+	-ms-transition-duration: 0.35s;
+	-o-transition-duration: 0.35s;*/
+	cursor: pointer;
+	z-index: 1;
+	outline: none;
+	border: none;
+}
+.bottomBar img:hover{
+	background: rgba(255,255,255,0.15);
+}
+.bottomBar img:active{
+	background: rgba(255,255,255,0.3);
+	/*-webkit-transform: scale(0.8);
+	-moz-transform: scale(0.8);
+	-ms-transform: scale(0.8);
+	-o-transform: scale(0.8);*/
+}
+#notyou{
+	font-size: 15px;
+	cursor: pointer;
+}
+#notyou:hover{
+	text-decoration: underline;
+}
+#user{
+	outline: none;
+	border: none;
+	padding: 1px;
+	padding-left: 0px;
+}
+#remember{
+	font-size: 15px;
+	color: rgba(255,255,255,0.80);
+	text-decoration: underline;
+	text-align: right;
+	vertical-align: middle;
+}
+#remember:hover{
+	color: rgba(255,255,255,0.90);
+}
+#remember:active{
+	color: rgba(255,255,255,0.40);
+}
+body{background: rgb(32, 132, 197);}
+#submit{background-color: rgb(9, 129, 167);}
+#submit:hover{background-color: rgb(12, 142, 184);}
+#submit:active{background-color: rgb(1, 166, 218);}
