@@ -60,7 +60,7 @@ Route::group(array('before' => 'auth'), function() {
 });
 
 /*
-| Unauthenticated group
+| Unauthenticated group lelel
 */
 
 Route::group(array('before' => 'guest'), function() {
