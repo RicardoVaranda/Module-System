@@ -22,7 +22,7 @@ Route::get('/user/{username}', array(
 Route::group(array('before' => 'auth'), function() {
 
 	/*
-	| CSRF protection group
+	| CSRF protection group loool
 	*/
 	Route::group(array('before' => 'csrf'), function(){
 
