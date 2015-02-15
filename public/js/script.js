@@ -28,28 +28,9 @@ $(document).ready(function(){
 			},750);
 		}
 	}
-	$(function() {
-		$("#loginCover").draggable({
-			axis:"y",
-			containment:[-window.innerWidth*1.2,-window.innerHeight*1.2,0,0],
-			stop:function(e){
-				var elTop = $("#loginCover").position().top;
-				var area = window.innerHeight*-0.3;
-				if(area<elTop){moveCover("bottom");}
-				else{moveCover("top");}
-			}
-		});
-		$(".draggable").disableSelection();
-	});
-	$("#loginCover").mousedown(function(e){
-		mouseY = e.clientY;
-	});
-	$("#loginCover").mouseup(function(e){
-		if(mouseY==e.clientY) moveCover("top");
-	});
 	var images=['eye_active.jpg','eye_hover.jpg'];
 	for (var i = images.length - 1; i >= 0; i--) {
-		var image = '<img src="'+ "images/" + images[i] +'">';
+		var image = '<img src="'+ "../images/" + images[i] +'">';
 		$(image).load();
 	};
 	$("#showPass").mousedown(function(){

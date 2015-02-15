@@ -15,7 +15,7 @@
 		<div class="fullScreenItem" id="loginPage">
 			<div id="loginFormCenter">
 				<div id="LoginFormContainer">
-					<img src="./../images/me.png">
+					<img src="{{URL::to('/')}}/images/me.png">
 					<div id="rightContainer">
 						<h1>
 							<span id="user" ContentEditable="false" {{ (Input::old('username')) ? ' value="'. Input::old('username') .'"' : ''}}>[Username]</span>
@@ -43,7 +43,7 @@
 		</div>
 		<div id="rightBar" class="bottomBar">
 			<a href="www.mycit.ie" target="_blank">
-				<img src="./../images/myCIT.png" alt="myCIT homepage" title="myCIT Homepage" />
+				<img src="{{URL::to('/')}}/images/myCIT.png" alt="myCIT homepage" title="myCIT Homepage" />
 			</a>
 		</div>
 		<div id="leftBar" class="bottomBar">
