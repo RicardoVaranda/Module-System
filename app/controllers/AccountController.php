@@ -8,7 +8,7 @@ class AccountController extends BaseController{
 	public function postSignIn(){
 		$validator = Validator::make(Input::all(),
 			array(
-				'email' => 'required|email',
+				'username' => 'required',
 				'password' => 'required'
 				)
 			);
@@ -24,7 +24,7 @@ class AccountController extends BaseController{
 			$remember = (Input::has('remember')) ? true : false;
 
 			$auth = Auth::attempt(array(
-				'email' => Input::get('email'),
+				'username' => Input::get('username'),
 				'password' => Input::get('password'),
 				'active' => 1
 			), $remember);

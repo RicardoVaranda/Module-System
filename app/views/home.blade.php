@@ -1,5 +1,5 @@
-@if(Auth::check())
-	
+@if(!Auth::check())
+	{{Redirect::route('account-sign-in')}}
 @else
-	@extends('account.signin')
+	@include('layout.main')
 @endif

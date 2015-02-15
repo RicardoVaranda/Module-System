@@ -110,13 +110,13 @@ form{
 	margin-right: 0px;
 	width: 30px;
 	height: 30px;
-	background: url(../images/eye_normal.jpg);
+	background: url(./../images/eye_normal.jpg);
 }
 #showPass:hover{
-	background: url(../images/eye_hover.jpg);
+	background: url(./../images/eye_hover.jpg);
 }
 #showPass:active{
-	background: url(../images/eye_active.jpg);
+	background: url(./../images/eye_active.jpg);
 }
 p{
 	font-family: segoelight;
@@ -197,3 +197,11 @@ body{background: rgb(32, 132, 197);}
 #submit{background-color: rgb(9, 129, 167);}
 #submit:hover{background-color: rgb(12, 142, 184);}
 #submit:active{background-color: rgb(1, 166, 218);}
+
+.global{
+	color: rgb(255, 0, 0);
+	font-size: 28;
+	vertical-align: middle;
+	text-align: center;
+	text-shadow: 0px 0px 25px rgba(0,0,0,0.3);
+}

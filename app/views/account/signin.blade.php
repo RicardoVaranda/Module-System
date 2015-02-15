@@ -3,19 +3,19 @@
 		<title>CIT Modules :: Module System Login!</title>
 		<meta name="description" content="Module System Login Page" />
 		<meta charset="UTF-8" />
-		<link rel="stylesheet" href="css/loginStyle.css" />
-		<script src="js/jquery.js"></script>
-		<script src="js/jquery.ui.core.js"></script>
-		<script src="js/jquery.ui.widget.js"></script>
-		<script src="js/touch.js"></script>
-		<script src="js/moment.js"></script>
-		<script src="js/script.js"></script>
+		{{ HTML::style('./css/loginStyle.css') }}
+		{{ HTML::script('./js/jquery.js') }}
+		{{ HTML::script('./js/jquery.ui.core.js') }}
+		{{ HTML::script('./js/jquery.ui.widget.js') }}
+		{{ HTML::script('./js/touch.js') }}
+		{{ HTML::script('./js/moment.js') }}
+		{{ HTML::script('./js/script.js') }}
 	</head>
 	<body>
 		<div class="fullScreenItem" id="loginPage">
 			<div id="loginFormCenter">
 				<div id="LoginFormContainer">
-					<img src="images/me.png">
+					<img src="./../images/me.png">
 					<div id="rightContainer">
 						<h1>
 							<span id="user" ContentEditable="false" {{ (Input::old('username')) ? ' value="'. Input::old('username') .'"' : ''}}>[Username]</span>
@@ -35,12 +35,15 @@
 							</label>
 						</a>
 					</div>
+					@if(Session::has('global'))
+						<div class="global"> {{ Session::get('global') }} </div>
+					@endif
 				</div>
 			</div>
 		</div>
 		<div id="rightBar" class="bottomBar">
 			<a href="www.mycit.ie" target="_blank">
-				<img src="images/myCIT.png" alt="myCIT homepage" title="myCIT Homepage" />
+				<img src="./../images/myCIT.png" alt="myCIT homepage" title="myCIT Homepage" />
 			</a>
 		</div>
 		<div id="leftBar" class="bottomBar">
