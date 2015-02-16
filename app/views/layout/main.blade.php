@@ -73,7 +73,7 @@
 						<li class="client-menu"><a class="ascensorLink ascensorLink5" href="#">Clients</a></li>
 						<li class="blog-menu"><a class="ascensorLink ascensorLink6" href="#">Blog</a></li>
 						<li class="contact-menu"><a class="ascensorLink ascensorLink7" href="#">Contact</a></li>
-						<li class="follow-menu"><a class="ascensorLink ascensorLink8" href="#">Follow</a></li>
+						<li class="signout-menu"><a class="ascensorLink" href="{{ URL::route('account-sign-out') }}">Sign out</a></li>
 					</ul>
 				</div>
             </div>
@@ -128,7 +128,7 @@
 							</a>
 						</div>
 						<div class="tile tile-item tile-signout">
-							<a class="ascensorLink ascensorLink8 tile-nav" href="#">
+							<a class="ascensorLink tile-nav" href="{{ URL::route('account-sign-out') }}">
 								<h5 class="h5">Sign Out</h5>
 								<i class="fa fa-sign-out fa-4x"></i>
 							</a>
@@ -772,14 +772,10 @@
 			<section class="section follow">
 				<div class="center-box">
 					<div class="container">
-					
-						<div class="row load-tweets">
-							
-						</div>
 						
 						<div class="row">
 							<div class="socialize">
-								<h2 class="h2">Let's Socialize</h2>
+								<h2 class="h2">See you soon!</h2>
 							</div>
 						</div>
 						
