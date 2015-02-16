@@ -34,7 +34,7 @@ class AccountController extends BaseController{
 				return Redirect::intended('/');
 			} else {
 				return Redirect::route('account-sign-in')
-						->with('global', 'Email or Password incorrect, or account not activated.');
+						->with('global', 'Username or Password incorrect, or account not activated.')->withInput();
 			}
 		}
 

@@ -18,12 +18,12 @@
 					<img src="{{URL::to('/')}}/images/me.png">
 					<div id="rightContainer">
 						<h1>
-							<span id="user" ContentEditable="false" {{ (Input::old('username')) ? ' value="'. Input::old('username') .'"' : ''}}>[Username]</span>
+							<span id="user" ContentEditable="false" style="text-transform:uppercase">{{ (Input::old('username')) ? e(Input::old('username')) : '[Student ID]' }}</span>
 							<span id="notyou">(not you?)</span>
 						</h1>
 						<h4>CIT Module System</h4>
 						<form id="loginForm" action="{{ URL::route('account-sign-in-post') }}" method="POST">
-							<input id="username" name="username" style="display:none;" required>
+							<input id="username" name="username" style="display:none;" {{ (Input::old('username')) ? ' value="'. e(Input::old('username')) . '"' : '' }} required>
 							<input id="pass" name="password" type="password" text="" placeholder="Password" required>
 							<div id="showPass"></div>
 							<div id="submit"></div>

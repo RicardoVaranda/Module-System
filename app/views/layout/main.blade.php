@@ -127,10 +127,10 @@
 								<i class="fa fa-envelope fa-4x"></i>
 							</a>
 						</div>
-						<div class="tile tile-item tile-follow">
+						<div class="tile tile-item tile-signout">
 							<a class="ascensorLink ascensorLink8 tile-nav" href="#">
-								<h5 class="h5">Follow</h5>
-								<i class="fa fa-twitter fa-4x"></i>
+								<h5 class="h5">Sign Out</h5>
+								<i class="fa fa-sign-out fa-4x"></i>
 							</a>
 						</div>
 							

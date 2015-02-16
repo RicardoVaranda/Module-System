@@ -111,6 +111,20 @@ form{
 	width: 30px;
 	height: 30px;
 }
+#showPass{
+	float: left;
+	margin: 2px;
+	margin-right: 0px;
+	width: 30px;
+	height: 30px;
+	background: url(../images/eye_normal.jpg);
+}
+#showPass:hover{
+	background: url(../images/eye_hover.jpg);
+}
+#showPass:active{
+	background: url(../images/eye_active.jpg);
+}
 p{
 	font-family: segoelight;
 	color: white;
