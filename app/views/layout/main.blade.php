@@ -66,7 +66,7 @@
 		
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 					<ul class="nav navbar-nav pull-right">
-						<li class="portfolio-menu"><a class="ascensorLink ascensorLink1" href="#">Modules</a></li>
+						<li class="portfolio-menu"><a class="ascensorLink ascensorLink1" href="#">Electives</a></li>
 						<li class="about-menu"><a class="ascensorLink ascensorLink2" href="#">Profile</a></li>
 						<li class="service-menu"><a class="ascensorLink ascensorLink3" href="#">Settings</a></li>
 						<li class="team-menu"><a class="ascensorLink ascensorLink4" href="#">Team</a></li>
@@ -87,7 +87,7 @@
 	
 						<div class="tile tile-item tile-portfolio">
 							<a class="ascensorLink ascensorLink1 tile-nav" href="#">
-								<h5 class="h5">Modules</h5>
+								<h5 class="h5">Electives</h5>
 								<i class="fa fa-windows fa-4x"></i>
 							</a>
 						</div>
@@ -99,7 +99,7 @@
 						</div>
 						<div class="tile tile-item tile-service">
 							<a class="ascensorLink ascensorLink3 tile-nav" href="#">
-								<h5 class="h5">Services</h5>
+								<h5 class="h5">My info</h5>
 								<i class="fa fa-sitemap fa-4x"></i>
 							</a>
 						</div>
@@ -140,7 +140,7 @@
 			
 			<section class="section portfolio">
 				<div class="container">
-					<h1 class="h1">Modules</h1>
+					<h1 class="h1">Electives</h1>
 					<div class="row">
 						<div class="grid-controls">
 							<ul>
@@ -213,21 +213,13 @@
 					<div class="row">
 					
 						<div class="col-sm-6 col-md-8 col-lg-8">
-							<div id="about-carousel" class="carousel slide">
-								<div class="carousel-inner">
-									<div class="item active"><img src="images/about/about.jpg" alt="about-us"></div>
-									<div class="item"><img src="images/about/about.jpg" alt="about-us"></div>
-									<div class="item"><img src="images/about/about.jpg" alt="about-us"></div>
-									<div class="item"><img src="images/about/about.jpg" alt="about-us"></div>
-								</div>
-								<!-- Controls -->
-								<a class="left carousel-control" href="#about-carousel" data-slide="prev"><span class="icon-prev"></span></a>
-								<a class="right carousel-control" href="#about-carousel" data-slide="next"><span class="icon-next"></span></a>
+							<div class="profile">
+								<h2>Student Name</h2>
 							</div>
 						</div>
 							
 						<div class="col-sm-6 col-md-4 col-lg-4">
-							<div class="skills">
+							<div class="profile">
 								<h4 class="h4">Our Skills</h4>
 								<div class="progress">
 									<p>HTML/CSS</p>
@@ -288,7 +280,7 @@
 			
 			<section class="section service">  
 				<div class="container">	
-					<h1 class="h1">Services</h1>
+					<h1 class="h1">My Info</h1>
 					
 					<div class="row">
 						<hr class="metro-hr">
@@ -340,7 +332,7 @@
 					
 					<div class="row">
 						<hr class="metro-hr">
-						<h2 class="h2 lead">Our Features</h2>
+						<h2 class="h2 lead">My Modules</h2>
 						<div class="col-sm-6 col-md-4">
 							<div class="feature-box">
 								<div class="feature-icon"><i class="fa fa-twitter"></i></div>

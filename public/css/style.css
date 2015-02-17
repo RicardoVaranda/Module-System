@@ -395,23 +395,23 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 	left: 50px;
 	width: 50px;
 }
-.skills {
+.profile {
 	padding: 30px 30px;
 	color: #FFFFFF;
 	background: #37AFFF;
 	background: rgba(55, 175, 255, 0.9);
 }
-.skills p {
+.profile p {
 	margin-bottom: 5px;
 }
-.skills .skill-q {
+.profile .skill-q {
 	height: 40px;
 	margin-top: 30px;
 }
-.skills .skill-q p {
+.profile .skill-q p {
 	margin-top: 6px;
 }
-.skills h3, .skills h4 {
+.profile h3, .profile h4 {
 	color: #ffffff;
 	margin: 0 0 10px;
 }
