@@ -27,7 +27,7 @@ Route::group(array('before' => 'auth'), function() {
 	Route::group(array('before' => 'csrf'), function(){
 
 		/*
-		| Change Password (POST)
+		| Change Password (POST) -- Ricardo Edited here
 		*/
 
 		Route::post('/account/change-password', array(
