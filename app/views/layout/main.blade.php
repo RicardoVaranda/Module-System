@@ -171,7 +171,7 @@
 			
 			<section class="section about">
 				<div class="container">
-					<h1 class="h1">About</h1>
+					<h1 class="h1">Test</h1>
 						
 					<div class="row">
 					
