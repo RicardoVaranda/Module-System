@@ -1,6 +1,4 @@
-@extends('layout.main')
 
-@section('content')
 	<form action="{{ URL::route('account-change-password-post') }}" method="post">
 		
 		<div class="field">
@@ -24,4 +22,3 @@
 		<input type="submit" value="Change password">
 		{{Form::token()}}
 	</form>
-@stop

@@ -1079,3 +1079,11 @@ ul.subFilter li{
 	font-size: .8em;
 	background-color: #8AA7DB;
 }
+
+.changePass{
+	display:none;
+}
+
+.chPass:focus ~ .changePass{
+	display: block !important;
+}

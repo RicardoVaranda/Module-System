@@ -115,7 +115,7 @@ class AccountController extends BaseController{
 	}
 
 	public function getChangePassword(){
-		return View::make('account.password');
+		return View::make('layout.main', ['#changePass']);
 	}
 
 	public function postChangePassword(){
@@ -127,7 +127,7 @@ class AccountController extends BaseController{
 			));
 
 		if($validator->fails()){
-			return Redirect::route('account-change-password')
+			return Redirect::route('home', ['#changePass'])
 					->withErrors($validator);
 		} else {
 
@@ -145,13 +145,13 @@ class AccountController extends BaseController{
 							->with('global', 'Your password has been changed.');
 				}
 			} else {
-				return Redirect::route('account-change-password')
+				return Redirect::route('home', ['#changePass'])
 				->with('global', 'Your old password is incorrect.');
 			}
 
 		}
 
-		return Redirect::route('account-change-password')
+		return Redirect::route('home', ['#changePass'])
 				->with('global', 'Your password could not be changed');
 	}
 

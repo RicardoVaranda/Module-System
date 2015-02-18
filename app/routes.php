@@ -16,18 +16,18 @@ Route::get('/user/{username}', array(
 ));
 
 /*
-| Authenticated group test Bobby
+| Authenticated group
 */
 
 Route::group(array('before' => 'auth'), function() {
 
 	/*
-	| CSRF protection group loool
+	| CSRF protection group
 	*/
 	Route::group(array('before' => 'csrf'), function(){
 
 		/*
-		| Change Password (POST) -- Ricardo Edited here
+		| Change Password (POST) 
 		*/
 
 		Route::post('/account/change-password', array(
