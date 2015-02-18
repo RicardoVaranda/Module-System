@@ -17,7 +17,7 @@
 							</div>
 							<div class="col-sm-4">
 								<div class="modal-entery">
-									<p>Add a description here</p>
+									<p>{{ $mod->mdescription }}</p>
 									<h4 class="h4">Lecturer</h4>
 									{{ $mod->mcoordinator }}
 									<h4 class="h4">Field of Study</h4>

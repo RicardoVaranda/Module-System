@@ -178,64 +178,162 @@
 					
 						<div class="col-sm-6 col-md-8 col-lg-8">
 							<div class="profile">
-								<h2>Student Name</h2>
+								<h1>{{ Auth::user()->name }}</h1>
+									<table>
+										<tbody>
+											<tr>
+												<th><b>Student ID:</b></th>
+												<td colspan="1">{{ Auth::user()->username }}</td>
+											</tr>
+											<tr>
+												<th><b>Degree:</b></th>
+												<td colspan="1">Ordinary Bachelor Degree</td>
+											</tr>
+											<tr>
+												<th><b>Major:</b></th>
+												<td colspan="1">Computing</td>
+											</tr>
+											<tr>
+												<th><b>Program:</b></th>
+												<td colspan="1">Bachelor of Science</td>
+											</tr>
+											<tr>
+												<th><b>Class:</b></th>
+												<td colspan="1">Third Year</td>
+											</tr>
+										</tbody>
+									</table>
 							</div>
 						</div>
 							
 						<div class="col-sm-6 col-md-4 col-lg-4">
-							<div class="profile">
-								<h4 class="h4">Our Skills</h4>
-								<div class="progress">
-									<p>HTML/CSS</p>
-									<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 90%">
-									  	<div class="progress-percent"><span>9.0</span></div>
-									</div>
-								</div>
-								<div class="progress">
-									<p>Photoshop</p>
-									<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-									  	<div class="progress-percent"><span>8.0</span></div>
-									</div>
-								</div>
-								<div class="progress">
-									<p>WordPress</p>
-									<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 95%">
-									  	<div class="progress-percent"><span>9.5</span></div>
-									</div>
-								</div>
-								<div class="progress">
-									<p>SEO</p>
-									<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 75%">
-									  	<div class="progress-percent"><span>7.5</span></div>
-									</div>
+							<div class="profile" style="padding:40px 20px">
+								<h4 class="h4">Settings</h4>
+								<div class="skill-q">
+									<p class="pull-left">Forgot your password?</p>
+									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i> reset</button>
 								</div>
 								<div class="skill-q">
-									<p class="pull-left">Enaugh for you?</p>
-									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i> Email us</button>
+									<p class="pull-left">Forgot Secret Question?</p>
+									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i> reset</button>
 								</div>	
 							</div>
 						</div>
 						
 					</div>
-						
+					
 					<div class="row">
-						<div class="col-sm-6 col-md-6 col-lg-6">
-							<div class="about-note">
-								<h4 class="h4">Our philosophy</h4>
-								<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-								Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, 
-								when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-								It has survived not only five centuries.</p>
+						<hr class="metro-hr">
+						<h2 class="h2 lead">My Modules</h2>
+						<div class="col-sm-6 col-md-4">
+							<div class="feature-box">
+								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
+								<div class="feature-text">
+									<h3>Object Oriented Analysis & Design</h3>
+									<small style="float:right"><u>Manditory</u></small>
+									<p>Mary Davin</p>
+									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
+									</br>
+								</div>
 							</div>
 						</div>
-						<div class="col-sm-6 col-md-6 col-lg-6">
-							<div class="about-note">
-								<h4 class="h4">Our goal</h4>
-								<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. 
-								The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, 
-								as opposed to using \'Content here, content here\', making it look like readable English.</p>
+						<div class="col-sm-6 col-md-4">
+							<div class="feature-box">
+								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
+								<div class="feature-text">
+									<h3>Internet Network & Services</h3>
+									<small style="float:right"><u>Manditory</u></small>
+									<p>Mary Davin</p>
+									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
+									</br>
+								</div>
 							</div>
 						</div>
+						<div class="col-sm-6 col-md-4">
+							<div class="feature-box">
+								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
+								<div class="feature-text">
+									<h3>Server-Side Web Development</h3>
+									<small style="float:right"><u>Manditory</u></small>
+									<p>Mary Davin</p>
+									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
+									</br>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-4">
+							<div class="feature-box">
+								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
+								<div class="feature-text">
+									<h3>Object Oriented Analysis & Design</h3>
+									<small style="float:right"><u>Manditory</u></small>
+									<p>Mary Davin</p>
+									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
+									</br>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-4">
+							<div class="feature-box">
+								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
+								<div class="feature-text">
+									<h3>Internet Network & Services</h3>
+									<small style="float:right"><u>Manditory</u></small>
+									<p>Mary Davin</p>
+									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
+									</br>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-4">
+							<div class="feature-box">
+								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
+								<div class="feature-text">
+									<h3>Server-Side Web Development</h3>
+									<small style="float:right"><u>Manditory</u></small>
+									<p>Mary Davin</p>
+									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
+									</br>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-4">
+							<div class="feature-box">
+								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
+								<div class="feature-text">
+									<h3>Object Oriented Analysis & Design</h3>
+									<small style="float:right"><u>Manditory</u></small>
+									<p>Mary Davin</p>
+									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
+									</br>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-4">
+							<div class="feature-box">
+								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
+								<div class="feature-text">
+									<h3>Internet Network & Services</h3>
+									<small style="float:right"><u>Manditory</u></small>
+									<p>Mary Davin</p>
+									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
+									</br>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-4">
+							<div class="feature-box">
+								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
+								<div class="feature-text">
+									<h3>Server-Side Web Development</h3>
+									<small style="float:right"><u>Manditory</u></small>
+									<p>Mary Davin</p>
+									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
+									</br>
+								</div>
+							</div>
+						</div>
+						<hr class="metro-hr">
 					</div>
 						
 				</div>
