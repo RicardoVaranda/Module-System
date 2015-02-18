@@ -171,8 +171,7 @@
 			
 			<section class="section about">
 				<div class="container">
-					<h1 class="h1">Test</h1>
-						
+					<h1 class="h1">My Profile</h1>						
 					<div class="row">
 					
 						<div class="col-sm-6 col-md-8 col-lg-8">
