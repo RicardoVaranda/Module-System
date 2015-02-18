@@ -16,7 +16,7 @@ Route::get('/user/{username}', array(
 ));
 
 /*
-| Authenticated group
+| Authenticated group change
 */
 
 Route::group(array('before' => 'auth'), function() {
