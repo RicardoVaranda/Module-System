@@ -70,7 +70,7 @@ The reason for this is so we can have a robust system that we can simply
 use plugin templates to do things we require it. It will also help
 with conflicts as we will not be working in the same files. I 
 recommend you take a look at this folder:
-[Views Folder](https://github.com/RicardoVaranda/Module-System/blob/master/views/)
+[Views Folder](https://github.com/RicardoVaranda/Module-System/tree/master/app/views)
 
 This is where all of the html work is done, There are various files in there and
 they pretty much explain what templates they have inside them for example,
