@@ -60,6 +60,10 @@ $(document).ready(function () {
 		$(this).hoverdir(); 
 	});
 
+	$('.dep').on('change', function() {
+	  $("#grid").mixitup('filter', this.value);
+	})
+
 	// center box
 	function centerBox(){
 		

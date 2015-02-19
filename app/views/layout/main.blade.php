@@ -30,6 +30,7 @@
 		{{ HTML::script('js/jquery-1.10.2.min.js') }}
 		{{ HTML::script('js/modernizr.custom.97074.js') }}
 		{{ HTML::script('http://maps.googleapis.com/maps/api/js?sensor=true') }}
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         
 		<!--[if lt IE 9]>
 			<script src="js/selectivizr.js"></script>
@@ -144,18 +145,20 @@
 					<div class="row">
 						<div class="grid-controls">
 							<ul>
+									<li class="filter active" id="all" data-filter="all"><a href="#">All</a></li>
 								@foreach (Faculty::all() as $fac)
-									<li class="filter" id="{{ $fac->facultyname }}" data-filter="{{ $fac->short() }}"><a href="#">{{ $fac->facultyname }}</a></li>
+									<li class="filter" id="{{ $fac->short() }}" data-filter="{{ $fac->short() }}"><a href="#">{{ $fac->facultyname }}</a></li>
 								@endforeach
 							</ul>
-							<!--
+
 							@foreach (Faculty::all() as $fac)
-							<ul id="{{ $fac->facultyshort }}" class="subFilter">
-								@foreach ($fac->departments as $dep)
-								<li class"filter" data-filter="{{ $dep->departmentname }}"><a href="#">{{ $dep->departmentname }}</a></li>
-								@endforeach
-							</ul>
-							@endforeach -->
+									<select class="dep styled-select blue semi-square" id="{{ $fac->short() }}More" name="{{ $fac->short() }}Departments" >
+										@foreach ($fac->departments as $dep)
+											<option value="{{$dep->short()}}">{{ $dep->name() }}</option>
+										@endforeach
+									</select>
+							@endforeach
+							
 						</div>
 						<ul id="grid">
 							@foreach(Modules::where('melective', 1)->get() as $mod)
@@ -166,6 +169,38 @@
 						</ul>
 					</div>
 				</div>
+				<!-- Custom Javascript Filtering system - Ricardo -->
+
+				<script type="text/javascript">
+					$(document).ready(function(){
+					    $("#buss").click(function(){
+					        $("#bussMore").show();
+					        $("#engMore").hide();
+					    });
+					    $("#all").click(function(){
+					        $("#bussMore").hide();
+					        $("#engMore").hide();
+					    });
+					    $("#eng").click(function(){
+					        $("#bussMore").hide();
+					        $("#engMore").show();
+					    });
+					    $("#music").click(function(){
+					        $("#bussMore").hide();
+					        $("#engMore").hide();
+					    });
+					    $("#art").click(function(){
+					        $("#bussMore").hide();
+					        $("#engMore").hide();
+					    });
+					    $("#maritime").click(function(){
+					        $("#bussMore").hide();
+					        $("#engMore").hide();
+					    });
+					});
+				</script>
+
+				<!-- End of Filtering system -->
 			</section>
 			<!-- /portfolio -->
 			

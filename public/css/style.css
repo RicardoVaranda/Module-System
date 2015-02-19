@@ -251,7 +251,8 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 	display: inline-block;
 }
 .grid-controls li {
-	min-width: 80px;
+	max-width: 30%;
+	min-width: 30%;
 	height: 40px;
 	float: left;
 	margin: 5px;
@@ -260,7 +261,9 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 .grid-controls li a {
 	color: #FFFFFF;
 	display: block;
-	padding: 10px 10px;
+	position: relative;
+	  top: 50%;
+	  transform: translateY(-50%);
 }
 .grid-controls li a:hover {
 	text-shadow: 0px 0px 10px #ffffff;
@@ -1071,19 +1074,61 @@ Blog
 }
 
 /*
-*	Modified from Bellow here:
+*	Modified from Bellow here by Ricardo:
 *
 */
 
 ul.subFilter li{
 	font-size: .8em;
 	background-color: #8AA7DB;
+	min-width: 30%;
+	max-width: 30%;
+}
+
+ul.subFilter li a{
+	position: relative;
+  	top: 50%;
+  	transform: translateY(-50%);
+}
+
+ul.subFilter{
+	display: none;
 }
 
 .changePass{
 	display:none;
 }
 
+input[type=text]::-webkit-calendar-picker-indicator, input[type=text]::calendar-picker-indicator {
+    opacity:0; 
+}
+
 .chPass:focus ~ .changePass{
 	display: block !important;
 }
+
+.styled-select {
+	-webkit-appearance: none;
+    -moz-appearance: none;
+	background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
+	height: 29px;
+	overflow: hidden;
+	width: 240px;
+	min-width: 50%;
+	display: none;
+	color: #fff;
+	border: none;
+}
+
+.semi-square {
+   -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+   border-radius: 5px;
+}
+
+.blue    { background-color: #3b8ec2; }
+
+/*
+*	Stoped Modifing it here
+*
+*/

@@ -1,4 +1,4 @@
-<li class="mix {{ $mod->department->faculty->short() }}"> 
+<li class="mix {{ $mod->department->faculty->short() }} {{ $mod->department->short() }}"> 
 	<a data-toggle="modal" role="button" href="#{{$mod->mcode}}"> <img src="images/portfolio/portfolio1.jpg" alt="portfolio">
 		<div><span>{{ $mod->mshorttitle }}</span></div>
 	</a>
