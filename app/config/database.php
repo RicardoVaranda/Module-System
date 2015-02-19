@@ -54,13 +54,14 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => '127.0.0.1',
+			'host'      => 'alonica.net',
 			'database'  => 'modules',
-			'username'  => 'root',
-			'password'  => '',
+			'username'  => 'banana',
+			'password'  => 'P455w0Rd!@£$%^&*',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
+			'port'		=> '3306',
 		),
 
 		'pgsql' => array(
