@@ -1,5 +1,5 @@
 <snippet>
-  <content><![CDATA[
+  <content>
 # ${1:CIT 3rd Year Project OMS}
 
 Project Name: Online Free Choice Module System
@@ -46,7 +46,7 @@ P.S its all sudo code.
 
 '''
 A live version of this script can be seen here:
-[a link](https://github.com/RicardoVaranda/Module-System/blob/master/app/controllers/HomeController.php#L5)
+[Login Script](https://github.com/RicardoVaranda/Module-System/blob/master/app/controllers/HomeController.php#L5)
 
 We are going to need to create different layouts for the following:
 - Change password (kind of done)
@@ -70,7 +70,7 @@ The reason for this is so we can have a robust system that we can simply
 use plugin templates to do things we require it. It will also help
 with conflicts as we will not be working in the same files. I 
 recommend you take a look at this folder:
-[a link](https://github.com/RicardoVaranda/Module-System/blob/master/views/)
+[Views Folder](https://github.com/RicardoVaranda/Module-System/blob/master/views/)
 
 This is where all of the html work is done, There are various files in there and
 they pretty much explain what templates they have inside them for example,
@@ -89,6 +89,5 @@ explain to you all about how routes work and how you can link them.
 
 **Brain can't think any longer will update further if required.**
 
-]]></content>
-  <tabTrigger>readme</tabTrigger>
+</content>
 </snippet>
