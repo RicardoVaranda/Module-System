@@ -1,6 +1,6 @@
 <snippet>
   <content>
-# ${1:CIT 3rd Year Project OMS}
+# _CIT 3rd Year Project OMS_
 
 Project Name: Online Free Choice Module System
 
