@@ -44,7 +44,7 @@ P.S its all sudo code.
 
     it checks if the user is checked in and sends them to whatever page depending on their status.
 
-'''
+
 A live version of this script can be seen here:
 [Login Script](https://github.com/RicardoVaranda/Module-System/blob/master/app/controllers/HomeController.php#L5)
 
