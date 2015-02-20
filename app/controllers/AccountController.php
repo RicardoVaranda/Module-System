@@ -115,7 +115,7 @@ class AccountController extends BaseController{
 	}
 
 	public function getChangePassword(){
-		return View::make('layout.main', ['#changePass']);
+		return Redirect::route('home', ['#changePass']);
 	}
 
 	public function postChangePassword(){
@@ -128,7 +128,7 @@ class AccountController extends BaseController{
 
 		if($validator->fails()){
 			return Redirect::route('home', ['#changePass'])
-					->withErrors($validator);
+					->withErrors($validator)->with('pass', 'You password failed the validation');
 		} else {
 
 			$user = User::find(Auth::user()->id);

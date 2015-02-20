@@ -88,7 +88,7 @@ $(document).ready(function () {
 	// contact form
 	$('input, textarea').placeholder();
 	
-	$('#contactform').submit(function(){
+	/*$('#contactform').submit(function(){
 	
 		"use strict";
 		
@@ -112,7 +112,7 @@ $(document).ready(function () {
 		);
 		});
 		return false; 
-	});
+	});*/
 
 });
 
