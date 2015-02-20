@@ -1128,6 +1128,78 @@ input[type=text]::-webkit-calendar-picker-indicator, input[type=text]::calendar-
 
 .blue    { background-color: #3b8ec2; }
 
+  .globalD {
+    position: relative;
+    width: 454px;
+    height: 51px;
+    padding: 0px;
+    text-align: center;
+  	display: block;
+  	margin-left: auto;
+  	margin-right: auto;
+  	line-height: 51px;
+  	top: 50%;
+  	transform: translateY(-50%);
+    background: #33CCFF;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-box-shadow: 2px 2px 10px 0px #616161;
+    -moz-box-shadow: 2px 2px 10px 0px #616161;
+    box-shadow: 2px 2px 10px 0px #616161;
+}
+
+  .globalU {
+    position: relative;
+    width: 350px;
+    height: 51px;
+    color: #FFF;
+    transform: translateY(55%);
+    padding: 0px;
+    text-align: center;
+  	display: block;
+  	margin-left: auto;
+  	margin-right: auto;
+  	line-height: 51px;
+    background: #33CCFF;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-box-shadow: 2px 2px 10px 0px #616161;
+    -moz-box-shadow: 2px 2px 10px 0px #616161;
+    box-shadow: 2px 2px 10px 0px #616161;
+}
+
+.warn {
+	background: #FD2561;
+}
+  .arrowD:after {
+    content: "";
+    position: absolute;
+    bottom: -15px;
+    left: 48px;
+    border-style: solid;
+    border-width: 15px 20px 0;
+    border-color: #33CCFF transparent;
+    display: block;
+    width: 0;
+    z-index: 1;
+}
+
+  .arrowU:after {
+	content: "";
+    position: absolute;
+    top: -15px;
+    left: 48px;
+    border-style: solid;
+    border-width: 0 20px 15px;
+    border-color: #FD2561 transparent;
+    display: block;
+    width: 0;
+    z-index: 1;
+}
+
+
 /*
 *	Stoped Modifing it here
 *

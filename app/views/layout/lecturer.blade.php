@@ -84,6 +84,9 @@
 		
 			<section class="section home">
 				<div class="center-box">
+					@if(Session::has('global'))
+							<div class="globalD arrowD">{{ Session::get('global') }}</div>
+					@endif
 					<div class="container">
 	
 						<div class="tile tile-item tile-portfolio">
@@ -246,6 +249,9 @@
 									<p>Change Password</p>
 									<a data-toggle="modal" class="submit btn btn-info btn-block" role="button" href="#contact">Change Password Now</a>
 								</div>
+								@if(Session::has('pass'))
+									<div class="globalU warn arrowU">{{ Session::get('global') }}</div>
+								@endif
 								<div class="skill-q">
 									<p>Change Secret Question?</p>
 									<a data-toggle="modal" class="submit btn btn-info btn-block" role="button" href="#sQuestion">Change Question Now</a>
