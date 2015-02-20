@@ -23,9 +23,9 @@ $(document).ready(function () {
 	"use strict";
 	
 	// ascensor initialize
-	$('#ascensor').ascensor({ascensorMap: [[1,1],[0,0],[0,1],[0,2],[1,2],[1,0],[2,0],[2,1],[10,10]]});					 // Ascensor
+	//$('#ascensor').ascensor({ascensorMap: [[1,1],[0,0],[0,1],[0,2],[1,2],[1,0],[2,0],[2,1],[10,10]]});					 // Ascensor
 	//$('#ascensor').ascensor({ascensorMap: [[1,1],[0,0],[0,1],[0,2],[1,2],[1,0],[2,0],[2,1],[2,2]], queued: true});	// Ascensor Queued
-	//$('#ascensor').ascensor({ascensorMap: [[0,0],[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],[0,8]]}); 					// Horizontal
+	$('#ascensor').ascensor({ascensorMap: [[1,1],[1,0],[0,1],[1,2],[1,2],[0,5],[0,6],[0,7],[0,8]]}); 					// Horizontal
 	//$('#ascensor').ascensor({ascensorMap: [[0,0],[1,0],[2,0],[3,0],[4,0],[5,0],[6,0],[7,0],[8,0]]});					// Vertical
 	
 	// load tweets
