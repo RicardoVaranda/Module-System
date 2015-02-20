@@ -142,17 +142,17 @@ class AccountController extends BaseController{
 
 				if($user->save()){
 					return Redirect::route('home')
-							->with('global', 'Your password has been changed.');
+					->with('global', 'Your password has been succesfully changed');
 				}
 			} else {
 				return Redirect::route('home', ['#changePass'])
-				->with('global', 'Your old password is incorrect.');
+				->with('pass', 'Your old password is incorrect.');
 			}
 
 		}
 
 		return Redirect::route('home', ['#changePass'])
-				->with('global', 'Your password could not be changed');
+				->with('pass', 'Your password could not be changed');
 	}
 
 	public function getForgotPassword(){

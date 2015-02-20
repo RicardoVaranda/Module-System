@@ -80,6 +80,9 @@
 		
 			<section class="section home">
 				<div class="center-box">
+					@if(Session::has('global'))
+							<div class="globalD arrowD">{{ Session::get('global') }}</div>
+					@endif
 					<div class="container">
 	
 						<div class="tile tile-item tile-portfolio">
