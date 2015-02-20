@@ -218,6 +218,9 @@
 									<p>Change Password</p>
 									<a data-toggle="modal" class="submit btn btn-info btn-block" role="button" href="#contact">Change Password Now</a>
 								</div>
+								@if(Session::has('pass'))
+									<div class="globalU warn arrowU">{{ Session::get('pass') }}</div>
+								@endif
 								<div class="skill-q">
 									<p>Change Secret Question?</p>
 									<a data-toggle="modal" class="submit btn btn-info btn-block" role="button" href="#sQuestion">Change Question Now</a>
