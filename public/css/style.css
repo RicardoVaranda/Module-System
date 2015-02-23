@@ -694,6 +694,21 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 	padding: 2rem 2rem 2rem 4rem;
 	position: relative;
 }
+
+/* ==============================================
+Electives
+===============================================*/
+
+.elective-btn {
+	padding: 5px;
+	padding-left: 15px;
+	padding-right: 15px;
+	margin: 10px;
+	float: left;
+	margin-top: 30px;
+}
+
+
 /* ==============================================
 Blog
 =============================================== */
@@ -822,6 +837,7 @@ Blog
 	border: none;
 	background-color: #EA00FF;
 }
+
 .form-control {
 	color: #747474;
 	border-radius: 0;

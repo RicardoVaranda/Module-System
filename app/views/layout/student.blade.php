@@ -6,8 +6,8 @@
 		Title and basic Metas
 		=============================================== -->
         <meta charset="utf-8">
-        <title>QuickMetro | Responsive Metro Style Template</title>
-		<meta name="description" content="QuickMetro - Responsive Metro Style Template.">
+        <title>Student | Module Registration System</title>
+		<meta name="description" content="Student | Module Registration System">
 		<meta name="author" content="ThemeArt">
 		
 		<!-- ==============================================

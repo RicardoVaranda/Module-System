@@ -178,6 +178,21 @@ jQuery(function( $ ){
 	
 });
 
+$( ".electiveRegister" ).submit(function() {
+	// Prevent default action.
+	event.preventDefault();
+	
+	// Get form.
+    var form = $(this);
+    
+    // Get the electiveId
+    var electiveId = form.find('#electiveId').val();
+    
+    console.log(electiveId);
+    
+    return;
+});
+
 
 /* ==============================================
 Loading

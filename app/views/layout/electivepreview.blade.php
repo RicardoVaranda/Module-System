@@ -14,6 +14,10 @@
 						<div class="row">
 							<div class="col-sm-8">
 								<img src="images/portfolio/portfolio1.jpg" class="img-responsive" alt="portfolio">
+								<form class="electiveRegister" action="" method="POST">
+									<input type="hidden" id="electiveId" value="{{ $mod->mid }}" />
+									<button type="submit" class="btn-primary elective-btn">Register</button>
+								</form>
 							</div>
 							<div class="col-sm-4">
 								<div class="modal-entery">
