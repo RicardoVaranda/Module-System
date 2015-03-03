@@ -1,21 +1,4 @@
 /* ==============================================
-Google Map
-=============================================== */
-function initialize() {
-	
-	"use strict";
-	
-	var mapProp = {
-  		center:new google.maps.LatLng(40.758440, -73.985186), 		// <- Your LatLng
-  		zoom:16,
-		scrollwheel: false,
-  		mapTypeId:google.maps.MapTypeId.ROADMAP
-  	};
-	var map = new google.maps.Map(document.getElementById("map"),mapProp);
-}
-//google.maps.event.addDomListener(window, 'load', initialize);
-
-/* ==============================================
 jQuery
 =============================================== */
 $(document).ready(function () {
@@ -25,11 +8,8 @@ $(document).ready(function () {
 	// ascensor initialize
 	//$('#ascensor').ascensor({ascensorMap: [[1,1],[0,0],[0,1],[0,2],[1,2],[1,0],[2,0],[2,1],[10,10]]});					 // Ascensor
 	//$('#ascensor').ascensor({ascensorMap: [[1,1],[0,0],[0,1],[0,2],[1,2],[1,0],[2,0],[2,1],[2,2]], queued: true});	// Ascensor Queued
-	$('#ascensor').ascensor({ascensorMap: [[1,1],[1,0],[0,1],[1,2],[1,2],[0,5],[0,6],[0,7],[0,8]]}); 					// Horizontal
+	$('#ascensor').ascensor({ascensorMap: [[1,1],[1,0],[0,1],[1,2],[2,1],[0,0],[0,2],[2,2],[2,0]]}); 					// Horizontal
 	//$('#ascensor').ascensor({ascensorMap: [[0,0],[1,0],[2,0],[3,0],[4,0],[5,0],[6,0],[7,0],[8,0]]});					// Vertical
-	
-	// load tweets
-	$(".follow .load-tweets").load("php/twitter.php");
 	
 	$("[href='#']").click(function(e){
 		e.preventDefault();
@@ -87,97 +67,66 @@ $(document).ready(function () {
 
 	// contact form
 	$('input, textarea').placeholder();
-	
-	/*$('#contactform').submit(function(){
-	
-		"use strict";
-		
-		var action = $(this).attr('action');
-		
-		$("#state-message").slideUp(750,function() {
-		$('#state-message').hide();
-		
-		$.post(action, { 
-			name: $('#name').val(),
-			email: $('#email').val(),
-			message: $('#message').val()
-		},
-			function(data){
-				document.getElementById('state-message').innerHTML = data;
-				$('#state-message').slideDown('slow');
-				$('#contactform img.loader').fadeOut('slow',function(){$(this).remove()});
-				$('#submit').removeAttr('disabled'); 
-				if(data.match('success') != null) $('#contactform').slideUp('slow');
-			}
-		);
-		});
-		return false; 
-	});*/
 
 });
 
 /* ==============================================
-Testimonials
+Load Modules
 =============================================== */
-
-jQuery(function( $ ){
-	
-	"use strict";
-	
-	var randomnumber, quoteclass, author, timeout;
-	
-	startTestimonials();
-	
-	$('.client .photos ul li').hover( function(){
-
-		window.clearTimeout(timeout);
-		
-		$('.client .photos ul li.active').removeClass('active');
-		
-		quoteclass = $(this).attr('class');
-		
-		author = $(this).find('img').attr('alt');
-		author = author.split('-');
-		author = author[0] + '<span> - ' + author[1] + '</span>';
-		
-		$('.client .quotes ul li.active').fadeOut('slow', function(){
-			$(this).removeClass('active');
-			$('.client .quotes ul li.' + quoteclass).fadeIn().addClass('active');
-			$('.client .photos .author').html(author);
-		});
-		
-		$(this).addClass('active');
-		
-	}, function(){
-		timeout = window.setTimeout( startTestimonials, 5000 );
-		return false;
+loadModules = function(){
+	var list = $("#grid");
+    list.empty();
+    $(document).bind('ajaxStart', function(){
+	    $(".load.Mod").show();
+	}).bind('ajaxStop', function(){
+	    $(".load.Mod").hide();
 	});
-	
-	function startTestimonials() {
-		
-		"use strict";
-		
-		$('.client .photos ul li.active').removeClass('active');
-		
-		randomnumber = Math.floor( (Math.random()*6) + 1 );
-		
-		author = $('.client .photos ul li.quote-' + randomnumber).find('img').attr('alt');
-		author = author.split('-');
-		author = author[0] + '<span> - ' + author[1] + '</span>';
-		
-		$('.client .quotes ul li.active').fadeOut('slow', function(){
-			$(this).removeClass('active');
-			$('.client .quotes ul li.quote-' + randomnumber).fadeIn().addClass('active');
-			$('.client .photos .author').html(author);
-		});
-		
-		$('.client .photos ul li.quote-' + randomnumber).addClass('active');
-		
-		timeout = window.setTimeout( startTestimonials, 5000 );
-	}
-	
-});
+        $.ajax({
+            type: "POST",
+            url: "modules",
+            success:function(modules)
+            {
+                list.append(modules);
+                list.mixitup();
+                $("#grid li a ").each(function() { 
+					$(this).hoverdir(); 
+				});
 
+
+				$("#newForm").submit(function(e){
+	                e.preventDefault();
+	                var $form = $(this); 
+	                var errors = document.getElementsByClassName('float_form')
+
+				    for (var i = 0; i < errors.length; i++){
+				        errors[i].style.display = 'none';
+				    }
+	                $.ajax({
+	                    type: "POST",
+	                    url : $form.attr("action"),
+	                    data : {modData: $form.serialize()},
+	                    headers: {
+					        'X-CSRF-Token': $('input[name="_token"]').val()
+					    }
+	                })
+					.done(function(data){
+						if(data.fail){
+							$.each(data.errors, function( index, value ) {
+						        var errorDiv = $('#newForm #'+index+'_Errors');
+						        errorDiv.empty();
+						        errorDiv.append('<i class="fa fa-times-circle"></i>'+value);
+						        errorDiv.show();
+						    });
+					      $('#successMessage').empty();    
+						} else {
+							$('#newMod .close').click(); //hiding form
+
+							setTimeout(function() { loadModules(); }, 1000);
+							
+						}
+					});
+
+<<<<<<< Updated upstream
 $( ".electiveRegister" ).submit(function() {
 	// Prevent default action.
 	event.preventDefault();
@@ -193,6 +142,13 @@ $( ".electiveRegister" ).submit(function() {
     return;
 });
 
+=======
+        		});
+            }
+        });
+
+}
+>>>>>>> Stashed changes
 
 /* ==============================================
 Loading
@@ -200,4 +156,9 @@ Loading
 $(window).load(function(){
 	"use strict";
 	jQuery('#loading').fadeOut(1000);
+<<<<<<< Updated upstream
 });
+=======
+	loadModules();
+});
+>>>>>>> Stashed changes

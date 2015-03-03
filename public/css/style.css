@@ -1215,6 +1215,128 @@ input[type=text]::-webkit-calendar-picker-indicator, input[type=text]::calendar-
     z-index: 1;
 }
 
+.isa_info, .isa_success, .isa_warning, .isa_error {
+margin: 10px 0px;
+padding:12px;
+}
+.isa_info {
+    color: #00529B;
+    background-color: #BDE5F8;
+}
+.isa_success {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+}
+.isa_warning {
+    color: #9F6000;
+    background-color: #FEEFB3;
+}
+.isa_error {
+    color: #D8000C;
+    background-color: #FFBABA;
+}
+.isa_info i, .isa_success i, .isa_warning i, .isa_error i {
+    margin:0px 5px;
+}
+
+.load {
+	position: absolute;
+	z-index:99999;
+	top: 50%;
+	left: 50%;
+  border-radius:100%;
+  display:inline-block;
+  height:30px;
+  width:30px;
+  -webkit-animation:loader infinite 4s;
+     -moz-animation:loader infinite 4s;
+          animation:loader infinite 4s;
+  box-shadow:25px 25px #3498db,
+    -25px 25px #9b59b6,
+    -25px -25px #e74c3c,
+    25px -25px #2ecc71;
+}
+
+@-webkit-keyframes loader {
+  0%,100% {
+      box-shadow:25px 25px #3498db,
+        -25px 25px #9b59b6,
+        -25px -25px #e74c3c,
+        25px -25px #2ecc71;
+  }
+  25% {
+      box-shadow:-25px 25px #3498db,
+        -25px -25px #9b59b6,
+        25px -25px #e74c3c,
+        25px 25px #2ecc71;
+  }
+  50% {
+      box-shadow:-25px -25px #3498db,
+        25px -25px #9b59b6,
+        25px 25px #e74c3c,
+        -25px 25px #2ecc71;
+  }
+  75% {
+      box-shadow:25px -25px #3498db,
+        25px 25px #9b59b6,
+        -25px 25px #e74c3c,
+        -25px -25px #2ecc71;
+  }
+}
+
+@-moz-keyframes loader {
+  0%,100% {
+      box-shadow:25px 25px #3498db,
+        -25px 25px #9b59b6,
+        -25px -25px #e74c3c,
+        25px -25px #2ecc71;
+  }
+  25% {
+      box-shadow:-25px 25px #3498db,
+        -25px -25px #9b59b6,
+        25px -25px #e74c3c,
+        25px 25px #2ecc71;
+  }
+  50% {
+      box-shadow:-25px -25px #3498db,
+        25px -25px #9b59b6,
+        25px 25px #e74c3c,
+        -25px 25px #2ecc71;
+  }
+  75% {
+      box-shadow:25px -25px #3498db,
+        25px 25px #9b59b6,
+        -25px 25px #e74c3c,
+        -25px -25px #2ecc71;
+  }
+}
+
+@keyframes loader {
+  0%,100% {
+      box-shadow:25px 25px #3498db,
+        -25px 25px #9b59b6,
+        -25px -25px #e74c3c,
+        25px -25px #2ecc71;
+  }
+  25% {
+      box-shadow:-25px 25px #3498db,
+        -25px -25px #9b59b6,
+        25px -25px #e74c3c,
+        25px 25px #2ecc71;
+  }
+  50% {
+      box-shadow:-25px -25px #3498db,
+        25px -25px #9b59b6,
+        25px 25px #e74c3c,
+        -25px 25px #2ecc71;
+  }
+  75% {
+      box-shadow:25px -25px #3498db,
+        25px 25px #9b59b6,
+        -25px 25px #e74c3c,
+        -25px -25px #2ecc71;
+  }
+}
 
 /*
 *	Stoped Modifing it here

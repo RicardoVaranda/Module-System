@@ -15,7 +15,7 @@ class Modules extends Eloquent {
      */
     protected $primaryKey='mid';
 
-    protected $fillable = array('mfulltitle', 'mshorttitle', 'mcode', 
+    protected $fillable = array('mfulltitle', 'mshorttitle', 'mdescription', 'mcode', 
         'mcrn', 'mfieldofstudy', 'mcoordinator','mlevel', 
         'mcredits', 'melective', 'departmentid');
 

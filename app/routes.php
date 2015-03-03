@@ -4,12 +4,6 @@ Route::get('/', array(
 	'uses' => 'HomeController@home'
 ));
 
-Route::get('/test', array(
-	'as' => 'test',
-	'uses' => 'HomeController@test'
-));
-
-
 Route::get('/user/{username}', array(
 	'as' => 'profile-user',
 	'uses' => 'ProfileController@user'
@@ -31,19 +25,52 @@ Route::group(array('before' => 'auth'), function() {
 		*/
 
 		Route::post('/account/change-password', array(
-			'as' => 'account-change-password-post',
-			'uses' => 'AccountController@postChangePassword'
+			'as' 	=> 'account-change-password-post',
+			'uses' 	=> 'AccountController@postChangePassword'
+		));
+
+		/*
+		| Edit Module
+		*/
+
+		Route::post('/module-change', array(
+			'as' 	=> 'module-change-post',
+			'uses' 	=> 'ModuleController@postModuleChange'
+		));
+
+		/*
+		|	Add Module
+		*/
+		Route::post('/module-new', array(
+			'as' 	=> 'module-new-post',
+			'uses' 	=> 'ModuleController@postModuleNew'
 		));
 
 	});
+
+	/*
+	| Get Modules
+	*/
+	Route::any('/modules', array(
+		'as'	=> 'modules',
+		'uses'	=> 'ModuleController@getModules'
+	));
+
+	/*
+	| Get Images
+	*/
+	Route::get('img/{modName}', array(
+		'as'	=>	'getImg',
+		'uses'	=>	'ModuleController@getImage'
+	));
 	
 	/*
 	| Change Password (GET)
 	*/
 
 	Route::get('/account/change-password', array(
-		'as' => 'account-change-password',
-		'uses' => 'AccountController@getChangePassword'
+		'as' 	=> 'account-change-password',
+		'uses'	=> 'AccountController@getChangePassword'
 	));
 
 	/*
@@ -51,8 +78,8 @@ Route::group(array('before' => 'auth'), function() {
 	*/
 
 	Route::get('/account/sign-out', array(
-		'as' => 'account-sign-out',
-		'uses' => 'AccountController@getSignOut'
+		'as' 	=> 'account-sign-out',
+		'uses' 	=> 'AccountController@getSignOut'
 	));
 
 

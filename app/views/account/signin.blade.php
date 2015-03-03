@@ -51,9 +51,5 @@
 				<img src="images/alirezadesigner.png" alt="Go to AlirezaDesigner.com!" title="Go to AlirezaDesigner.com!" />
 			</a> -->
 		</div>
-		<div class="fullScreenItem draggable" id="loginCover" style="display:none">
-			<p id="time">13:56</p>
-			<p id="date">Thursday, Decemeber 14</p>
-		</div>
 	</body>
 </html>

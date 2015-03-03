@@ -6,9 +6,8 @@
 		Title and basic Metas
 		=============================================== -->
         <meta charset="utf-8">
-        <title>QuickMetro | Responsive Metro Style Template</title>
-		<meta name="description" content="QuickMetro - Responsive Metro Style Template.">
-		<meta name="author" content="ThemeArt">
+        <title>CIT Modules :: Module System</title>
+		<meta name="description" content="CIT Module System" />
 		
 		<!-- ==============================================
 		Mobile Metas
@@ -30,7 +29,6 @@
 		{{ HTML::script('js/jquery-1.10.2.min.js') }}
 		{{ HTML::script('js/modernizr.custom.97074.js') }}
 		{{ HTML::script('http://maps.googleapis.com/maps/api/js?sensor=true') }}
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         
 		<!--[if lt IE 9]>
 			<script src="js/selectivizr.js"></script>
@@ -88,17 +86,17 @@
 							<div class="globalD arrowD">{{ Session::get('global') }}</div>
 					@endif
 					<div class="container">
-	
-						<div class="tile tile-item tile-portfolio">
-							<a class="ascensorLink ascensorLink1 tile-nav" href="#">
-								<h5 class="h5">Electives</h5>
-								<i class="fa fa-windows fa-4x"></i>
-							</a>
-						</div>
+						
 						<div class="tile tile-item tile-about">
-							<a class="ascensorLink ascensorLink2 tile-nav" href="#">
+							<a class="ascensorLink ascensorLink1 tile-nav" href="#">
 								<h5 class="h5">Modules</h5>
 								<i class="fa fa-heart fa-4x"></i>
+							</a>
+						</div>
+						<div class="tile tile-item tile-portfolio">
+							<a class="ascensorLink ascensorLink2 tile-nav" href="#">
+								<h5 class="h5">Electives</h5>
+								<i class="fa fa-windows fa-4x"></i>
 							</a>
 						</div>
 						<div class="tile tile-item tile-team">
@@ -130,19 +128,13 @@
 				</div>
 			</section> <!-- /home -->
 			
-			<section class="section portfolio">
+			<section class="section modules">
+				<div class="load Mod"></div>
 				<div class="container">
-					<h1 class="h1">Electives</h1>
+					<h1 class="h1">Modules</h1>
 					<!-- Display all electives, add a new electives button, in that button open up a list of modules so that we can select the module that we want to create as an elective -->
 					<div class="row">
 						<ul id="grid">
-							@foreach(Modules::where('melective', 1)
-									->where('departmentid', Auth::user()->department)
-									->get() as $mod)
-								@include('layout.electivepreview', array('mod' => $mod))
-							@endforeach
-							<li class="gap"></li>
-							<!-- "gap" elements fill in the gaps in justified grid -->
 						</ul>
 					</div>
 				</div>
