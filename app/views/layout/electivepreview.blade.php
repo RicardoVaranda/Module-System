@@ -14,10 +14,33 @@
 						<div class="row">
 							<div class="col-sm-8">
 								<img src="images/portfolio/portfolio1.jpg" class="img-responsive" alt="portfolio">
-								<form class="electiveRegister" action="" method="POST">
+								<?php
+								// Extract current user's electives.
+								$electives = Auth::user()->electives;
+								$registered = false;
+								// Make sure we got a result.
+								if($electives != null) {
+									$electives = json_decode($electives);
+									//Search for current elective.
+									foreach($electives as $key => $value) {
+										if($value->electiveId == $mod->mid){
+											$registered = true;
+										}
+									}
+								} 
+
+								// Now print forms.
+								if($registered) { ?>
+									<form class="electiveUnregister" action="" method="POST">
 									<input type="hidden" id="electiveId" value="{{ $mod->mid }}" />
-									<button type="submit" class="btn-primary elective-btn">Register</button>
+									<button type="submit" class="btn-primary elective-btn">Unregister</button>
 								</form>
+								<?php } else { ?>
+									<form class="electiveRegister" action="" method="POST">
+										<input type="hidden" id="electiveId" value="{{ $mod->mid }}" />
+										<button type="submit" class="btn-primary elective-btn">Register</button>
+									</form>
+								<?php } ?>
 							</div>
 							<div class="col-sm-4">
 								<div class="modal-entery">
@@ -30,6 +53,16 @@
 									{{ $mod->mlevel }}
 									<h4 class="h4">Module Credits</h4>
 									{{ $mod->mcredits }}
+									<?php
+									// Let's get the total spaces in elective.
+									$spaces = 0;
+									$classes = Classes::where('classmodule', $mod->mid)->get();
+									foreach($classes as $c){
+										$spaces+=($c->classlimit-$c->classcurrent);
+									}
+									?>
+									<h4 class="h4">Spaces Available</h4>
+									<span id="elective{{ $mod->mid }}">{{ $spaces }}</span>
 								</div>
 							</div>
 						</div>

@@ -47,6 +47,24 @@ Route::group(array('before' => 'auth'), function() {
 		));
 
 	});
+	
+	/*
+	| Register to elective.
+	*/
+	
+	Route::post('/account/register-elective', array(
+		'as' => 'register-elective',
+		'uses' => 'ElectiveController@postRegisterElective'
+	));
+
+	/*
+	| Unregister to elective.
+	*/
+	
+	Route::post('/account/unregister-elective', array(
+		'as' => 'unregister-elective',
+		'uses' => 'ElectiveController@postUnregisterElective'
+	));
 
 	/*
 	| Get Modules
@@ -62,15 +80,6 @@ Route::group(array('before' => 'auth'), function() {
 	Route::get('img/{modName}', array(
 		'as'	=>	'getImg',
 		'uses'	=>	'ModuleController@getImage'
-	));
-	
-	/*
-	| Register to elective.
-	*/
-	
-	Route::post('/account/register-elective', array(
-		'as' => 'register-elective',
-		'uses' => 'ModuleController@postRegisterElective'
 	));
 	
 	/*
