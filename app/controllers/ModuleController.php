@@ -52,6 +52,66 @@ class ModuleController extends BaseController {
 		}
 	}
 
+	public function postModuleEdit(){
+
+		$inputData = Input::get('modData');
+	    parse_str($inputData, $formFields);  
+	    $moduleData = array(
+	      'mfulltitle'      => $formFields['mname'],
+	      'mshorttitle'		=> $formFields['mshorttitle'],
+	      'mdescription'     =>  $formFields['mdescription'],
+	      'mcode'     =>  $formFields['mcode'],
+	      'mfieldofstudy'     =>  $formFields['mfieldofstudy'],
+	      'mcoordinator'     =>  $formFields['mcoordinator'],
+	      'mlevel'     =>  $formFields['mlevel'],
+	      'mcredits'     =>  $formFields['mcredits'],
+	      'departmentid' => Auth::user()->department,
+	    ); 
+
+	    $rules = array(
+			'mfulltitle' 	=> 'required|max:50|unique:modules',
+			'mshorttitle'	=> 'required|max:50|unique:modules',
+			'mdescription'	=> 'required|min:30',
+			'mcode'		 	=> 'required|min:7|max:8|alpha_num|unique:modules',
+			'mfieldofstudy'	=> 'required|max:100',
+			'mcoordinator' 	=> 'required|exists:users,name,rank,1',
+			'mlevel' 		=> 'required|in:Fundamental,Intermediate,Advanced,Expert',
+			'mcredits'	 	=> 'required|integer|between:5,25',
+			'departmentid'	=> 'required',
+		);
+
+		$validator = Validator::make($moduleData,$rules);
+
+		if($validator->fails()){
+	        return Response::json(array(
+	            'fail' => true,
+	            'errors' => $validator->getMessageBag()->toArray()
+	        ));
+	    } else {
+
+	    	$mod = Modules::where('mcode', $moduleData['mcode']);
+
+	    	$mod->mfulltitle = $moduleData['mfulltitle'];
+	    	$mod->mshorttitle = $moduleData['mshorttitle'];
+	    	$mod->mdescription = $moduleData['mdescription'];
+	    	$mod->mcode = $moduleData['mcode'];
+	    	$mod->mfieldofstudy = $moduleData['mfieldofstudy'];
+	    	$mod->mcoordinator = $moduleData['mcoordinator'];
+	    	$mod->mlevel = $moduleData['mlevel'];
+	    	$mod->mcredits = $moduleData['mcredits'];
+	    	$mod->departmentid = $moduleData['departmentid'];
+	    	
+	    	if(Modules::create($moduleData)){
+	    		Session::flash('global', 'You have edited the module "'. $moduleData['mfulltitle'].'".');
+	    		  //return success  message
+		        return Response::json(array(
+		          'success' => true,
+		          'mName' => $moduleData['mfulltitle']
+		        ));
+	    	}
+		}
+	}
+
 		public function getModules(){
 			if(Auth::check()){
 				if (Auth::user()->rank >= 2) 
