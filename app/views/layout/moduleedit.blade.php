@@ -66,10 +66,6 @@
 	                    </div>
 	                    <div id="mcredits_Errors" class="isa_error" style="display: none;"></div>
 	                    <div class="form-group">
-	                    	<p style="float:left; font-size:16pt;">Offer as Elective</p>
-	                    	<input type="checkbox" name="melective" id="elective" class="form-control" style="width:50px">
-	                    </div>
-	                    <div class="form-group">
 	                        <i class="fa fa-arrow-right"></i>
 	                        <button type="submit" id="submit" class="btn btn-info btn-block">Submit new Module</button>
 	                		{{Form::token()}}

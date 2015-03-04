@@ -15,7 +15,6 @@ class ModuleController extends BaseController {
 	      'mcoordinator'     =>  $formFields['mcoordinator'],
 	      'mlevel'     =>  $formFields['mlevel'],
 	      'mcredits'     =>  $formFields['mcredits'],
-	      'melective'  =>  isset($formFields['melective']) ? 1 : 0,
 	      'departmentid' => Auth::user()->department,
 	    ); 
 
@@ -28,7 +27,6 @@ class ModuleController extends BaseController {
 			'mcoordinator' 	=> 'required|exists:users,name,rank,1',
 			'mlevel' 		=> 'required|in:Fundamental,Intermediate,Advanced,Expert',
 			'mcredits'	 	=> 'required|integer|between:5,25',
-			'melective'		=> 'required',
 			'departmentid'	=> 'required',
 		);
 
