@@ -18,19 +18,33 @@ class ModuleController extends BaseController {
 	      'departmentid' => Auth::user()->department,
 	    ); 
 
+	    Validator::extend('ranked', function($attribute, $value, $parameters)
+		{
+			$coord = User::where('name', $value)->first();
+			if($coord->rank < 1){
+				return false;
+			}
+		   
+		  return false;
+		});
+
 	    $rules = array(
 			'mfulltitle' 	=> 'required|max:50|unique:modules',
 			'mshorttitle'	=> 'required|max:50|unique:modules',
 			'mdescription'	=> 'required|min:30',
 			'mcode'		 	=> 'required|min:7|max:8|alpha_num|unique:modules',
 			'mfieldofstudy'	=> 'required|max:100',
-			'mcoordinator' 	=> 'required|exists:users,name,rank,1',
+			'mcoordinator' 	=> 'required|exists:users,name|ranked',
 			'mlevel' 		=> 'required|in:Fundamental,Intermediate,Advanced,Expert',
 			'mcredits'	 	=> 'required|integer|between:5,25',
 			'departmentid'	=> 'required',
 		);
+		
+		$messages = [
+		    'ranked' => "This user can't coordinate this class.",
+		];
 
-		$validator = Validator::make($moduleData,$rules);
+		$validator = Validator::make($moduleData,$rules,$messages);
 
 		if($validator->fails()){
 	        return Response::json(array(
@@ -67,7 +81,15 @@ class ModuleController extends BaseController {
 	      'departmentid' => Auth::user()->department,
 	    );
 
-
+	    Validator::extend('ranked', function($attribute, $value, $parameters)
+		{
+			$coord = User::where('name', $value)->first();
+			if($coord->rank < 1){
+				return false;
+			}
+		   
+		  return false;
+		});
 
 	    $rules = array(
 			'mfulltitle' 	=> 'required|max:50|unique:modules,mfulltitle,'.$formFields['mcode'].',mcode',
@@ -75,14 +97,19 @@ class ModuleController extends BaseController {
 			'mdescription'	=> 'required|min:30',
 			'mcode'		 	=> 'required|min:7|max:8|alpha_num|unique:modules,mcode,'.$formFields['mcode'].',mcode',
 			'mfieldofstudy'	=> 'required|max:100',
-			'mcoordinator' 	=> 'required|exists:users,name,rank,1',
+			'mcoordinator' 	=> 'required|exists:users,name|ranked',
 			'mlevel' 		=> 'required|in:Fundamental,Intermediate,Advanced,Expert',
 			'mcredits'	 	=> 'required|integer|between:5,25',
 			'mid'			=> 'required|exists:modules,mid',
 			'departmentid'	=> 'required',
 		);
 
-		$validator = Validator::make($moduleData,$rules);
+		$messages = [
+		    'ranked' => "This user can't coordinate this class.",
+		];
+
+		$validator = Validator::make($moduleData,$rules,$messages);
+		
 
 		if($validator->fails()){
 	        return Response::json(array(
@@ -91,7 +118,7 @@ class ModuleController extends BaseController {
 	        ));
 	    } else {
 
-	    	$mod = Modules::where('mid', $moduleData['mid']);
+	    	$mod = Modules::where('mid', $moduleData['mid'])->first();
 
 	    	$mod->mfulltitle = $moduleData['mfulltitle'];
 	    	$mod->mshorttitle = $moduleData['mshorttitle'];

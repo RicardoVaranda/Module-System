@@ -41,12 +41,13 @@
 							   <select onchange="$('#coord').val(this.value)">
 							   	@foreach(User::where('rank', '>', '0')->where('rank', '!=', '3')
 							   		->where('department', Auth::user()->department)->get() as $coord);
-							   		<option label="{{ $type=='edit' ? $coord->username : '' }}" value="{{ $type=='edit' ? $coord->name : '' }}"></option>
+							   		<option label="{{ $type=='edit' ? $coord->username : $coord->username }}" value="{{ $type=='edit' ? $coord->name : $coord->name }}"></option>
 								@endforeach
 							   </select>
 							</datalist>
 	                    </div>
 	                    <div id="mcoordinator_Errors" class="isa_error" style="display: none;"></div>
+	                    <div id="rank_Errors" class="isa_error" style="display: none;"></div>
 	                    <div class="form-group">
 	                        <i class="fa fa-question"></i>
 	                        <input type="text" name="mlevel" value="{{$type=='edit' ? $mod->mlevel : ''}}" id="level" list="levels" class="form-control" placeholder="Module Level" required>
