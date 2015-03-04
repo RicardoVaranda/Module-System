@@ -65,13 +65,11 @@
 		
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 					<ul class="nav navbar-nav pull-right">
-						<li class="portfolio-menu"><a class="ascensorLink ascensorLink1" href="#">Electives</a></li>
-						<li class="about-menu"><a class="ascensorLink ascensorLink2" href="#">Profile</a></li>
-						<li class="service-menu"><a class="ascensorLink ascensorLink3" href="#">Settings</a></li>
-						<li class="team-menu"><a class="ascensorLink ascensorLink4" href="#">Team</a></li>
-						<li class="client-menu"><a class="ascensorLink ascensorLink5" href="#">Clients</a></li>
-						<li class="blog-menu"><a class="ascensorLink ascensorLink6" href="#">Blog</a></li>
-						<li class="contact-menu"><a class="ascensorLink ascensorLink7" href="#">Contact</a></li>
+						<li class="portfolio-menu"><a class="ascensorLink ascensorLink1" href="#">Modules</a></li>
+						<li class="about-menu"><a class="ascensorLink ascensorLink2" href="#">Electives</a></li>
+						<li class="service-menu"><a class="ascensorLink ascensorLink3" href="#">Timetables</a></li>
+						<li class="team-menu"><a class="ascensorLink ascensorLink4" href="#">Lecturers</a></li>
+						<li class="client-menu"><a class="ascensorLink ascensorLink5" href="#">My Info</a></li>
 						<li class="signout-menu"><a class="ascensorLink" href="{{ URL::route('account-sign-out') }}">Sign out</a></li>
 					</ul>
 				</div>
@@ -100,19 +98,19 @@
 							</a>
 						</div>
 						<div class="tile tile-item tile-team">
-							<a class="ascensorLink ascensorLink4 tile-nav" href="#">
+							<a class="ascensorLink ascensorLink3 tile-nav" href="#">
 								<h5 class="h5">Timetables</h5>
 								<i class="fa fa-group fa-4x"></i>
 							</a>
 						</div>
 						<div class="tile tile-item tile-service">
-							<a class="ascensorLink ascensorLink3 tile-nav" href="#">
+							<a class="ascensorLink ascensorLink4 tile-nav" href="#">
 								<h5 class="h5">Lecturers</h5>
 								<i class="fa fa-sitemap fa-4x"></i>
 							</a>
 						</div>
 						<div class="tile tile-item tile-service">
-							<a class="ascensorLink ascensorLink3 tile-nav" href="#">
+							<a class="ascensorLink ascensorLink5 tile-nav" href="#">
 								<h5 class="h5">My info</h5>
 								<i class="fa fa-sitemap fa-4x"></i>
 							</a>
@@ -239,206 +237,120 @@
 
 				<!-- End of Ajax system -->
 			</section>
-			<!-- /portfolio -->
-			
-			<section class="section about">
+			<!-- /modules -->
+
+						<section class="section electives">
+				<div class="load Mod"></div>
 				<div class="container">
-					<h1 class="h1">My Profile</h1>						
+					<h1 class="h1">Electives</h1>
+					<!-- Display all electives, add a new electives button, in that button open up a list of modules so that we can select the module that we want to create as an elective -->
 					<div class="row">
-					
-						<div class="col-sm-6 col-md-8 col-lg-8">
-							<div class="profile">
-								<h1>{{ Auth::user()->name }}</h1>
-									<table>
-										<tbody>
-											<tr>
-												<th><b>Student ID:</b></th>
-												<td colspan="1">{{ Auth::user()->username }}</td>
-											</tr>
-											<tr>
-												<th><b>Degree:</b></th>
-												<td colspan="1">Ordinary Bachelor Degree</td>
-											</tr>
-											<tr>
-												<th><b>Major:</b></th>
-												<td colspan="1">Computing</td>
-											</tr>
-											<tr>
-												<th><b>Program:</b></th>
-												<td colspan="1">Bachelor of Science</td>
-											</tr>
-											<tr>
-												<th><b>Class:</b></th>
-												<td colspan="1">Third Year</td>
-											</tr>
-										</tbody>
-									</table>
-							</div>
-						</div>
-							
-						<div class="col-sm-6 col-md-4 col-lg-4">
-							<div class="profile" style="padding:40px 20px">
-								<h4 class="h4">Settings</h4>
-								<div class="skill-q" id="changePass">
-									<p>Change Password</p>
-									<a data-toggle="modal" class="submit btn btn-info btn-block" role="button" href="#contact">Change Password Now</a>
-								</div>
-								@if(Session::has('pass'))
-									<div class="globalU warn arrowU">{{ Session::get('global') }}</div>
-								@endif
-								<div class="skill-q">
-									<p>Change Secret Question?</p>
-									<a data-toggle="modal" class="submit btn btn-info btn-block" role="button" href="#sQuestion">Change Question Now</a>
-								</div>	
-							</div>
-						</div>
+						<ul id="electives">
+						</ul>
 					</div>
-					<div class="modal fade" id="contact" tabindex="-1" role="dialog" aria-hidden="true">
-						<div class="modal-dialog">
-							<div  class="contact-box">
-		                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		                        <form name="contactform" id="contactform" action="php/contactform.php" method="post">
-		                            <fieldset>
-		                                <h4 class="h4">Change Your Password</h4>
-		                                <div class="form-group">
-		                                    <i class="fa fa-unlock"></i>
-		                                    <input type="password" name="pass" id="pass" class="form-control" placeholder="Old Password (required)" required>
-		                                </div>
-		                                <div class="form-group">
-		                                    <i class="fa fa-key"></i>
-		                                    <input type="password" name="newPass" id="npassword" class="form-control" placeholder="New Password (required)" required>
-		                                </div>
-		                                <div class="form-group">
-		                                    <i class="fa fa-key"></i>
-		                            		<input type="password" name="passAgain" id="passagain" class="form-control" placeholder="Password Again (required)" required>
-		         		                </div>
-		                                <div class="form-group">
-		                                    <i class="fa fa-arrow-right"></i>
-		                                    <button  type="submit" id="submit" class="btn btn-info btn-block">Change Password</button>
-		                                </div>
-		                            </fieldset>
-		                        </form>
-		                        <div id="state-message"></div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<hr class="metro-hr">
-						<h2 class="h2 lead">My Modules</h2>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>Object Oriented Analysis & Design</h3>
-									<small style="float:right"><u>Manditory</u></small>
-									<p>Mary Davin</p>
-									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
-									</br>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>Internet Network & Services</h3>
-									<small style="float:right"><u>Manditory</u></small>
-									<p>Mary Davin</p>
-									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
-									</br>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>Server-Side Web Development</h3>
-									<small style="float:right"><u>Manditory</u></small>
-									<p>Mary Davin</p>
-									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
-									</br>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>Object Oriented Analysis & Design</h3>
-									<small style="float:right"><u>Manditory</u></small>
-									<p>Mary Davin</p>
-									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
-									</br>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>Internet Network & Services</h3>
-									<small style="float:right"><u>Manditory</u></small>
-									<p>Mary Davin</p>
-									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
-									</br>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>Server-Side Web Development</h3>
-									<small style="float:right"><u>Manditory</u></small>
-									<p>Mary Davin</p>
-									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
-									</br>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>Object Oriented Analysis & Design</h3>
-									<small style="float:right"><u>Manditory</u></small>
-									<p>Mary Davin</p>
-									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
-									</br>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>Internet Network & Services</h3>
-									<small style="float:right"><u>Manditory</u></small>
-									<p>Mary Davin</p>
-									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
-									</br>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>Server-Side Web Development</h3>
-									<small style="float:right"><u>Manditory</u></small>
-									<p>Mary Davin</p>
-									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
-									</br>
-								</div>
-							</div>
-						</div>
-						<hr class="metro-hr">
-					</div>
-						
 				</div>
-            </section> 
-			<!-- /about -->
+				<!-- Custom JQuery Ajax Next level system - Ricardo -->
+
+				<script type="text/javascript">
+					/*$(document).ready(function(){
+					    var list = $("#grid");
+					    list.empty();
+					    $(document).bind('ajaxStart', function(){
+						    $(".load.Mod").show();
+						}).bind('ajaxStop', function(){
+						    $(".load.Mod").hide();
+						});
+					        $.ajax({
+					            type: "POST",
+					            url: "modules",
+					            success:function(modules)
+					            {
+					                list.append(modules);
+					                list.mixitup();
+					                $("#grid li a ").each(function() { 
+										$(this).hoverdir(); 
+									});
+
+
+									$("#newForm").submit(function(e){
+						                e.preventDefault();
+						                var form = $(this); 
+						                var errors = document.getElementsByClassName('isa_error');
+
+									    for (var i = 0; i < errors.length; i++){
+									        errors[i].style.display = 'none';
+									    }
+						                $.ajax({
+						                    type: "POST",
+						                    url : form.attr("action"),
+						                    data : {modData: form.serialize()},
+						                    headers: {
+										        'X-CSRF-Token': $('input[name="_token"]').val()
+										    }
+						                })
+										.done(function(data){
+											if(data.fail){
+												$.each(data.errors, function( index, value ) {
+											        var errorDiv = $('#newForm #'+index+'_Errors');
+											        errorDiv.empty();
+											        errorDiv.append('<i class="fa fa-times-circle"></i>'+value);
+											        errorDiv.show();
+											    });
+										      $('#successMessage').empty();    
+											} else {
+												$('#newMod .close').click(); //hiding form
+
+												setTimeout(function() { loadModules(); }, 1000);
+												
+											}
+										});
+
+					        		});
+
+
+									$("#editForm").submit(function(e){
+						                e.preventDefault();
+						                var form = $(this); 
+						                var errors = document.getElementsByClassName('isa_error');
+
+									    for (var i = 0; i < errors.length; i++){
+									        errors[i].style.display = 'none';
+									    }
+						                $.ajax({
+						                    type: "POST",
+						                    url : form.attr("action"),
+						                    data : {modData: form.serialize()},
+						                    headers: {
+										        'X-CSRF-Token': $('input[name="_token"]').val()
+										    }
+						                })
+										.done(function(data){
+											if(data.fail){
+												$.each(data.errors, function( index, value ) {
+											        var errorDiv = form.find('#'+index+'_Errors');
+											        errorDiv.empty();
+											        errorDiv.append('<i class="fa fa-times-circle"></i>'+value);
+											        errorDiv.show();
+											    });
+										      $('#successMessage').empty();    
+											} else {
+												$('#newMod .close').click(); //hiding form
+
+												setTimeout(function() { loadModules(); }, 1000);
+												
+											}
+										});
+
+					        		});
+
+					            }
+					        });
+					});*/
+				</script>
+
+				<!-- End of Ajax system -->
+			</section>
+			<!--Electives -->
 			
 			<section class="section service">  
 				<div class="container">	
@@ -651,272 +563,205 @@
 					</div>
             </section> 
 			<!-- /team -->
-			
-			<section class="section client">
-				<div class="center-box">
+
+			<section class="section about">
 				<div class="container">
-					<h1 class="h1">Happy Clients</h1>
-					<h3 class="h3 lead">What they say about our Services.</h3>
+					<h1 class="h1">My Profile</h1>						
 					<div class="row">
-						<div class="col-sm-6 col-sm-push-6 col-md-6 col-md-push-6 col-lg-6 col-lg-push-6">
-							<div class="photos">
-								<div class="author"></div>
-								<ul>
-									<li class="quote-1 active"><a href="#"><img class="img-responsive" src="images/client/client.jpg" alt="Tom Smith - Founder"></a></li>
-									<li class="quote-2"><a href="#"><img class="img-responsive" src="images/client/client.jpg" alt="Sarah Doe - Designer"></a></li>
-									<li class="quote-3"><a href="#"><img class="img-responsive" src="images/client/client.jpg" alt="Sam Peterson - Developer"></a></li>
-									<li class="quote-4"><a href="#"><img class="img-responsive" src="images/client/client.jpg" alt="John Smith - Developer"></a></li>
-									<li class="quote-5"><a href="#"><img class="img-responsive" src="images/client/client.jpg" alt="Natasha Smith - Project Manager"></a></li>
-									<li class="quote-6"><a href="#"><img class="img-responsive" src="images/client/client.jpg" alt="Jessica Doe - Designer"></a></li>
-								</ul>
+					
+						<div class="col-sm-6 col-md-8 col-lg-8">
+							<div class="profile">
+								<h1>{{ Auth::user()->name }}</h1>
+									<table>
+										<tbody>
+											<tr>
+												<th><b>Student ID:</b></th>
+												<td colspan="1">{{ Auth::user()->username }}</td>
+											</tr>
+											<tr>
+												<th><b>Degree:</b></th>
+												<td colspan="1">Ordinary Bachelor Degree</td>
+											</tr>
+											<tr>
+												<th><b>Major:</b></th>
+												<td colspan="1">Computing</td>
+											</tr>
+											<tr>
+												<th><b>Program:</b></th>
+												<td colspan="1">Bachelor of Science</td>
+											</tr>
+											<tr>
+												<th><b>Class:</b></th>
+												<td colspan="1">Third Year</td>
+											</tr>
+										</tbody>
+									</table>
 							</div>
 						</div>
-						<div class="col-sm-6 col-md-6 col-lg-6 col-sm-pull-6 col-md-pull-6 col-lg-pull-6">
-							<div class="quotes">
-							<ul>
-								<li class="quote-1 active">
-									<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-									Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
-								</li>
-								<li class="quote-2">
-									<p>when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, 
-									but also the leap into electronic typesetting, remaining essentially unchanged.</p>
-								</li>
-								<li class="quote-3">
-									<p>It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
-									and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-								</li>
-								<li class="quote-4">
-									<p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-									when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-								</li>
-								<li class="quote-5">
-									<p>It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
-									and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-								</li>
-								<li class="quote-6">
-									<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. 
-									The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters</p>
-								</li>
-							</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-				</div>
-			</section>
-			<!-- /client -->
-			
-			<section class="section blog">
-					<div class="container">
-						<h1 class="h1">Our Blog</h1>
-						<div class="row">
-						
-							<div class="col-sm-6 col-md-6 col-lg-6 blog-post">
-								<article class="article">
-									<div class="article-media">
-										<a href="#"><img class="img-responsive" src="images/blog/blog-post1.jpg" alt="blog-article"></a>
-									</div>
-									<div class="article-body">
-										<h4 class="h4 article-title"><a href="#">Example Blog Post</a></h4>
-										
-										<div class="article-tag"><i class="fa fa-tag"></i><a href="#">Dinner</a>
-										<span class="separator">|</span><a href="#">Kitchen</a>
-										<span class="separator">|</span><a href="#">Harvesting</a>
-										</div>
-										
-										<p>when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-										It has survived when an unknown printer type and specimen book.</p>
-										
-										<div class="read-more"><a href="#">Read More</a>
-											<i class="fa fa-comment pull-right"> 08</i>
-										</div>
-									</div>
-								</article>
-							</div>
-							<div class="col-sm-6 col-md-6 col-lg-6 blog-post">
-								<article class="article">
-									<div class="article-media">
-										<a href="#"><img class="img-responsive" src="images/blog/blog-post2.jpg" alt="blog-article"></a>
-									</div>
-									<div class="article-body">
-										<h4 class="h4 article-title"><a href="#">Example Blog Post</a></h4>
-										
-										<div class="article-tag"><i class="fa fa-tag"></i><a href="#">Dinner</a>
-										<span class="separator">|</span><a href="#">Kitchen</a>
-										<span class="separator">|</span><a href="#">Harvesting</a>
-										</div>
-										
-										<p>when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-										It has survived when an unknown printer type and specimen book.</p>
-										
-										<div class="read-more"><a href="#">Read More</a>
-											<i class="fa fa-comment pull-right"> 08</i>
-										</div>
-									</div>
-								</article>
-							</div>
-							<div class="col-sm-6 col-md-6 col-lg-6 blog-post">
-								<article class="article">
-									<div class="article-media">
-										<a href="#"><img class="img-responsive" src="images/blog/blog-post3.jpg" alt="blog-article"></a>
-									</div>
-									<div class="article-body">
-										<h4 class="h4 article-title"><a href="#">Example Blog Post</a></h4>
-										
-										<div class="article-tag"><i class="fa fa-tag"></i><a href="#">Dinner</a>
-										<span class="separator">|</span><a href="#">Kitchen</a>
-										<span class="separator">|</span><a href="#">Harvesting</a>
-										</div>
-										
-										<p>when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-										It has survived when an unknown printer type and specimen book.</p>
-										
-										<div class="read-more"><a href="#">Read More</a>
-											<i class="fa fa-comment pull-right"> 08</i>
-										</div>
-									</div>
-								</article>
-							</div>
-						
-							<div class="col-sm-6 col-md-6 col-lg-6 blog-post">
-								<article class="article">
-									<div class="article-media">
-										<a href="#"><img class="img-responsive" src="images/blog/blog-post4.jpg" alt="blog-article"></a>
-									</div>
-									<div class="article-body">
-										<h4 class="h4 article-title"><a href="#">Example Blog Post</a></h4>
-										
-										<div class="article-tag"><i class="fa fa-tag"></i><a href="#">Dinner</a>
-										<span class="separator">|</span><a href="#">Kitchen</a>
-										<span class="separator">|</span><a href="#">Harvesting</a>
-										</div>
-										
-										<p>when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-										It has survived when an unknown printer type and specimen book.</p>
-										
-										<div class="read-more"><a href="#">Read More</a>
-											<i class="fa fa-comment pull-right"> 08</i>
-										</div>
-									</div>
-								</article>
-							</div>
-							<div class="col-sm-6 col-md-6 col-lg-6 blog-post">
-								<article class="article">
-									<div class="article-media">
-										<a href="#"><img class="img-responsive" src="images/blog/blog-post5.jpg" alt="blog-article"></a>
-									</div>
-									<div class="article-body">
-										<h4 class="h4 article-title"><a href="#">Example Blog Post</a></h4>
-										
-										<div class="article-tag"><i class="fa fa-tag"></i><a href="#">Dinner</a>
-										<span class="separator">|</span><a href="#">Kitchen</a>
-										<span class="separator">|</span><a href="#">Harvesting</a>
-										</div>
-										
-										<p>when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-										It has survived when an unknown printer type and specimen book.</p>
-										
-										<div class="read-more"><a href="#">Read More</a>
-											<i class="fa fa-comment pull-right"> 08</i>
-										</div>
-									</div>
-								</article>
-							</div>
-							<div class="col-sm-6 col-md-6 col-lg-6 blog-post">
-								<article class="article">
-									<div class="article-media">
-										<a href="#"><img class="img-responsive" src="images/blog/blog-post6.jpg" alt="blog-article"></a>
-									</div>
-									<div class="article-body">
-										<h4 class="h4 article-title"><a href="#">Example Blog Post</a></h4>
-										
-										<div class="article-tag"><i class="fa fa-tag"></i><a href="#">Dinner</a>
-										<span class="separator">|</span><a href="#">Kitchen</a>
-										<span class="separator">|</span><a href="#">Harvesting</a>
-										</div>
-										
-										<p>when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-										It has survived when an unknown printer type and specimen book.</p>
-										
-										<div class="read-more"><a href="#">Read More</a>
-											<i class="fa fa-comment pull-right"> 08</i>
-										</div>
-									</div>
-								</article>
-							</div>
-
-						</div>
-					</div>
-			</section> 
-			<!-- /blog -->
-
-            <section class="section contact">
-				<div class="center-box">
-					<div class="contact-holder">
-						<div class="container">
-							<div class="row">
-                            
-                            	<div class="col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
-									<div class="contact-box">
-                                         <h3 class="h3 lead">Think we might help?</h3>
-                                         <h3 class="h3 lead">We’d love to hear from you.</h3>
-                                        <a data-toggle="modal" class="submit btn btn-info btn-block" role="button" href="#contact">Write for us</a>
-                                    </div>
-                               		<div class="contact-box">
-										 <h3 class="h3">Where we are</h3>
-										 <address>
-											ThemeArt<br>
-											33 Street Name<br>
-											New York, NY 12345<br>
-										 </address>
-										 <address>
-											<i class="fa fa-phone"></i> <abbr title="Phone">P:</abbr> (123) 456-789
-										 </address>
-										 
-										 <address>
-											Contact :<br>
-											<i class="fa fa-envelope-o"></i> <a href="mailto:#">info@quickmetro.com</a>
-										 </address>
-										 
-									 </div>
+							
+						<div class="col-sm-6 col-md-4 col-lg-4">
+							<div class="profile" style="padding:40px 20px">
+								<h4 class="h4">Settings</h4>
+								<div class="skill-q" id="changePass">
+									<p>Change Password</p>
+									<a data-toggle="modal" class="submit btn btn-info btn-block" role="button" href="#contact">Change Password Now</a>
+								</div>
+								@if(Session::has('pass'))
+									<div class="globalU warn arrowU">{{ Session::get('global') }}</div>
+								@endif
+								<div class="skill-q">
+									<p>Change Secret Question?</p>
+									<a data-toggle="modal" class="submit btn btn-info btn-block" role="button" href="#sQuestion">Change Question Now</a>
 								</div>	
-                            
 							</div>
 						</div>
 					</div>
+					<div class="modal fade" id="contact" tabindex="-1" role="dialog" aria-hidden="true">
+						<div class="modal-dialog">
+							<div  class="contact-box">
+		                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		                        <form name="contactform" id="contactform" action="php/contactform.php" method="post">
+		                            <fieldset>
+		                                <h4 class="h4">Change Your Password</h4>
+		                                <div class="form-group">
+		                                    <i class="fa fa-unlock"></i>
+		                                    <input type="password" name="pass" id="pass" class="form-control" placeholder="Old Password (required)" required>
+		                                </div>
+		                                <div class="form-group">
+		                                    <i class="fa fa-key"></i>
+		                                    <input type="password" name="newPass" id="npassword" class="form-control" placeholder="New Password (required)" required>
+		                                </div>
+		                                <div class="form-group">
+		                                    <i class="fa fa-key"></i>
+		                            		<input type="password" name="passAgain" id="passagain" class="form-control" placeholder="Password Again (required)" required>
+		         		                </div>
+		                                <div class="form-group">
+		                                    <i class="fa fa-arrow-right"></i>
+		                                    <button  type="submit" id="submit" class="btn btn-info btn-block">Change Password</button>
+		                                </div>
+		                            </fieldset>
+		                        </form>
+		                        <div id="state-message"></div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<hr class="metro-hr">
+						<h2 class="h2 lead">My Modules</h2>
+						<div class="col-sm-6 col-md-4">
+							<div class="feature-box">
+								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
+								<div class="feature-text">
+									<h3>Object Oriented Analysis & Design</h3>
+									<small style="float:right"><u>Manditory</u></small>
+									<p>Mary Davin</p>
+									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
+									</br>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-4">
+							<div class="feature-box">
+								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
+								<div class="feature-text">
+									<h3>Internet Network & Services</h3>
+									<small style="float:right"><u>Manditory</u></small>
+									<p>Mary Davin</p>
+									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
+									</br>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-4">
+							<div class="feature-box">
+								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
+								<div class="feature-text">
+									<h3>Server-Side Web Development</h3>
+									<small style="float:right"><u>Manditory</u></small>
+									<p>Mary Davin</p>
+									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
+									</br>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-4">
+							<div class="feature-box">
+								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
+								<div class="feature-text">
+									<h3>Object Oriented Analysis & Design</h3>
+									<small style="float:right"><u>Manditory</u></small>
+									<p>Mary Davin</p>
+									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
+									</br>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-4">
+							<div class="feature-box">
+								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
+								<div class="feature-text">
+									<h3>Internet Network & Services</h3>
+									<small style="float:right"><u>Manditory</u></small>
+									<p>Mary Davin</p>
+									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
+									</br>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-4">
+							<div class="feature-box">
+								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
+								<div class="feature-text">
+									<h3>Server-Side Web Development</h3>
+									<small style="float:right"><u>Manditory</u></small>
+									<p>Mary Davin</p>
+									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
+									</br>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-4">
+							<div class="feature-box">
+								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
+								<div class="feature-text">
+									<h3>Object Oriented Analysis & Design</h3>
+									<small style="float:right"><u>Manditory</u></small>
+									<p>Mary Davin</p>
+									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
+									</br>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-4">
+							<div class="feature-box">
+								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
+								<div class="feature-text">
+									<h3>Internet Network & Services</h3>
+									<small style="float:right"><u>Manditory</u></small>
+									<p>Mary Davin</p>
+									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
+									</br>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-4">
+							<div class="feature-box">
+								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
+								<div class="feature-text">
+									<h3>Server-Side Web Development</h3>
+									<small style="float:right"><u>Manditory</u></small>
+									<p>Mary Davin</p>
+									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
+									</br>
+								</div>
+							</div>
+						</div>
+						<hr class="metro-hr">
+					</div>
+						
 				</div>
-				<div id="map"></div>
             </section> 
-			<!-- /contact -->
-
-			<section class="section follow">
-				<div class="center-box">
-					<div class="container">
-						
-						<div class="row">
-							<div class="socialize">
-								<h2 class="h2">See you soon!</h2>
-							</div>
-						</div>
-						
-						<div class="row">
-							<ul id="social-networks">
-								<li class="social-twitter"><a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter fa-4x"></i></a></li>
-								<li class="social-facebook"><a href="http://www.facebook.com" target="_blank"><i class="fa fa-facebook fa-4x"></i></a></li>
-								<li class="social-googleplus"><a href="http://www.google.com" target="_blank"><i class="fa fa-google-plus fa-4x"></i></a></li>
-								<li class="social-youtube"><a href="http://www.youtube.com" target="_blank"><i class="fa fa-youtube fa-4x"></i></a></li>
-								<li class="social-pinterest"><a href="http://www.pinterest.com" target="_blank"><i class="fa fa-pinterest fa-4x"></i></a></li>
-								<li class="social-dribbble"><a href="http://www.dribbble.com" target="_blank"><i class="fa fa-dribbble fa-4x"></i></a></li>
-								<li class="social-linkedin"><a href="http://www.linkedin.com" target="_blank"><i class="fa fa-linkedin fa-4x"></i></a></li>
-								<li class="social-flickr"><a href="http://www.flickr.com" target="_blank"><i class="fa fa-flickr fa-4x"></i></a></li>
-							</ul>
-						</div>
-						
-					</div>
-				</div>
-			</section> 
-			<!-- /follow -->
+			<!-- /about -->
 			
 		</div> 
 		<!-- /ascensor -->
