@@ -50,7 +50,7 @@ class ModuleController extends BaseController {
 		}
 	}
 
-	public function postModuleEdit(){
+	public function postModuleChange(){
 
 		$inputData = Input::get('modData');
 	    parse_str($inputData, $formFields);  
@@ -64,13 +64,13 @@ class ModuleController extends BaseController {
 	      'mlevel'     =>  $formFields['mlevel'],
 	      'mcredits'     =>  $formFields['mcredits'],
 	      'departmentid' => Auth::user()->department,
-	    ); 
+	    );
 
 	    $rules = array(
-			'mfulltitle' 	=> 'required|max:50|unique:modules',
-			'mshorttitle'	=> 'required|max:50|unique:modules',
+			'mfulltitle' 	=> 'required|max:50|unique:modules,mfulltitle,'.$formFields['mcode'].',mcode',
+			'mshorttitle'	=> 'required|max:50|unique:modules,mshorttitle,'.$formFields['mcode'].',mcode',
 			'mdescription'	=> 'required|min:30',
-			'mcode'		 	=> 'required|min:7|max:8|alpha_num|unique:modules',
+			'mcode'		 	=> 'required|min:7|max:8|alpha_num|unique:modules,mcode,'.$formFields['mcode'].',mcode',
 			'mfieldofstudy'	=> 'required|max:100',
 			'mcoordinator' 	=> 'required|exists:users,name,rank,1',
 			'mlevel' 		=> 'required|in:Fundamental,Intermediate,Advanced,Expert',
@@ -99,7 +99,7 @@ class ModuleController extends BaseController {
 	    	$mod->mcredits = $moduleData['mcredits'];
 	    	$mod->departmentid = $moduleData['departmentid'];
 	    	
-	    	if(Modules::create($moduleData)){
+	    	if($mod->save()){
 	    		Session::flash('global', 'You have edited the module "'. $moduleData['mfulltitle'].'".');
 	    		  //return success  message
 		        return Response::json(array(

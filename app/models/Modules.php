@@ -17,7 +17,7 @@ class Modules extends Eloquent {
 
     protected $fillable = array('mfulltitle', 'mshorttitle', 'mdescription', 'mcode', 
         'mcrn', 'mfieldofstudy', 'mcoordinator','mlevel', 
-        'mcredits', 'melective', 'departmentid');
+        'mcredits', 'departmentid');
 
     public function department()
     {
@@ -27,5 +27,9 @@ class Modules extends Eloquent {
     public function classes()
     {
         return $this->hasMany('Classes', 'moduleid')->orderBy('classid', 'ASC');
+    }
+
+    public function getId(){
+        return $this->primaryKey;
     }
 }
