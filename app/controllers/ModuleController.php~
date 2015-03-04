@@ -1,0 +1,312 @@
+<?php
+
+class ModuleController extends BaseController {
+
+	public function postModuleNew(){
+
+		$inputData = Input::get('modData');
+	    parse_str($inputData, $formFields);  
+	    $moduleData = array(
+	      'mfulltitle'      => $formFields['mname'],
+	      'mshorttitle'		=> $formFields['mshorttitle'],
+	      'mdescription'     =>  $formFields['mdescription'],
+	      'mcode'     =>  $formFields['mcode'],
+	      'mfieldofstudy'     =>  $formFields['mfieldofstudy'],
+	      'mcoordinator'     =>  $formFields['mcoordinator'],
+	      'mlevel'     =>  $formFields['mlevel'],
+	      'mcredits'     =>  $formFields['mcredits'],
+	      'departmentid' => Auth::user()->department,
+	    ); 
+
+	    $rules = array(
+			'mfulltitle' 	=> 'required|max:50|unique:modules',
+			'mshorttitle'	=> 'required|max:50|unique:modules',
+			'mdescription'	=> 'required|min:30',
+			'mcode'		 	=> 'required|min:7|max:8|alpha_num|unique:modules',
+			'mfieldofstudy'	=> 'required|max:100',
+			'mcoordinator' 	=> 'required|exists:users,name,rank,1',
+			'mlevel' 		=> 'required|in:Fundamental,Intermediate,Advanced,Expert',
+			'mcredits'	 	=> 'required|integer|between:5,25',
+			'departmentid'	=> 'required',
+		);
+
+		$validator = Validator::make($moduleData,$rules);
+
+		if($validator->fails()){
+	        return Response::json(array(
+	            'fail' => true,
+	            'errors' => $validator->getMessageBag()->toArray()
+	        ));
+	    } else {
+
+	    	if(Modules::create($moduleData)){
+	    		Session::flash('global', 'You have created the module "'. $moduleData['mfulltitle'].'".');
+	    		  //return success  message
+		        return Response::json(array(
+		          'success' => true,
+		          'mName' => $moduleData['mfulltitle']
+		        ));
+	    	}
+		}
+	}
+
+	public function postModuleEdit(){
+
+		$inputData = Input::get('modData');
+	    parse_str($inputData, $formFields);  
+	    $moduleData = array(
+	      'mfulltitle'      => $formFields['mname'],
+	      'mshorttitle'		=> $formFields['mshorttitle'],
+	      'mdescription'     =>  $formFields['mdescription'],
+	      'mcode'     =>  $formFields['mcode'],
+	      'mfieldofstudy'     =>  $formFields['mfieldofstudy'],
+	      'mcoordinator'     =>  $formFields['mcoordinator'],
+	      'mlevel'     =>  $formFields['mlevel'],
+	      'mcredits'     =>  $formFields['mcredits'],
+	      'departmentid' => Auth::user()->department,
+	    ); 
+
+	    $rules = array(
+			'mfulltitle' 	=> 'required|max:50|unique:modules',
+			'mshorttitle'	=> 'required|max:50|unique:modules',
+			'mdescription'	=> 'required|min:30',
+			'mcode'		 	=> 'required|min:7|max:8|alpha_num|unique:modules',
+			'mfieldofstudy'	=> 'required|max:100',
+			'mcoordinator' 	=> 'required|exists:users,name,rank,1',
+			'mlevel' 		=> 'required|in:Fundamental,Intermediate,Advanced,Expert',
+			'mcredits'	 	=> 'required|integer|between:5,25',
+			'departmentid'	=> 'required',
+		);
+
+		$validator = Validator::make($moduleData,$rules);
+
+		if($validator->fails()){
+	        return Response::json(array(
+	            'fail' => true,
+	            'errors' => $validator->getMessageBag()->toArray()
+	        ));
+	    } else {
+
+	    	$mod = Modules::where('mcode', $moduleData['mcode']);
+
+	    	$mod->mfulltitle = $moduleData['mfulltitle'];
+	    	$mod->mshorttitle = $moduleData['mshorttitle'];
+	    	$mod->mdescription = $moduleData['mdescription'];
+	    	$mod->mcode = $moduleData['mcode'];
+	    	$mod->mfieldofstudy = $moduleData['mfieldofstudy'];
+	    	$mod->mcoordinator = $moduleData['mcoordinator'];
+	    	$mod->mlevel = $moduleData['mlevel'];
+	    	$mod->mcredits = $moduleData['mcredits'];
+	    	$mod->departmentid = $moduleData['departmentid'];
+	    	
+	    	if(Modules::create($moduleData)){
+	    		Session::flash('global', 'You have edited the module "'. $moduleData['mfulltitle'].'".');
+	    		  //return success  message
+		        return Response::json(array(
+		          'success' => true,
+		          'mName' => $moduleData['mfulltitle']
+		        ));
+	    	}
+		}
+	}
+
+		public function getModules(){
+			if(Auth::check()){
+			echo "here";
+				if (Auth::user()->rank >= 2) 
+					return View::make('layout.modules.load') ;
+				else
+					return;
+			}
+			else
+			{
+				return Redirect::route('account-sign-in');
+			}
+		}
+
+		public function getImage($modCode){
+
+		    $cacheKey = md5($modCode);
+
+		    $image = Cache::remember($cacheKey, 3600, function() use ($modCode) {
+		        // start making our image (this assumes your original image is within "app/storage/img")
+		        $colors = array('#00c6ff', '#f39c12', '#ff0000', '#49E035');
+		        $color = $colors[array_rand($colors)];
+		        $img = Image::canvas(384, 384, $color);
+		        $img->insert(public_path('images/layout.png'), 'top-left', 5, 0);
+
+		        $mod = Modules::where('mcode', $modCode);
+
+		        if($mod->count()){
+		        	$mod = $mod->first();
+
+		        	$img->text($mod->department->name(), 192, 250, function($font) {
+					    $font->file(public_path('fonts/segoeui.ttf'));
+					    $font->size(30);
+					    $font->color('#fff');
+					    $font->align('center');
+					});
+
+					$img->text($mod->mshorttitle, 192, 320, function($font) {
+					    $font->file(public_path('fonts/segoeui.ttf'));
+					    $font->size(25);
+					    $font->color('#fff');
+					    $font->align('center');
+					});
+
+		        } elseif ($modCode == 'new') {
+		        	$img->text('Create new Module!', 192, 300, function($font) {
+					    $font->file(public_path('fonts/segoeui.ttf'));
+					    $font->size(30);
+					    $font->color('#fff');
+					    $font->align('center');
+					});
+		        } else {
+			        $img->text('Error: Module not Found!', 192, 300, function($font) {
+					    $font->file(public_path('fonts/segoeui.ttf'));
+					    $font->size(30);
+					    $font->color('#fff');
+					    $font->align('center');
+					});
+		   		}
+
+		        // return the image as a JPG
+		        return $img->encode('jpg');
+		    });
+
+		    // return the image
+		    $headers = [
+		        'Content-Type'        => 'image/jpeg',
+		        'Content-Disposition' => 'inline',
+		        'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0',
+		        'Pragma'              => 'public',
+		        'Etag'                => md5($image),
+		    ];
+
+		    return Response::make($image, 200, $headers)->setTtl((60 * 30));
+		}
+		
+	// Function used to register or de-register from electives.
+	public function postRegisterElective(){
+		// Prepare errors array.
+		$errors = array();
+		$result = array();
+		
+		// Define validation parameters.
+		$validator = Validator::make(Input::all(),
+			array(
+				'electiveId' => 'required',
+				'userId'	 => 'required' 
+				)
+			);
+		
+		// Ensure validator doesn't fail.
+		if(!$validator->fails()){
+					
+			// Get the user and electives we will be working with.
+			$user = User::where('id', '=', Input::get('userId'))->first();
+			$electives = $user->electives;
+			
+			// Check if electives is null.
+			if($electives == null){
+				// If it's null this is the first elective so add it if there
+				// is space.
+				$electives = array();
+				
+				// Get the class for the elective. Working correctly you done for now then yh?yep all good sweet im working on
+				// basically making these images go onto the web plz
+				$class = Classes::where('classmodule', Input::get('electiveId'))->get();
+				// Check that class exists.
+				if(count($class) > 0) {
+				
+					// Pick the class that has space.
+					$classes = $class;
+					$found = false;
+					foreach($classes as $c){
+						if($c->classlimit > $c->classcurrent){
+							$found = true;
+							$class = $c;
+						}
+					}
+					// Now check if we found a class with space.
+					if($found){
+						// Save it.
+						$class->classcurrent = $class->classcurrent + 1;
+						$class->save();
+						// Important to keep track of date, electives available
+						// for more than one semester.
+						array_push($electives, array('electiveId' => Input::get('electiveId'),
+														'registrationDate' => date('Y-m-d')));
+						$user->electives = json_encode($electives);
+						$user->save();
+					
+					} else {
+						array_push($errors, 'Elective is full!');
+					}
+				} else {
+					array_push($errors, 'There\'s no class for this elective!');
+				}
+				
+			} else {
+				$electives = json_decode($electives);
+				// Check if user is already enrolled in elective.
+				foreach($electives as $e){
+					if($e->electiveId == Input::get('electiveId')) {
+						array_push($errors, 'You have already enrolled for this elective!');
+					}
+				}
+				// Check that we got no errors.
+				if(count($errors) == 0){
+					$class = Classes::where('classmodule', Input::get('electiveId'))->get();
+					// Check that class exists.
+					if(count($class) > 0) {
+				
+						// Pick the class that has space.
+						$classes = $class;
+						$found = false;
+						foreach($classes as $c){
+							if($c->classlimit > $c->classcurrent){
+								$found = true;
+								$class = $c;
+							}
+						}
+						// Now check if we found a class with space.
+						if($found){
+							// Save it.
+							$class->classcurrent = $class->classcurrent + 1;
+							$class->save();
+							// Important to keep track of date, electives available
+							// for more than one semester.
+							array_push($electives, array('electiveId' => Input::get('electiveId'),
+															'registrationDate' => date('Y-m-d')));
+							$user->electives = json_encode($electives);
+							$user->save();
+					
+						} else {
+							array_push($errors, 'Elective is full!');
+						}
+					} else {
+						array_push($errors, 'There\'s no class for this elective!');
+					}	
+				}
+			}
+			
+			// Check that we got no errors.
+			if(count($errors) == 0){
+				$result = array(
+					'success' => true
+				);
+				return Response::json( $result );
+			} else {
+			
+				$result = array(
+					'success' => false,
+					'errors' => $errors
+				);
+				return Response::json( $result );
+			}
+		}	
+		
+	}
+}
+?>

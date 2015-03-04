@@ -65,6 +65,15 @@ Route::group(array('before' => 'auth'), function() {
 	));
 	
 	/*
+	| Register to elective.
+	*/
+	
+	Route::post('/account/register-elective', array(
+		'as' => 'register-elective',
+		'uses' => 'ModuleController@postRegisterElective'
+	));
+	
+	/*
 	| Change Password (GET)
 	*/
 
