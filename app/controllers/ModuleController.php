@@ -63,8 +63,11 @@ class ModuleController extends BaseController {
 	      'mcoordinator'     =>  $formFields['mcoordinator'],
 	      'mlevel'     =>  $formFields['mlevel'],
 	      'mcredits'     =>  $formFields['mcredits'],
+	      'mid'			=>	$formFields['mid'],
 	      'departmentid' => Auth::user()->department,
 	    );
+
+
 
 	    $rules = array(
 			'mfulltitle' 	=> 'required|max:50|unique:modules,mfulltitle,'.$formFields['mcode'].',mcode',
@@ -75,6 +78,7 @@ class ModuleController extends BaseController {
 			'mcoordinator' 	=> 'required|exists:users,name,rank,1',
 			'mlevel' 		=> 'required|in:Fundamental,Intermediate,Advanced,Expert',
 			'mcredits'	 	=> 'required|integer|between:5,25',
+			'mid'			=> 'required|exists:modules,mid',
 			'departmentid'	=> 'required',
 		);
 
@@ -87,7 +91,7 @@ class ModuleController extends BaseController {
 	        ));
 	    } else {
 
-	    	$mod = Modules::where('mcode', $moduleData['mcode']);
+	    	$mod = Modules::where('mid', $moduleData['mid']);
 
 	    	$mod->mfulltitle = $moduleData['mfulltitle'];
 	    	$mod->mshorttitle = $moduleData['mshorttitle'];

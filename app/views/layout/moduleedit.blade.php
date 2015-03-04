@@ -65,6 +65,7 @@
 	                    	<input type="number" value="{{ $type=='edit' ? $mod->mcredits : '' }}" name="mcredits" id="credits" class="form-control" placeholder="Module Credits Awarded" min="5" max="25" required>
 	                    </div>
 	                    <div id="mcredits_Errors" class="isa_error" style="display: none;"></div>
+	                    <input type="hidden" name="mid" value="{{$type=='edit' ? $mod->mid : ''}}">
 	                    <div class="form-group">
 	                        <i class="fa fa-arrow-right"></i>
 	                        <button type="submit" id="submit" class="btn btn-info btn-block">Submit new Module</button>
