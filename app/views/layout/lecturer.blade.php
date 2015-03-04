@@ -7,7 +7,7 @@
 		=============================================== -->
         <meta charset="utf-8">
         <title>QuickMetro | Responsive Metro Style Template</title>
-		<meta name="description" content="QuickMetro - Responsive Metro Style Template.">
+		<meta namfe="description" content="QuickMetro - Responsive Metro Style Template.">
 		<meta name="author" content="ThemeArt">
 		
 		<!-- ==============================================
@@ -508,142 +508,9 @@
 				</div>
 			</section> 
 			<!-- /service -->
+		
 			
-            <section class="section team">
-					<div class="container">
-						<h1 class="h1">Creative Team</h1>
-						<div class="row">
-							<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-								<div class="team-member">
-									<img src="images/team/team-member.jpg" alt="team_member">
-									<h3 class="h3 lead">Tom Smith</h3>
-									<h5 class="h5">Founder</h5>
-									<ul class="member-social">
-										<li><a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter fa-2x"></i></a></li>
-										<li><a href="http://www.facebook.com" target="_blank"><i class="fa fa-facebook fa-2x"></i></a></li>
-										<li><a href="http://www.dribbble.com" target="_blank"><i class="fa fa-dribbble fa-2x"></i></a></li>
-									</ul>
-								</div>
-							</div>
-							<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-								<div class="team-member">
-									<img src="images/team/team-member.jpg" alt="team_member">
-									<h3 class="h3 lead">Tom Smith</h3>
-									<h5 class="h5">Founder</h5>
-									<ul class="member-social">
-										<li><a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter fa-2x"></i></a></li>
-										<li><a href="http://www.facebook.com" target="_blank"><i class="fa fa-facebook fa-2x"></i></a></li>
-										<li><a href="http://www.dribbble.com" target="_blank"><i class="fa fa-dribbble fa-2x"></i></a></li>
-									</ul>
-								</div>
-							</div>
-							<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-								<div class="team-member">
-									<img src="images/team/team-member.jpg" alt="team_member">
-									<h3 class="h3 lead">Sam Peterson</h3>
-									<h5 class="h5">Developer</h5>
-									<ul class="member-social">
-										<li><a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter fa-2x"></i></a></li>
-										<li><a href="http://www.facebook.com" target="_blank"><i class="fa fa-facebook fa-2x"></i></a></li>
-										<li><a href="http://www.dribbble.com" target="_blank"><i class="fa fa-dribbble fa-2x"></i></a></li>
-									</ul>
-								</div>
-							</div>
-							<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-								<div class="team-member">
-									<img src="images/team/team-member.jpg" alt="team_member">
-									<h3 class="h3 lead">John Smith</h3>
-									<h5 class="h5">Developer</h5>
-									<ul class="member-social">
-										<li><a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter fa-2x"></i></a></li>
-										<li><a href="http://www.facebook.com" target="_blank"><i class="fa fa-facebook fa-2x"></i></a></li>
-										<li><a href="http://www.dribbble.com" target="_blank"><i class="fa fa-dribbble fa-2x"></i></a></li>
-									</ul>
-								</div>
-							</div>
-							<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-								<div class="team-member">
-									<img src="images/team/team-member.jpg" alt="team_member">
-									<h3 class="h3 lead">Natasha Smith</h3>
-									<h5 class="h5">Project Manager</h5>
-									<ul class="member-social">
-										<li><a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter fa-2x"></i></a></li>
-										<li><a href="http://www.facebook.com" target="_blank"><i class="fa fa-facebook fa-2x"></i></a></li>
-										<li><a href="http://www.dribbble.com" target="_blank"><i class="fa fa-dribbble fa-2x"></i></a></li>
-									</ul>
-								</div>
-							</div>
-							<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-								<div class="team-member">
-									<img src="images/team/team-member.jpg" alt="team_member">
-									<h3 class="h3 lead">Jessica Doe</h3>
-									<h5 class="h5">Designer</h5>
-									<ul class="member-social">
-										<li><a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter fa-2x"></i></a></li>
-										<li><a href="http://www.facebook.com" target="_blank"><i class="fa fa-facebook fa-2x"></i></a></li>
-										<li><a href="http://www.dribbble.com" target="_blank"><i class="fa fa-dribbble fa-2x"></i></a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-            </section> 
-			<!-- /team -->
 			
-			<section class="section client">
-				<div class="center-box">
-				<div class="container">
-					<h1 class="h1">Happy Clients</h1>
-					<h3 class="h3 lead">What they say about our Services.</h3>
-					<div class="row">
-						<div class="col-sm-6 col-sm-push-6 col-md-6 col-md-push-6 col-lg-6 col-lg-push-6">
-							<div class="photos">
-								<div class="author"></div>
-								<ul>
-									<li class="quote-1 active"><a href="#"><img class="img-responsive" src="images/client/client.jpg" alt="Tom Smith - Founder"></a></li>
-									<li class="quote-2"><a href="#"><img class="img-responsive" src="images/client/client.jpg" alt="Sarah Doe - Designer"></a></li>
-									<li class="quote-3"><a href="#"><img class="img-responsive" src="images/client/client.jpg" alt="Sam Peterson - Developer"></a></li>
-									<li class="quote-4"><a href="#"><img class="img-responsive" src="images/client/client.jpg" alt="John Smith - Developer"></a></li>
-									<li class="quote-5"><a href="#"><img class="img-responsive" src="images/client/client.jpg" alt="Natasha Smith - Project Manager"></a></li>
-									<li class="quote-6"><a href="#"><img class="img-responsive" src="images/client/client.jpg" alt="Jessica Doe - Designer"></a></li>
-								</ul>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-6 col-lg-6 col-sm-pull-6 col-md-pull-6 col-lg-pull-6">
-							<div class="quotes">
-							<ul>
-								<li class="quote-1 active">
-									<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-									Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
-								</li>
-								<li class="quote-2">
-									<p>when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, 
-									but also the leap into electronic typesetting, remaining essentially unchanged.</p>
-								</li>
-								<li class="quote-3">
-									<p>It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
-									and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-								</li>
-								<li class="quote-4">
-									<p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-									when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-								</li>
-								<li class="quote-5">
-									<p>It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
-									and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-								</li>
-								<li class="quote-6">
-									<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. 
-									The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters</p>
-								</li>
-							</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-				</div>
-			</section>
-			<!-- /client -->
 			
 			<section class="section blog">
 					<div class="container">

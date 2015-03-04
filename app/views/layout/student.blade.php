@@ -357,7 +357,36 @@
 					<div class="row">
 						<hr class="metro-hr">
 						<div class="col-sm-9">
-							<p>Many good things to come...</p>
+									<!-- tables inside this DIV could have draggable content -->
+		<div id="drag">
+			<!-- left container -->
+			<div id="left_container">
+				<!-- this block will become sticky (with a little JavaScript help)-->
+				<div id="left">
+					<table id="table1">
+						<colgroup>
+							<col width="150"/>
+							<col width="150"/>
+							<col width="150"/>
+						</colgroup>
+						
+						<!-- function will display rows ($person Array is used in mylib.php) -->
+						<tr><td><div id="p00" class="drag">Darlene Jonas</div></td><td><div id="p01" class="drag">Tonya Stclair</div></td><td><div id="p02" class="drag">Chris Fordham</div></td></tr><tr><td><div id="p03" class="drag">Glenn Tetreault</div></td><td><div id="p04" class="drag">Christopher Wolford</div></td><td><div id="p05" class="drag">Jonathan Savage</div></td></tr><tr><td><div id="p06" class="drag">Travis Liles</div></td><td><div id="p07" class="drag">Keith Hubbell</div></td><td><div id="p08" class="drag">Christopher Hamann</div></td></tr><tr><td><div id="p09" class="drag">Virginia Quade</div></td><td><div id="p10" class="drag">Irma Gregg</div></td><td><div id="p11" class="drag">Johnny Foss</div></td></tr><tr><td><div id="p12" class="drag">Pam Farwell</div></td><td><div id="p13" class="drag">Lydia Berkley</div></td><td><div id="p14" class="drag">Michelle Mowry</div></td></tr><tr><td><div id="p15" class="drag">Larry Womble</div></td><td><div id="p16" class="drag">Russell Schumann</div></td><td><div id="p17" class="drag">Kimberly Browne</div></td></tr><tr><td><div id="p18" class="drag">Timothy Laboy</div></td><td><div id="p19" class="drag">Paula Rivera</div></td><td><div id="p20" class="drag">Maryann Austin</div></td></tr><tr><td><div id="p21" class="drag">Dora Copeland</div></td><td><div id="p22" class="drag">Dolores Tyson</div></td><td><div id="p23" class="drag">Evelyn Sutton</div></td></tr><tr><td><div id="p24" class="drag">Ernest High</div></td><td><div id="p25" class="drag">Marvin Hoppe</div></td><td><div id="p26" class="drag">Sharon Olander</div></td></tr><tr><td><div id="p27" class="drag">Harriet Wilde</div></td><td><div id="p28" class="drag">Raymond Rickert</div></td><td><div id="p29" class="drag">Chris Nalley</div></td></tr>
+					</table>
+					<div class="instructions">
+						
+					</div>
+				</div>
+			</div><!-- left container -->
+			
+			<!-- right container -->
+			<div id="right">
+				<table cellspacing="0" cellpadding="0">
+					<colgroup><col width="400"/></colgroup>
+					<tr class="maintd"><td></td></tr>
+				</table>
+			</div>
+		</div>
 						</div>
 						<hr class="metro-hr">
 					</div>
