@@ -126,7 +126,12 @@ loadModules = function(){
 						}
 					});
 
-<<<<<<< Updated upstream
+        		});
+            }
+        });
+
+}
+
 $( ".electiveRegister" ).submit(function() {
 	// Prevent default action.
 	event.preventDefault();
@@ -142,23 +147,11 @@ $( ".electiveRegister" ).submit(function() {
     return;
 });
 
-=======
-        		});
-            }
-        });
-
-}
->>>>>>> Stashed changes
-
 /* ==============================================
 Loading
 =============================================== */
 $(window).load(function(){
 	"use strict";
 	jQuery('#loading').fadeOut(1000);
-<<<<<<< Updated upstream
-});
-=======
 	loadModules();
 });
->>>>>>> Stashed changes
