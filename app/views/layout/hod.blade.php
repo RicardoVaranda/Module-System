@@ -138,38 +138,106 @@
 						</ul>
 					</div>
 				</div>
-				<!-- Custom Javascript Filtering system - Ricardo -->
+				<!-- Custom JQuery Ajax Next level system - Ricardo -->
 
 				<script type="text/javascript">
 					$(document).ready(function(){
-					    $("#buss").click(function(){
-					        $("#bussMore").show();
-					        $("#engMore").hide();
-					    });
-					    $("#all").click(function(){
-					        $("#bussMore").hide();
-					        $("#engMore").hide();
-					    });
-					    $("#eng").click(function(){
-					        $("#bussMore").hide();
-					        $("#engMore").show();
-					    });
-					    $("#music").click(function(){
-					        $("#bussMore").hide();
-					        $("#engMore").hide();
-					    });
-					    $("#art").click(function(){
-					        $("#bussMore").hide();
-					        $("#engMore").hide();
-					    });
-					    $("#maritime").click(function(){
-					        $("#bussMore").hide();
-					        $("#engMore").hide();
-					    });
+					    var list = $("#grid");
+					    list.empty();
+					    $(document).bind('ajaxStart', function(){
+						    $(".load.Mod").show();
+						}).bind('ajaxStop', function(){
+						    $(".load.Mod").hide();
+						});
+					        $.ajax({
+					            type: "POST",
+					            url: "modules",
+					            success:function(modules)
+					            {
+					                list.append(modules);
+					                list.mixitup();
+					                $("#grid li a ").each(function() { 
+										$(this).hoverdir(); 
+									});
+
+
+									$("#newForm").submit(function(e){
+						                e.preventDefault();
+						                var form = $(this); 
+						                var errors = document.getElementsByClassName('isa_error');
+
+									    for (var i = 0; i < errors.length; i++){
+									        errors[i].style.display = 'none';
+									    }
+						                $.ajax({
+						                    type: "POST",
+						                    url : form.attr("action"),
+						                    data : {modData: form.serialize()},
+						                    headers: {
+										        'X-CSRF-Token': $('input[name="_token"]').val()
+										    }
+						                })
+										.done(function(data){
+											if(data.fail){
+												$.each(data.errors, function( index, value ) {
+											        var errorDiv = $('#newForm #'+index+'_Errors');
+											        errorDiv.empty();
+											        errorDiv.append('<i class="fa fa-times-circle"></i>'+value);
+											        errorDiv.show();
+											    });
+										      $('#successMessage').empty();    
+											} else {
+												$('#newMod .close').click(); //hiding form
+
+												setTimeout(function() { loadModules(); }, 1000);
+												
+											}
+										});
+
+					        		});
+
+
+									$("#editForm").submit(function(e){
+						                e.preventDefault();
+						                var form = $(this); 
+						                var errors = document.getElementsByClassName('isa_error');
+
+									    for (var i = 0; i < errors.length; i++){
+									        errors[i].style.display = 'none';
+									    }
+						                $.ajax({
+						                    type: "POST",
+						                    url : form.attr("action"),
+						                    data : {modData: form.serialize()},
+						                    headers: {
+										        'X-CSRF-Token': $('input[name="_token"]').val()
+										    }
+						                })
+										.done(function(data){
+											if(data.fail){
+												$.each(data.errors, function( index, value ) {
+											        var errorDiv = form.find('#'+index+'_Errors');
+											        errorDiv.empty();
+											        errorDiv.append('<i class="fa fa-times-circle"></i>'+value);
+											        errorDiv.show();
+											    });
+										      $('#successMessage').empty();    
+											} else {
+												$('#newMod .close').click(); //hiding form
+
+												setTimeout(function() { loadModules(); }, 1000);
+												
+											}
+										});
+
+					        		});
+
+					            }
+					        });
 					});
 				</script>
 
-				<!-- End of Filtering system -->
+				<!-- End of Ajax system -->
 			</section>
 			<!-- /portfolio -->
 			

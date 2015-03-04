@@ -70,105 +70,6 @@ $(document).ready(function () {
 
 });
 
-/* ==============================================
-Load Modules
-=============================================== */
-loadModules = function(){
-	var list = $("#grid");
-    list.empty();
-    $(document).bind('ajaxStart', function(){
-	    $(".load.Mod").show();
-	}).bind('ajaxStop', function(){
-	    $(".load.Mod").hide();
-	});
-        $.ajax({
-            type: "POST",
-            url: "modules",
-            success:function(modules)
-            {
-                list.append(modules);
-                list.mixitup();
-                $("#grid li a ").each(function() { 
-					$(this).hoverdir(); 
-				});
-
-
-				$("#newForm").submit(function(e){
-	                e.preventDefault();
-	                var form = $(this); 
-	                var errors = document.getElementsByClassName('isa_error');
-
-				    for (var i = 0; i < errors.length; i++){
-				        errors[i].style.display = 'none';
-				    }
-	                $.ajax({
-	                    type: "POST",
-	                    url : form.attr("action"),
-	                    data : {modData: form.serialize()},
-	                    headers: {
-					        'X-CSRF-Token': $('input[name="_token"]').val()
-					    }
-	                })
-					.done(function(data){
-						if(data.fail){
-							$.each(data.errors, function( index, value ) {
-						        var errorDiv = $('#newForm #'+index+'_Errors');
-						        errorDiv.empty();
-						        errorDiv.append('<i class="fa fa-times-circle"></i>'+value);
-						        errorDiv.show();
-						    });
-					      $('#successMessage').empty();    
-						} else {
-							$('#newMod .close').click(); //hiding form
-
-							setTimeout(function() { loadModules(); }, 1000);
-							
-						}
-					});
-
-        		});
-
-
-				$("#editForm").submit(function(e){
-	                e.preventDefault();
-	                var form = $(this); 
-	                var errors = document.getElementsByClassName('isa_error');
-
-				    for (var i = 0; i < errors.length; i++){
-				        errors[i].style.display = 'none';
-				    }
-	                $.ajax({
-	                    type: "POST",
-	                    url : form.attr("action"),
-	                    data : {modData: form.serialize()},
-	                    headers: {
-					        'X-CSRF-Token': $('input[name="_token"]').val()
-					    }
-	                })
-					.done(function(data){
-						if(data.fail){
-							$.each(data.errors, function( index, value ) {
-						        var errorDiv = form.find('#'+index+'_Errors');
-						        errorDiv.empty();
-						        errorDiv.append('<i class="fa fa-times-circle"></i>'+value);
-						        errorDiv.show();
-						    });
-					      $('#successMessage').empty();    
-						} else {
-							$('#newMod .close').click(); //hiding form
-
-							setTimeout(function() { loadModules(); }, 1000);
-							
-						}
-					});
-
-        		});
-
-            }
-        });
-
-}
-
 $( ".electiveRegister" ).submit(function() {
 	// Prevent default action.
 	event.preventDefault();
@@ -190,5 +91,4 @@ Loading
 $(window).load(function(){
 	"use strict";
 	jQuery('#loading').fadeOut(1000);
-	loadModules();
 });
