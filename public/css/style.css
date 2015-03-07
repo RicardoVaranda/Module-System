@@ -700,6 +700,8 @@ Electives
 ===============================================*/
 
 .elective-btn {
+	position: relative;
+	z-index: 100;
 	padding: 5px;
 	padding-left: 15px;
 	padding-right: 15px;

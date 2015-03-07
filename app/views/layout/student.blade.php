@@ -115,6 +115,7 @@
 			</section> <!-- /home -->
 			
 			<section class="section portfolio">
+				<div class="load Elec" style="display:none;"></div>
 				<div class="container">
 					<h1 class="h1">Electives</h1>
 					<div class="row">
@@ -173,6 +174,11 @@
 					        $("#engMore").hide();
 					    });
 					});
+					$(document).bind('ajaxStart', function(){
+						    $(".load.Elec").show();
+						}).bind('ajaxStop', function(){
+						    $(".load.Elec").hide();
+						});
 				</script>
 
 				<!-- End of Filtering system -->

@@ -14,7 +14,7 @@ class Classes extends Eloquent {
      *
      * @var array
      */
-    protected $fillable = array('lecturername', 'classtimetable', 'studentsregistered', 'spacesavailable', 'totalspaces');
+    protected $fillable = array('lecturerid', 'classtimetable', 'studentsregistered', 'spacesavailable', 'totalspaces');
     /**
      * 
      */
@@ -25,6 +25,6 @@ class Classes extends Eloquent {
 
     public function fromLecturer($lecturer)
     {
-        return $this->where('lecturername', '=', $lecturer);
+        return $this->where('lecturerid', $lecturer);
     }
 }
