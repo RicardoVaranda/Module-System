@@ -297,6 +297,10 @@ $( document ).on('submit', '.removeStudent', function() {
 	  		$('#classleft').val(response.space);
 	  		$('#student'+studentId).remove();
 	  		alert('Student Removed Successfully!');
+	  	} else {
+	  		$('#classleft').val($('#classleft').val()+1);
+	  		$('#student'+studentId).remove();
+	  		alert(response.errors);
 	  	}
 
 	  });

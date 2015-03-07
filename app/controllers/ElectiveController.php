@@ -96,6 +96,7 @@ class ElectiveController extends BaseController {
 
 
 		public function postUnregisterElective() {
+			//TODO: Verify that student registered to elective in current semester.
 
 			$errors = '';
 
@@ -231,6 +232,8 @@ class ElectiveController extends BaseController {
 
 		public function removeStudent() {
 
+			$errors = '';
+
 			// Get the Class to remove student from.
 			$class = Classes::where('classId', Input::get('classId'))->first();
 
@@ -239,43 +242,58 @@ class ElectiveController extends BaseController {
 
 			// Now get students electives, loop through them and remove class.
 			$studentElectives = json_decode($student->electives);
+			$found = false;
 
 			foreach($studentElectives as $key => $value) {
 				if($value->classId == Input::get('classId')) {
 						// Remove class.
 						unset($studentElectives[$key]);
+						$found = true;
 					}
 			}
 
-			// Save student.
-			$student->electives = json_encode($studentElectives);
-			$student->save();
+			// Let's make sure we found class in student's electives.
+			if($found) {
+				// Save student.
+				$student->electives = json_encode($studentElectives);
+				$student->save();
 
-			// Now loop through class students and remove student.
-			$classStudents = json_decode($class->classstudents);
+				// Now loop through class students and remove student.
+				$classStudents = json_decode($class->classstudents);
 
-			foreach($classStudents as $key => $value) {
-				if($value == Input::get('studentId')) {
-					// Remove student.
-					unset($classStudents[$key]);
+				foreach($classStudents as $key => $value) {
+					if($value == Input::get('studentId')) {
+						// Remove student.
+						unset($classStudents[$key]);
+					}
 				}
+
+				// Normalize classStudents array.
+				$classStudents = array_values($classStudents);
+
+				$class->classstudents = json_encode($classStudents);
+
+				// Decrement classcurrent.
+				$class->classcurrent = $class->classcurrent - 1;
+
+				// Save class.
+				$class->save();
+			} else {
+				$errors = 'Student has already been removed from class!';
 			}
 
-			// Normalize classStudents array.
-			$classStudents = array_values($classStudents);
-
-			$class->classstudents = json_encode($classStudents);
-
-			// Decrement classcurrent.
-			$class->classcurrent = $class->classcurrent - 1;
-
-			// Save class.
-			$class->save();
-
-			return Response::json(array(
+			// Verify there was no error.
+			if($errors == '') {
+				return Response::json(array(
 										'success' => true,
 										'space' => ($class->classlimit - $class->classcurrent)
 									));
+			} else {
+				return Response::json(array(
+										'success' => false,
+										'errors' => $errors
+									));
+			}
 		}
 }
 ?>
