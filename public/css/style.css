@@ -838,6 +838,10 @@ Blog
 	background-color: #EA00FF;
 }
 
+.small {
+	width:80px!important;
+	float: left;
+}
 .form-control {
 	color: #747474;
 	border-radius: 0;

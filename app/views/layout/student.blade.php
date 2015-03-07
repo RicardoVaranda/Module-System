@@ -181,7 +181,7 @@
 			
 			<section class="section about">
 				<div class="container">
-					<h1 class="h1">My Profile</h1>						
+					<h1 class="h1">Profile</h1>						
 					<div class="row">
 					
 						<div class="col-sm-6 col-md-8 col-lg-8">
@@ -199,7 +199,7 @@
 											</tr>
 											<tr>
 												<th><b>Major:</b></th>
-												<td colspan="1">Computing</td>
+												<td colspan="1">{{ Departments::find(Auth::user()->department)->name() }}</td>
 											</tr>
 											<tr>
 												<th><b>Program:</b></th>

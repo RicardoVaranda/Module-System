@@ -67,6 +67,33 @@ Route::group(array('before' => 'auth'), function() {
 	));
 
 	/*
+	| Load Class.
+	*/
+	
+	Route::post('/account/load-class', array(
+		'as' => 'load-class',
+		'uses' => 'ElectiveController@loadClass'
+	));
+
+	/*
+	| Update Class.
+	*/
+	
+	Route::post('/account/update-class', array(
+		'as' => 'update-class',
+		'uses' => 'ElectiveController@updateClass'
+	));
+
+	/*
+	| Remove Student from Class.
+	*/
+	
+	Route::post('/account/remove-student', array(
+		'as' => 'remove-student',
+		'uses' => 'ElectiveController@removeStudent'
+	));
+
+	/*
 	| Get Modules
 	*/
 	Route::any('/modules', array(

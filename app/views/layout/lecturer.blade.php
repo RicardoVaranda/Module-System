@@ -6,8 +6,8 @@
 		Title and basic Metas
 		=============================================== -->
         <meta charset="utf-8">
-        <title>QuickMetro | Responsive Metro Style Template</title>
-		<meta namfe="description" content="QuickMetro - Responsive Metro Style Template.">
+        <title>Lecturer | Module Enrollment System</title>
+		<meta namfe="description" content="Lecturer | Module Enrollment System">
 		<meta name="author" content="ThemeArt">
 		
 		<!-- ==============================================
@@ -29,7 +29,6 @@
 		=============================================== -->
 		{{ HTML::script('js/jquery-1.10.2.min.js') }}
 		{{ HTML::script('js/modernizr.custom.97074.js') }}
-		{{ HTML::script('http://maps.googleapis.com/maps/api/js?sensor=true') }}
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         
 		<!--[if lt IE 9]>
@@ -209,7 +208,7 @@
 			
 			<section class="section about">
 				<div class="container">
-					<h1 class="h1">My Profile</h1>						
+					<h1 class="h1">Profile</h1>						
 					<div class="row">
 					
 						<div class="col-sm-6 col-md-8 col-lg-8">
@@ -218,24 +217,16 @@
 									<table>
 										<tbody>
 											<tr>
-												<th><b>Student ID:</b></th>
+												<th><b>Lecturer ID:</b></th>
 												<td colspan="1">{{ Auth::user()->username }}</td>
 											</tr>
 											<tr>
-												<th><b>Degree:</b></th>
-												<td colspan="1">Ordinary Bachelor Degree</td>
+												<th><b>Department:</b></th>
+												<td colspan="1">{{ Departments::find(Auth::user()->department)->name() }}</td>
 											</tr>
 											<tr>
-												<th><b>Major:</b></th>
-												<td colspan="1">Computing</td>
-											</tr>
-											<tr>
-												<th><b>Program:</b></th>
-												<td colspan="1">Bachelor of Science</td>
-											</tr>
-											<tr>
-												<th><b>Class:</b></th>
-												<td colspan="1">Third Year</td>
+												<th><b>Number of Classes:</b></th>
+												<td colspan="1">{{ count(Classes::where('classlecturer', Auth::user()->id)->get()) }}</td>
 											</tr>
 										</tbody>
 									</table>
@@ -262,114 +253,46 @@
 					@extends('account.password')
 					<div class="row">
 						<hr class="metro-hr">
-						<h2 class="h2 lead">My Modules</h2>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>Object Oriented Analysis & Design</h3>
-									<small style="float:right"><u>Manditory</u></small>
-									<p>Mary Davin</p>
-									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
-									</br>
-								</div>
+						<h2 class="h2 lead">Classes</h2>
+
+						<div class="col-lg-12">
+							<div class="profile">
+							<label>Select Class:</label>
+							<select id="class-Select" class="form-control">
+								@foreach(Classes::where('classlecturer', Auth::user()->id)->get() as $class)
+									<?php $elective = Modules::where('mid', $class->classmodule)->first(); ?>
+									<option value="{{ $class->classid }}">{{ $elective->mshorttitle }}</option>
+								@endforeach
+							</select>
+							<br>
+							<form action="" method="POST" id="classForm">
+							<?php 
+								$class = Classes::where('classlecturer', Auth::user()->id)->first();
+							?>
+								<label>Space Limit:</label><input type="text" class="form-control" id="classlimit" placeholder="Class Space Limit" value="{{ $class->classlimit }}" />
+								<label>Space Left:</label><input type="text" class="form-control" id="classleft" placeholder="Space Left in Class" value="{{ ($class->classlimit - $class->classcurrent) }}" disabled/>
+								<input type="hidden" id="classId" value="{{ $class->classid }}"/>
+								<button type="submit" class="btn btn-primary" style="margin-top: 10px;">Update Class</button>
+							</form>
 							</div>
 						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>Internet Network & Services</h3>
-									<small style="float:right"><u>Manditory</u></small>
-									<p>Mary Davin</p>
-									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
-									</br>
+						<div id="class-students">
+						@foreach(json_decode($class->classstudents) as $student)
+							<div class="col-sm-4" id="student{{ User::find($student)->id }}">
+								<div class="feature-box">
+									<div class="feature-text">
+										<h3>Name: {{ User::find($student)->name }}</h3>
+										<p>Student ID: {{ User::find($student)->username }}</p>
+										<p>Major: {{ Departments::find(User::find($student)->department)->name() }}</p>
+										<form class="removeStudent" action="" method="POST">
+											<input type="hidden" id="classId" value="{{ $class->classid }}" />
+											<input type="hidden" id="studentId" value="{{ User::find($student)->id }}" />
+											<button type="submit" class="btn btn-primary"><i class="fa fa-arrow-right"></i>Remove</button>
+										</form>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>Server-Side Web Development</h3>
-									<small style="float:right"><u>Manditory</u></small>
-									<p>Mary Davin</p>
-									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
-									</br>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>Object Oriented Analysis & Design</h3>
-									<small style="float:right"><u>Manditory</u></small>
-									<p>Mary Davin</p>
-									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
-									</br>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>Internet Network & Services</h3>
-									<small style="float:right"><u>Manditory</u></small>
-									<p>Mary Davin</p>
-									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
-									</br>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>Server-Side Web Development</h3>
-									<small style="float:right"><u>Manditory</u></small>
-									<p>Mary Davin</p>
-									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
-									</br>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>Object Oriented Analysis & Design</h3>
-									<small style="float:right"><u>Manditory</u></small>
-									<p>Mary Davin</p>
-									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
-									</br>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>Internet Network & Services</h3>
-									<small style="float:right"><u>Manditory</u></small>
-									<p>Mary Davin</p>
-									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
-									</br>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>Server-Side Web Development</h3>
-									<small style="float:right"><u>Manditory</u></small>
-									<p>Mary Davin</p>
-									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
-									</br>
-								</div>
-							</div>
+						@endforeach
 						</div>
 						<hr class="metro-hr">
 					</div>

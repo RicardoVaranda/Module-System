@@ -210,6 +210,98 @@ $( document ).on('submit', '.electiveUnregister', function() {
     return;
 });
 
+$( document ).on('change', '#class-Select', function() {
+
+	var classId = $(this).val();
+
+	$.post( "account/load-class", {
+					classId: classId})
+	.done(function( data ) {
+		var response = data;
+	  	if(response.success) {
+	  		// Display class info.
+	  		$('#classlimit').val(response.limit);
+	  		$('#classleft').val(response.space);
+	  		$('#classId').val(classId);
+
+	  		// Display students for class.
+	  		$('#class-students').empty();
+	  		for(i = 0; i<response.students.length; i++) {
+	  			var student = response.students[i];
+	  			var studentObject = '<div class="col-sm-4" id="student'+ student.id +'">'+
+										'<div class="feature-box">'+
+											'<div class="feature-text">'+
+												'<h3>Name: '+ student.name +'</h3>'+
+												'<p>Student ID: '+ student.username +'</p>'+
+												'<p>Major: '+ student.major +'</p>'+
+												'<form class="removeStudent" action="" method="POST">'+
+													'<input type="hidden" id="classId" value="'+ classId +'" />'+
+													'<input type="hidden" id="studentId" value="'+ student.id +'" />'+
+													'<button type="submit" class="btn btn-primary"><i class="fa fa-arrow-right"></i>Remove</button>'+
+												'</form>'+
+											'</div>'+
+										'</div>'+
+									'</div>';
+	  			$('#class-students').append(studentObject);
+	  		}
+	  	}
+	});
+});
+
+$( document ).on('submit', '#classForm', function() {
+	// Prevent default action.
+	event.preventDefault();
+	
+	// Get form.
+    var form = $(this);
+
+    // Get the class Id.
+    var classId = form.find('#classId').val();
+
+    // Get the space limit.
+    var limit = form.find('#classlimit').val();
+
+    $.post( "account/update-class", {
+					classId: classId,
+					limit: limit})
+	.done(function( data ) {
+		var response = data;
+	  	if(response.success) {
+	  		$('#classleft').val(response.space);
+	  		alert('Class updated successfully!');
+	  	}
+
+	  });
+
+    });
+
+$( document ).on('submit', '.removeStudent', function() {
+	// Prevent default action.
+	event.preventDefault();
+	
+	// Get form.
+    var form = $(this);
+
+    // Get the class Id.
+    var classId = form.find('#classId').val();
+
+    // Get the student Id.
+    var studentId = form.find('#studentId').val();
+
+    $.post( "account/remove-student", {
+					classId: classId,
+					studentId: studentId})
+	.done(function( data ) {
+		var response = data;
+	  	if(response.success) {
+	  		$('#classleft').val(response.space);
+	  		$('#student'+studentId).remove();
+	  		alert('Student Removed Successfully!');
+	  	}
+
+	  });
+});
+
 /* ==============================================
 Loading
 =============================================== */

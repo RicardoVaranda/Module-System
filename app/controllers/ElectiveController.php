@@ -52,6 +52,8 @@ class ElectiveController extends BaseController {
 					$students = json_decode($students);
 				}
 				array_push($students, $user->id);
+				// Normalize students array.
+				$students = array_values($students);
 				$class->classstudents = json_encode($students);
 				$class->save();
 
@@ -140,6 +142,8 @@ class ElectiveController extends BaseController {
 				// Make sure we got a result before saving everything.
 				if($found) {
 					$class->classcurrent = $class->classcurrent - 1;
+					// Normalize students array.
+					$students = array_values($students);
 					$class->classstudents = json_encode($students);
 					$class->save();
 
@@ -171,6 +175,106 @@ class ElectiveController extends BaseController {
 										'success' => false,
 										'spaces' => $spaces,
 										'errors' => $errors
+									));
+		}
+
+
+		public function loadClass() {
+
+			// Get the Class and it's students.
+			$class = Classes::where('classId', Input::get('classId'))->first();
+			$studentIds = json_decode($class->classstudents);
+			$students = array();
+
+			// Loop through all studentIds and get relevant info.
+			foreach($studentIds as $s) {
+				// Get current student.
+				$user = User::find($s);
+
+				// Save name and username.
+				$name = $user->name;
+				$username = $user->username;
+
+				// Get the major.
+				$major = Departments::find($user->department)->name();
+
+				// Push to students array.
+				array_push($students, array('id' => $s,
+											'name' => $name,
+											'username' => $username,
+											'major' => $major
+											));
+			}
+
+			return Response::json(array(
+										'success' => true,
+										'limit' => $class->classlimit,
+										'space' => ($class->classlimit - $class->classcurrent),
+										'students' => $students
+									));
+		}
+
+		public function updateClass() {
+
+			// Get the Class to update.
+			$class = Classes::where('classId', Input::get('classId'))->first();
+
+			// Update the class.
+			$class->classlimit = Input::get('limit');
+			$class->save();
+
+			return Response::json(array(
+										'success' => true,
+										'space' => ($class->classlimit - $class->classcurrent)
+									));
+		}
+
+		public function removeStudent() {
+
+			// Get the Class to remove student from.
+			$class = Classes::where('classId', Input::get('classId'))->first();
+
+			// Get the student we are removing from class.
+			$student = User::find(Input::get('studentId'));
+
+			// Now get students electives, loop through them and remove class.
+			$studentElectives = json_decode($student->electives);
+
+			foreach($studentElectives as $key => $value) {
+				if($value->classId == Input::get('classId')) {
+						// Remove class.
+						unset($studentElectives[$key]);
+					}
+			}
+
+			// Save student.
+			$student->electives = json_encode($studentElectives);
+			$student->save();
+
+			// Now loop through class students and remove student.
+			$classStudents = json_decode($class->classstudents);
+
+			foreach($classStudents as $key => $value) {
+				if($value == Input::get('studentId')) {
+					// Remove student.
+					unset($classStudents[$key]);
+				}
+			}
+
+			// Normalize classStudents array.
+			$classStudents = array_values($classStudents);
+
+			$class->classstudents = json_encode($classStudents);
+
+			// Decrement classcurrent.
+			$class->classcurrent = $class->classcurrent - 1;
+
+			// Save class.
+			$class->save();
+
+			return Response::json(array(
+										'success' => true,
+										'space' => ($class->classlimit - $class->classcurrent)
 									));
 		}
 }
