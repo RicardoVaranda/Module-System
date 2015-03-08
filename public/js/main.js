@@ -306,6 +306,83 @@ $( document ).on('submit', '.removeStudent', function() {
 	  });
 });
 
+
+$( document ).on('submit', '#createLecturer', function() {
+	// Prevent default action.
+	event.preventDefault();
+	
+	// Get form.
+    var form = $(this);
+
+    // Get the lecturer details.
+    var lecturerName = form.find('#lecturerName').val();
+    var lecturerId = form.find('#lecturerId').val();
+    var lecturerEmail = form.find('#lecturerEmail').val();
+
+    $.post( "account/create-lecturer", {
+					name: lecturerName,
+					username: lecturerId,
+					email: lecturerEmail})
+	.done(function( data ) {
+		var response = data;
+	  	if(response.success) {
+	  		// Add lecturer to lecturer container.
+	  		var lecturerObject = '<div class="col-sm-4" id="lecturer'+ response.id +'">'+
+										'<div class="feature-box">'+
+											'<div class="feature-text">'+
+												'<h3>Name: '+ lecturerName +'</h3>'+
+												'<p>Lecturer ID: '+ lecturerId +'</p>'+
+												'<p>Email: '+ lecturerEmail +'</p>'+
+												'<form class="removeLecturer" action="" method="POST">'+
+													'<input type="hidden" id="lecturerId" value="'+ response.id +'" />'+
+													'<button type="submit" class="btn btn-primary"><i class="fa fa-arrow-right"></i>Remove</button>'+
+												'</form>'+
+											'</div>'+
+										'</div>'+
+									'</div>';
+  			$('#lecturerContainer').append(lecturerObject);
+
+  			// Reset Form.
+  			form.find('#lecturerName').val('');
+  			form.find('#lecturerId').val('');
+  			form.find('#lecturerEmail').val('');
+
+	  		alert('Lecturer Created Successfully!');
+	  	} else {
+	  		// Inform user of errors.
+	  		alert(response.errors[0]);
+	  	}
+
+	  });
+});
+
+$( document ).on('submit', '.removeLecturer', function() {
+	// Prevent default action.
+	event.preventDefault();
+	
+	// Get form.
+    var form = $(this);
+
+    // Get the lecturer Id.
+    var lecturerId = form.find('#lecturerId').val();
+
+    $.post( "account/remove-lecturer", {
+					id: lecturerId})
+	.done(function( data ) {
+		var response = data;
+	  	if(response.success) {
+	  		// Remove lecturer.
+	  		$('#lecturer'+lecturerId).remove();
+	  			
+	  		alert('Lecturer Removed Successfully!');
+	  	} else {
+	  		// Inform user of errors.
+	  		alert(response.errors);
+	  	}
+
+	  });
+});
+
 /* ==============================================
 Loading
 =============================================== */

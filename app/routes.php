@@ -94,6 +94,24 @@ Route::group(array('before' => 'auth'), function() {
 	));
 
 	/*
+	| Create Lecturer.
+	*/
+	
+	Route::post('/account/create-lecturer', array(
+		'as' => 'create-lecturer',
+		'uses' => 'AccountController@createLecturer'
+	));
+
+	/*
+	| Remove Lecturer.
+	*/
+	
+	Route::post('/account/remove-lecturer', array(
+		'as' => 'remove-lecturer',
+		'uses' => 'AccountController@removeLecturer'
+	));
+
+	/*
 	| Get Modules
 	*/
 	Route::any('/modules', array(

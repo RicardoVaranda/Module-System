@@ -559,6 +559,11 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 	font-size: 16px;
 	margin-bottom: 5px;
 }
+.feature-box .feature-text h1 {
+	color: #FFFFFF;
+	font-size: 22px;
+	margin-bottom: 5px;
+}
 /* Team */
 .team {
 	background: #A9D6FF;

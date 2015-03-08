@@ -28,7 +28,6 @@
 		=============================================== -->
 		{{ HTML::script('js/jquery-1.10.2.min.js') }}
 		{{ HTML::script('js/modernizr.custom.97074.js') }}
-		{{ HTML::script('http://maps.googleapis.com/maps/api/js?sensor=true') }}
         
 		<!--[if lt IE 9]>
 			<script src="js/selectivizr.js"></script>
@@ -485,80 +484,34 @@
 			
             <section class="section team">
 					<div class="container">
-						<h1 class="h1">Creative Team</h1>
-						<div class="row">
-							<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-								<div class="team-member">
-									<img src="images/team/team-member.jpg" alt="team_member">
-									<h3 class="h3 lead">Tom Smith</h3>
-									<h5 class="h5">Founder</h5>
-									<ul class="member-social">
-										<li><a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter fa-2x"></i></a></li>
-										<li><a href="http://www.facebook.com" target="_blank"><i class="fa fa-facebook fa-2x"></i></a></li>
-										<li><a href="http://www.dribbble.com" target="_blank"><i class="fa fa-dribbble fa-2x"></i></a></li>
-									</ul>
+						<h1 class="h1">Lecturers</h1>
+						<div class="col-lg-12">
+							<div class="profile">
+								<h3>Create Lecturer</h3>
+								<form action="" method="POST" id="createLecturer">
+									<label>Lecturer Name:</label><input type="text" class="form-control" id="lecturerName" placeholder="Lecturer Name" required/>
+									<label>Lecturer Username:</label><input type="text" class="form-control" id="lecturerId" placeholder="Lecturer Username" required/>
+									<label>Lecturer Email:</label><input type="email" class="form-control" id="lecturerEmail" placeholder="Lecturer Email" required/>
+									<button type="submit" class="btn btn-primary" style="margin-top:10px;">Create Lecturer</button>
+								</form>
+							</div>
+						</div>
+						<div id="lecturerContainer">
+							@foreach(User::where('rank', 1)->where('department', Auth::user()->department)->get() as $lecturer)
+								<div class="col-sm-4" id="lecturer{{ $lecturer->id }}">
+								<div class="feature-box">
+									<div class="feature-text">
+										<h3>Name: {{ $lecturer->name }}</h3>
+										<p>Lecturer ID: {{ $lecturer->username }}</p>
+										<p>Email: {{ $lecturer->email }}</p>
+										<form class="removeLecturer" action="" method="POST">
+											<input type="hidden" id="lecturerId" value="{{ $lecturer->id }}" />
+											<button type="submit" class="btn btn-primary"><i class="fa fa-arrow-right"></i>Remove</button>
+										</form>
+									</div>
 								</div>
 							</div>
-							<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-								<div class="team-member">
-									<img src="images/team/team-member.jpg" alt="team_member">
-									<h3 class="h3 lead">Tom Smith</h3>
-									<h5 class="h5">Founder</h5>
-									<ul class="member-social">
-										<li><a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter fa-2x"></i></a></li>
-										<li><a href="http://www.facebook.com" target="_blank"><i class="fa fa-facebook fa-2x"></i></a></li>
-										<li><a href="http://www.dribbble.com" target="_blank"><i class="fa fa-dribbble fa-2x"></i></a></li>
-									</ul>
-								</div>
-							</div>
-							<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-								<div class="team-member">
-									<img src="images/team/team-member.jpg" alt="team_member">
-									<h3 class="h3 lead">Sam Peterson</h3>
-									<h5 class="h5">Developer</h5>
-									<ul class="member-social">
-										<li><a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter fa-2x"></i></a></li>
-										<li><a href="http://www.facebook.com" target="_blank"><i class="fa fa-facebook fa-2x"></i></a></li>
-										<li><a href="http://www.dribbble.com" target="_blank"><i class="fa fa-dribbble fa-2x"></i></a></li>
-									</ul>
-								</div>
-							</div>
-							<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-								<div class="team-member">
-									<img src="images/team/team-member.jpg" alt="team_member">
-									<h3 class="h3 lead">John Smith</h3>
-									<h5 class="h5">Developer</h5>
-									<ul class="member-social">
-										<li><a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter fa-2x"></i></a></li>
-										<li><a href="http://www.facebook.com" target="_blank"><i class="fa fa-facebook fa-2x"></i></a></li>
-										<li><a href="http://www.dribbble.com" target="_blank"><i class="fa fa-dribbble fa-2x"></i></a></li>
-									</ul>
-								</div>
-							</div>
-							<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-								<div class="team-member">
-									<img src="images/team/team-member.jpg" alt="team_member">
-									<h3 class="h3 lead">Natasha Smith</h3>
-									<h5 class="h5">Project Manager</h5>
-									<ul class="member-social">
-										<li><a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter fa-2x"></i></a></li>
-										<li><a href="http://www.facebook.com" target="_blank"><i class="fa fa-facebook fa-2x"></i></a></li>
-										<li><a href="http://www.dribbble.com" target="_blank"><i class="fa fa-dribbble fa-2x"></i></a></li>
-									</ul>
-								</div>
-							</div>
-							<div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-								<div class="team-member">
-									<img src="images/team/team-member.jpg" alt="team_member">
-									<h3 class="h3 lead">Jessica Doe</h3>
-									<h5 class="h5">Designer</h5>
-									<ul class="member-social">
-										<li><a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter fa-2x"></i></a></li>
-										<li><a href="http://www.facebook.com" target="_blank"><i class="fa fa-facebook fa-2x"></i></a></li>
-										<li><a href="http://www.dribbble.com" target="_blank"><i class="fa fa-dribbble fa-2x"></i></a></li>
-									</ul>
-								</div>
-							</div>
+							@endforeach
 						</div>
 					</div>
             </section> 
