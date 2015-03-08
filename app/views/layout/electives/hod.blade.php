@@ -41,7 +41,7 @@
 							   <select onchange="$('#coord').val(this.value)">
 							   	@foreach(User::where('rank', '>', '0')->where('rank', '!=', '3')
 							   		->where('department', Auth::user()->department)->get() as $coord);
-							   		<option label="{{ $type=='edit' ? $coord->username : $coord->username }}" value="{{ $type=='edit' ? $coord->name : $coord->name }}"></option>
+							   		<option label="{{ $coord->username }}" value="{{ $coord->name }}"></option>
 								@endforeach
 							   </select>
 							</datalist>

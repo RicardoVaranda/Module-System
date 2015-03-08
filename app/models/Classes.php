@@ -6,7 +6,7 @@ class Classes extends Eloquent {
      * @var string
      */
     protected $primaryKey='classid';
-    protected $foreignKey='moduleid';
+    protected $foreignKey='classmodule';
     protected $table = 'classes';
     public $timestamps = false;
     /**
@@ -14,13 +14,13 @@ class Classes extends Eloquent {
      *
      * @var array
      */
-    protected $fillable = array('lecturerid', 'classtimetable', 'studentsregistered', 'spacesavailable', 'totalspaces');
+    protected $fillable = array('classlecturer', 'classstudents', 'classmodules', 'classlimit', 'classtimes');
     /**
      * 
      */
     public function module()
     {
-        return $this->belongsTo('Module', 'moduleid');
+        return $this->belongsTo('Module', 'classmodule');
     }
 
     public function fromLecturer($lecturer)
