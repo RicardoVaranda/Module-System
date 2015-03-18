@@ -163,10 +163,9 @@ $( document ).on('submit', '.electiveRegister', function() {
 	  	}
 	  	// Update spaces.
 	  	$('#elective'+electiveId).html(response.spaces);
+	  	// Release Button.
+		form.find('button').prop('disabled', false);
 	});
-	
-	// Release Button.
-	form.find('button').prop('disabled', false);
     
     return;
 });
@@ -202,10 +201,9 @@ $( document ).on('submit', '.electiveUnregister', function() {
 	  	}
 	  	// Update spaces.
 	  	$('#elective'+electiveId).html(response.spaces);
+	  	// Release Button.
+		form.find('button').prop('disabled', false);
 	});
-	
-	// Release Button.
-	form.find('button').prop('disabled', false);
     
     return;
 });
@@ -282,28 +280,40 @@ $( document ).on('submit', '.removeStudent', function() {
 	// Get form.
     var form = $(this);
 
-    // Get the class Id.
-    var classId = form.find('#classId').val();
+    // Lock Button.
+	form.find('button').prop('disabled', true);
 
-    // Get the student Id.
-    var studentId = form.find('#studentId').val();
+	// Ask user if they are sure they want to remove student.
+	var confirmation = confirm("Do you want to remove the student from your class?");
+	if(confirmation) {
 
-    $.post( "account/remove-student", {
-					classId: classId,
-					studentId: studentId})
-	.done(function( data ) {
-		var response = data;
-	  	if(response.success) {
-	  		$('#classleft').val(response.space);
-	  		$('#student'+studentId).remove();
-	  		alert('Student Removed Successfully!');
-	  	} else {
-	  		$('#classleft').val($('#classleft').val()+1);
-	  		$('#student'+studentId).remove();
-	  		alert(response.errors);
-	  	}
+	    // Get the class Id.
+	    var classId = form.find('#classId').val();
 
-	  });
+	    // Get the student Id.
+	    var studentId = form.find('#studentId').val();
+
+	    $.post( "account/remove-student", {
+						classId: classId,
+						studentId: studentId})
+		.done(function( data ) {
+			var response = data;
+		  	if(response.success) {
+		  		$('#classleft').val(response.space);
+		  		$('#student'+studentId).remove();
+		  		alert('Student Removed Successfully!');
+		  	} else {
+		  		$('#classleft').val($('#classleft').val()+1);
+		  		$('#student'+studentId).remove();
+		  		alert(response.errors);
+		  	}
+		  	// Release Button.
+			form.find('button').prop('disabled', false);
+		  });
+	} else {
+		// Release Button.
+			form.find('button').prop('disabled', false);
+	}
 });
 
 
@@ -368,33 +378,40 @@ $( document ).on('submit', '#createLecturer', function() {
 $( document ).on('submit', '.removeLecturer', function() {
 	// Prevent default action.
 	event.preventDefault();
-	// For some reason form submits twice
-	// This seems to fix it.
-	event.stopImmediatePropagation();
 	
 	// Get form.
     var form = $(this);
+    // Lock Button.
+	form.find('button').prop('disabled', true);
 
-    // Get the lecturer Id.
-    var lecturerId = form.find('#lecturerId').val();
+	// Ask user if they are sure they want to remove lecturer.
+	var confirmation = confirm("Do you want to remove the lecturer?");
+	if(confirmation) {
 
-    console.log("remove");
+	    // Get the lecturer Id.
+	    var lecturerId = form.find('#lecturerId').val();
 
-    $.post( "account/remove-lecturer", {
-					id: lecturerId})
-	.done(function( data ) {
-		var response = data;
-	  	if(response.success) {
-	  		// Remove lecturer.
-	  		$('#lecturer'+lecturerId).remove();
-	  			
-	  		alert('Lecturer Removed Successfully!');
-	  	} else {
-	  		// Inform user of errors.
-	  		alert(response.errors);
-	  	}
+	    console.log("remove");
 
-	  });
+	    $.post( "account/remove-lecturer", {
+						id: lecturerId})
+		.done(function( data ) {
+			var response = data;
+		  	if(response.success) {
+		  		// Remove lecturer.
+		  		$('#lecturer'+lecturerId).remove();
+		  			
+		  		alert('Lecturer Removed Successfully!');
+		  	} else {
+		  		// Inform user of errors.
+		  		alert(response.errors);
+		  	}
+		  	form.find('button').prop('disabled', false);
+		  });
+
+	} else {
+		form.find('button').prop('disabled', false);
+	}
 });
 
 /* ==============================================

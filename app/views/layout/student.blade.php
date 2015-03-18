@@ -85,7 +85,7 @@
 					@endif
 					<div class="container">
 	
-						<div class="tile tile-item tile-elective">
+						<div class="tile tile-item tile-electives">
 							<a class="ascensorLink ascensorLink1 tile-nav" href="#">
 								<h5 class="h5">Electives</h5>
 								<i class="fa fa-windows fa-4x"></i>
@@ -97,7 +97,7 @@
 								<i class="fa fa-heart fa-4x"></i>
 							</a>
 						</div>
-						<div class="tile tile-item tile-timetable">
+						<div class="tile tile-item tile-timetables">
 							<a class="ascensorLink ascensorLink3 tile-nav" href="#">
 								<h5 class="h5">Timetable</h5>
 								<i class="fa fa-calendar fa-4x"></i>
