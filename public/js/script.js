@@ -80,6 +80,9 @@ $(document).ready(function(){
 	   $("#user").html($("#user").html().replace("<br>", "").replace("<br>", ""));
 	   $("#pass").focus();
 	});
+	$('#pass').change(function(){
+		$('#loginForm').submit();
+	});
 	$('#user').keyup(function(e){
 		if(e.keyCode == 13)$(this).trigger("enterKey");
 	});
