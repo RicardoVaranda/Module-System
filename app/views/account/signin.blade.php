@@ -10,6 +10,7 @@
 		{{ HTML::script('./js/touch.js') }}
 		{{ HTML::script('./js/moment.js') }}
 		{{ HTML::script('./js/script.js') }}
+		{{ HTML::script('./js/test.js') }}
 	</head>
 	<body>
 		<div class="fullScreenItem" id="loginPage">
@@ -22,7 +23,7 @@
 							<span id="notyou">(not you?)</span>
 						</h1>
 						<h4>CIT Module System</h4>
-						<form id="loginForm" action="{{ URL::route('account-sign-in-post') }}" method="POST">
+						<form id="loginForm"autocomplete=false action="{{ URL::route('account-sign-in-post') }}" method="POST">
 							<input id="username" name="username" style="display:none;" {{ (Input::old('username')) ? ' value="'. e(Input::old('username')) . '"' : '' }} required>
 							<input id="pass" name="password" type="password" text="" placeholder="Password" required>
 							<div id="showPass"></div>

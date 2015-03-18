@@ -215,22 +215,22 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 	line-height: 2;
 	font-family: 'Open Sans', sans-serif;
 }
-.tile-portfolio {
+.tile-profile {
 	background: #00c6ff;
 }
-.tile-about {
+.tile-electives {
 	background: #f39c12;
 }
 .tile-service {
 	background: #FD2561;
 }
-.tile-team {
+.tile-modules {
 	background: #20b9cb;
 }
-.tile-client {
+.tile-timetables {
 	background: #49E035;
 }
-.tile-blog {
+.tile-lecturers {
 	background: #FF08FF;
 }
 .tile-contact {

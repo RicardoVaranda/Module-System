@@ -66,8 +66,8 @@
 		
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 					<ul class="nav navbar-nav pull-right">
-						<li class="portfolio-menu"><a class="ascensorLink ascensorLink1" href="#">Electives</a></li>
-						<li class="about-menu"><a class="ascensorLink ascensorLink2" href="#">Profile</a></li>
+						<li class="electives-menu"><a class="ascensorLink ascensorLink1" href="#">Electives</a></li>
+						<li class="profile-menu"><a class="ascensorLink ascensorLink2" href="#">Profile</a></li>
 						<li class="service-menu"><a class="ascensorLink ascensorLink3" href="#">Settings</a></li>
 						<li class="team-menu"><a class="ascensorLink ascensorLink4" href="#">Team</a></li>
 						<li class="client-menu"><a class="ascensorLink ascensorLink5" href="#">Clients</a></li>
@@ -88,46 +88,16 @@
 					@endif
 					<div class="container">
 	
-						<div class="tile tile-item tile-portfolio">
+						<div class="tile tile-item tile-electives">
 							<a class="ascensorLink ascensorLink1 tile-nav" href="#">
 								<h5 class="h5">Electives</h5>
 								<i class="fa fa-windows fa-4x"></i>
 							</a>
 						</div>
-						<div class="tile tile-item tile-about">
+						<div class="tile tile-item tile-profile">
 							<a class="ascensorLink ascensorLink2 tile-nav" href="#">
 								<h5 class="h5">Profile</h5>
 								<i class="fa fa-heart fa-4x"></i>
-							</a>
-						</div>
-						<div class="tile tile-item tile-service">
-							<a class="ascensorLink ascensorLink3 tile-nav" href="#">
-								<h5 class="h5">My info</h5>
-								<i class="fa fa-sitemap fa-4x"></i>
-							</a>
-						</div>
-						<div class="tile tile-item tile-team">
-							<a class="ascensorLink ascensorLink4 tile-nav" href="#">
-								<h5 class="h5">Team</h5>
-								<i class="fa fa-group fa-4x"></i>
-							</a>
-						</div>
-						<div class="tile tile-item tile-client">
-							<a class="ascensorLink ascensorLink5 tile-nav" href="#">
-								<h5 class="h5">Clients</h5>
-								<i class="fa fa-smile-o fa-4x"></i>
-							</a>
-						</div>
-						<div class="tile tile-item tile-blog">
-							<a class="ascensorLink ascensorLink6 tile-nav" href="#">
-								<h5 class="h5">Blog</h5>
-								<i class="fa fa-edit fa-4x"></i>
-							</a>
-						</div>
-						<div class="tile tile-item tile-contact">
-							<a class="ascensorLink ascensorLink7 tile-nav" href="#">
-								<h5 class="h5">Contact</h5>
-								<i class="fa fa-envelope fa-4x"></i>
 							</a>
 						</div>
 						<div class="tile tile-item tile-signout">
@@ -260,7 +230,7 @@
 							<label>Select Class:</label>
 							<select id="class-Select" class="form-control">
 								@foreach(Classes::where('classlecturer', Auth::user()->id)->get() as $class)
-									<?php $elective = Modules::where('mid', $class->classmodule)->first(); ?>
+									{{$elective = Modules::where('mid', $class->classmodule)->first() }}
 									<option value="{{ $class->classid }}">{{ $elective->mshorttitle }}</option>
 								@endforeach
 							</select>

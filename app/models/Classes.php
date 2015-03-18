@@ -14,13 +14,13 @@ class Classes extends Eloquent {
      *
      * @var array
      */
-    protected $fillable = array('classlecturer', 'classstudents', 'classmodules', 'classlimit', 'classtimes');
+    protected $fillable = array('classlecturer', 'classstudents', 'classmodule', 'classlimit', 'classtimes');
     /**
      * 
      */
     public function module()
     {
-        return $this->belongsTo('Module', 'classmodule');
+        return $this->belongsTo('Modules', 'classmodule');
     }
 
     public function fromLecturer($lecturer)

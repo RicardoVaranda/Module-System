@@ -34,7 +34,7 @@ class AccountController extends BaseController{
 				return Redirect::intended('/')->with('global', 'Welcome back '.Auth::user()->name.'!');
 			} else {
 				return Redirect::route('account-sign-in')
-						->with('global', 'Username or Password incorrect, or account not activated.')->withInput();
+						->with('global', 'Username or Password incorrect, or account not active.')->withInput();
 			}
 		}
 

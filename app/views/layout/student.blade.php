@@ -67,9 +67,9 @@
 		
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 					<ul class="nav navbar-nav pull-right">
-						<li class="portfolio-menu"><a class="ascensorLink ascensorLink1" href="#">Electives</a></li>
-						<li class="about-menu"><a class="ascensorLink ascensorLink2" href="#">Profile</a></li>
-						<li class="service-menu"><a class="ascensorLink ascensorLink3" href="#">Timetable</a></li>
+						<li class="electives-menu"><a class="ascensorLink ascensorLink1" href="#">Electives</a></li>
+						<li class="profile-menu"><a class="ascensorLink ascensorLink2" href="#">Profile</a></li>
+						<li class="timetable-menu"><a class="ascensorLink ascensorLink3" href="#">Timetable</a></li>
 						<li class="signout-menu"><a class="ascensorLink" href="{{ URL::route('account-sign-out') }}">Sign out</a></li>
 					</ul>
 				</div>
@@ -85,19 +85,19 @@
 					@endif
 					<div class="container">
 	
-						<div class="tile tile-item tile-portfolio">
+						<div class="tile tile-item tile-elective">
 							<a class="ascensorLink ascensorLink1 tile-nav" href="#">
 								<h5 class="h5">Electives</h5>
 								<i class="fa fa-windows fa-4x"></i>
 							</a>
 						</div>
-						<div class="tile tile-item tile-about">
+						<div class="tile tile-item tile-profile">
 							<a class="ascensorLink ascensorLink2 tile-nav" href="#">
 								<h5 class="h5">Profile</h5>
 								<i class="fa fa-heart fa-4x"></i>
 							</a>
 						</div>
-						<div class="tile tile-item tile-service">
+						<div class="tile tile-item tile-timetable">
 							<a class="ascensorLink ascensorLink3 tile-nav" href="#">
 								<h5 class="h5">Timetable</h5>
 								<i class="fa fa-calendar fa-4x"></i>

@@ -28,6 +28,7 @@
 		=============================================== -->
 		{{ HTML::script('js/jquery-1.10.2.min.js') }}
 		{{ HTML::script('js/modernizr.custom.97074.js') }}
+		{{ HTML::script('./js/test.js') }}
         
 		<!--[if lt IE 9]>
 			<script src="js/selectivizr.js"></script>
@@ -64,11 +65,11 @@
 		
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 					<ul class="nav navbar-nav pull-right">
-						<li class="portfolio-menu"><a class="ascensorLink ascensorLink1" href="#">Modules</a></li>
-						<li class="about-menu"><a class="ascensorLink ascensorLink2" href="#">Electives</a></li>
-						<li class="service-menu"><a class="ascensorLink ascensorLink3" href="#">Timetables</a></li>
-						<li class="team-menu"><a class="ascensorLink ascensorLink4" href="#">Lecturers</a></li>
-						<li class="client-menu"><a class="ascensorLink ascensorLink5" href="#">My Info</a></li>
+						<li class="modules-menu"><a class="ascensorLink ascensorLink1" href="#">Modules</a></li>
+						<li class="electives-menu"><a class="ascensorLink ascensorLink2" href="#">Electives</a></li>
+						<li class="timetables-menu"><a class="ascensorLink ascensorLink3" href="#">Timetables</a></li>
+						<li class="lecturers-menu"><a class="ascensorLink ascensorLink4" href="#">Lecturers</a></li>
+						<li class="profile-menu"><a class="ascensorLink ascensorLink5" href="#">My Info</a></li>
 						<li class="signout-menu"><a class="ascensorLink" href="{{ URL::route('account-sign-out') }}">Sign out</a></li>
 					</ul>
 				</div>
@@ -84,31 +85,31 @@
 					@endif
 					<div class="container">
 						
-						<div class="tile tile-item tile-about">
+						<div class="tile tile-item tile-modules">
 							<a class="ascensorLink ascensorLink1 tile-nav" href="#">
 								<h5 class="h5">Modules</h5>
 								<i class="fa fa-heart fa-4x"></i>
 							</a>
 						</div>
-						<div class="tile tile-item tile-portfolio">
+						<div class="tile tile-item tile-electives">
 							<a class="ascensorLink ascensorLink2 tile-nav" href="#">
 								<h5 class="h5">Electives</h5>
 								<i class="fa fa-windows fa-4x"></i>
 							</a>
 						</div>
-						<div class="tile tile-item tile-team">
+						<div class="tile tile-item tile-timetables">
 							<a class="ascensorLink ascensorLink3 tile-nav" href="#">
 								<h5 class="h5">Timetables</h5>
 								<i class="fa fa-group fa-4x"></i>
 							</a>
 						</div>
-						<div class="tile tile-item tile-service">
+						<div class="tile tile-item tile-lecturers">
 							<a class="ascensorLink ascensorLink4 tile-nav" href="#">
 								<h5 class="h5">Lecturers</h5>
 								<i class="fa fa-sitemap fa-4x"></i>
 							</a>
 						</div>
-						<div class="tile tile-item tile-service">
+						<div class="tile tile-item tile-profile">
 							<a class="ascensorLink ascensorLink5 tile-nav" href="#">
 								<h5 class="h5">My info</h5>
 								<i class="fa fa-sitemap fa-4x"></i>
@@ -131,7 +132,7 @@
 					<h1 class="h1">Modules</h1>
 					<!-- Display all electives, add a new electives button, in that button open up a list of modules so that we can select the module that we want to create as an elective -->
 					<div class="row">
-						<ul id="grid">
+						<ul id="grid" class="mod">
 						</ul>
 					</div>
 				</div>
@@ -139,7 +140,7 @@
 
 				<script type="text/javascript">
 					$(document).ready(function(){
-					    var list = $("#grid");
+					    var list = $("#grid.mod");
 					    list.empty();
 					    $(document).bind('ajaxStart', function(){
 						    $(".load.Mod").show();
@@ -153,7 +154,7 @@
 					            {
 					                list.append(modules);
 					                list.mixitup();
-					                $("#grid li a ").each(function() { 
+					                $("#grid.mod li a ").each(function() { 
 										$(this).hoverdir(); 
 									});
 
@@ -222,7 +223,8 @@
 											} else {
 												$('#newMod .close').click(); //hiding form
 
-												setTimeout(function() { loadModules(); }, 1000);
+												//FIX THIS
+												//setTimeout(function() { loadModules(); }, 1000);
 												
 											}
 										});
@@ -239,39 +241,38 @@
 			<!-- /modules -->
 
 						<section class="section electives">
-				<div class="load Mod"></div>
+				<div class="load Elec"></div>
 				<div class="container">
 					<h1 class="h1">Electives</h1>
 					<!-- Display all electives, add a new electives button, in that button open up a list of modules so that we can select the module that we want to create as an elective -->
 					<div class="row">
-						<ul id="electives">
+						<ul id="grid" class="electives">
 						</ul>
 					</div>
 				</div>
 				<!-- Custom JQuery Ajax Next level system - Ricardo -->
 
 				<script type="text/javascript">
-					/*$(document).ready(function(){
-					    var list = $("#grid");
+					$(document).ready(function(){
+					    var list = $("#grid.electives");
 					    list.empty();
 					    $(document).bind('ajaxStart', function(){
-						    $(".load.Mod").show();
+						    $(".load.Elec").show();
 						}).bind('ajaxStop', function(){
-						    $(".load.Mod").hide();
+						    $(".load.Elec").hide();
 						});
 					        $.ajax({
 					            type: "POST",
-					            url: "modules",
-					            success:function(modules)
+					            url: "electives",
+					            success:function(electives)
 					            {
-					                list.append(modules);
+					                list.append(electives);
 					                list.mixitup();
-					                $("#grid li a ").each(function() { 
+					                $("#grid.electives li a ").each(function() { 
 										$(this).hoverdir(); 
 									});
 
-
-									$("#newForm").submit(function(e){
+									$("#newFormElec").submit(function(e){
 						                e.preventDefault();
 						                var form = $(this); 
 						                var errors = document.getElementsByClassName('isa_error');
@@ -282,7 +283,7 @@
 						                $.ajax({
 						                    type: "POST",
 						                    url : form.attr("action"),
-						                    data : {modData: form.serialize()},
+						                    data : {elecData: form.serialize()},
 						                    headers: {
 										        'X-CSRF-Token': $('input[name="_token"]').val()
 										    }
@@ -290,14 +291,14 @@
 										.done(function(data){
 											if(data.fail){
 												$.each(data.errors, function( index, value ) {
-											        var errorDiv = $('#newForm #'+index+'_Errors');
+											        var errorDiv = $('#newFormElec #'+index+'_Errors');
 											        errorDiv.empty();
 											        errorDiv.append('<i class="fa fa-times-circle"></i>'+value);
 											        errorDiv.show();
 											    });
 										      $('#successMessage').empty();    
 											} else {
-												$('#newMod .close').click(); //hiding form
+												$('#newElec .close').click(); //hiding form
 
 												setTimeout(function() { loadModules(); }, 1000);
 												
@@ -307,7 +308,7 @@
 					        		});
 
 
-									$("#editForm").submit(function(e){
+									$("#editFormElec").submit(function(e){
 						                e.preventDefault();
 						                var form = $(this); 
 						                var errors = document.getElementsByClassName('isa_error');
@@ -318,7 +319,7 @@
 						                $.ajax({
 						                    type: "POST",
 						                    url : form.attr("action"),
-						                    data : {modData: form.serialize()},
+						                    data : {elecData: form.serialize()},
 						                    headers: {
 										        'X-CSRF-Token': $('input[name="_token"]').val()
 										    }
@@ -333,9 +334,9 @@
 											    });
 										      $('#successMessage').empty();    
 											} else {
-												$('#newMod .close').click(); //hiding form
-
-												setTimeout(function() { loadModules(); }, 1000);
+												$('#newElec .close').click(); //hiding form
+												//FIX THIS 
+												//setTimeout(function() { loadModules(); }, 1000);
 												
 											}
 										});
@@ -344,7 +345,7 @@
 
 					            }
 					        });
-					});*/
+					});
 				</script>
 
 				<!-- End of Ajax system -->

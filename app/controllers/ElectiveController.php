@@ -295,5 +295,144 @@ class ElectiveController extends BaseController {
 									));
 			}
 		}
+
+
+
+	// RIC -> ERRORS INBOUND :D
+
+	public function postElectiveNew(){
+
+		$inputData = Input::get('elecData');
+	    parse_str($inputData, $formFields);  
+	    $elecData = array(
+	      'classlecturer'	=> $formFields['clect'],
+	      'classmodule'		=> $formFields['cmod'],
+	      'classlimit'		=> $formFields['climit'],
+	      //'classtimes'				=> $formFields[''],
+	    ); 
+
+	    Validator::extend('ranked', function($attribute, $value, $parameters)
+		{
+			$coord = User::where('name', $value)->first();
+			if($coord->rank < 1){
+				return false;
+			}
+		   
+		  return false;
+		});
+
+	    $rules = array(
+			'classlecturer' => 'required|max:50|exists:users,name|ranked',
+			'classmodule'	=> 'required|exists:modules,mshorttitle',
+			'classlimit'	=> 'required|min:10|max:30',
+			//'classtimes'	=> 'required|',
+		);
+			
+		$messages = [
+		    'ranked' => "This user can't coordinate this class.",
+		];
+
+		$validator = Validator::make($elecData,$rules,$messages);
+
+		if($validator->fails()){
+	        return Response::json(array(
+	            'fail' => true,
+	            'errors' => $validator->getMessageBag()->toArray()
+	        ));
+	    } else {
+
+	    	if(Classes::create($elecData)){
+	    		Session::flash('global', 'You have created the elective "'. $elecData['classmodule'].'".');
+	    		  //return success  message
+		        return Response::json(array(
+		          'success' => true,
+		          'mName' => $elecData['classmodule']
+		        ));
+	    	}
+		}
+	}
+
+	public function postElectiveChange(){
+
+		$inputData = Input::get('elecData');
+	    parse_str($inputData, $formFields);  
+	    $elecData = array(
+	      'mfulltitle'      => $formFields['mname'],
+	      //add the rest
+	    );
+
+	    Validator::extend('ranked', function($attribute, $value, $parameters)
+		{
+			$coord = User::where('name', $value)->first();
+			if($coord->rank < 1){
+				return false;
+			}
+		   
+		  return false;
+		});
+
+	    $rules = array(
+			'mfulltitle' 	=> 'required|max:50|unique:modules,mfulltitle,'.$formFields['mcode'].',mcode',
+			'mshorttitle'	=> 'required|max:50|unique:modules,mshorttitle,'.$formFields['mcode'].',mcode',
+			'mdescription'	=> 'required|min:30',
+			'mcode'		 	=> 'required|min:7|max:8|alpha_num|unique:modules,mcode,'.$formFields['mcode'].',mcode',
+			'mfieldofstudy'	=> 'required|max:100',
+			'mcoordinator' 	=> 'required|exists:users,name|ranked',
+			'mlevel' 		=> 'required|in:Fundamental,Intermediate,Advanced,Expert',
+			'mcredits'	 	=> 'required|integer|between:5,25',
+			'mid'			=> 'required|exists:modules,mid',
+			'departmentid'	=> 'required',
+		);
+
+		$messages = [
+		    'ranked' => "This user can't coordinate this class.",
+		];
+
+		$validator = Validator::make($moduleData,$rules,$messages);
+		
+
+		if($validator->fails()){
+	        return Response::json(array(
+	            'fail' => true,
+	            'errors' => $validator->getMessageBag()->toArray()
+	        ));
+	    } else {
+
+	    	$mod = Modules::where('mid', $moduleData['mid'])->first();
+
+	    	$mod->mfulltitle = $moduleData['mfulltitle'];
+	    	$mod->mshorttitle = $moduleData['mshorttitle'];
+	    	$mod->mdescription = $moduleData['mdescription'];
+	    	$mod->mcode = $moduleData['mcode'];
+	    	$mod->mfieldofstudy = $moduleData['mfieldofstudy'];
+	    	$mod->mcoordinator = $moduleData['mcoordinator'];
+	    	$mod->mlevel = $moduleData['mlevel'];
+	    	$mod->mcredits = $moduleData['mcredits'];
+	    	$mod->departmentid = $moduleData['departmentid'];
+	    	
+	    	if($mod->save()){
+	    		Session::flash('global', 'You have edited the module "'. $moduleData['mfulltitle'].'".');
+	    		  //return success  message
+		        return Response::json(array(
+		          'success' => true,
+		          'mName' => $moduleData['mfulltitle']
+		        ));
+	    	}
+		}
+	}
+
+	public function getElectives(){
+		if(Auth::check()){
+			if (Auth::user()->rank >= 2) 
+				return View::make('layout.electives.hodload') ;
+			else
+				return;
+		}
+		else
+		{
+			return Redirect::route('account-sign-in');
+		}
+	}
+ 
 }
 ?>

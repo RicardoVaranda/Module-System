@@ -1,44 +1,19 @@
 <li class="mix all"> 
-	<a data-toggle="modal" role="button" href="{{ $type=='edit' ? '#editElec'.$elec->classid : '#newElec'}}"> <img src="{{ $type=='edit' ? URL::route('getImg', $elective->module->mcode) : URL::route('getImg', 'new')}}" alt="portfolio">
-		<div><span>{{ $type=='edit' ? $mod->mshorttitle : 'Create new Module'}}</span></div>
+	<a data-toggle="modal" role="button" href="{{ $type=='edit' ? '#editElec'.$elec->classid : '#newElec'}}"> <img src="{{ $type=='edit' ? URL::route('getImg', $elec->module->mcode) : URL::route('getImg', 'newElec')}}" alt="portfolio">
+		<div><span>{{ $type=='edit' ? $elec->module->mshorttitle : 'Create new Elective'}}</span></div>
 	</a>
-	<div class="modal fade" id="{{ $type=='edit' ? 'editMod'.$mod->mcode : 'newMod'}}" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal fade" id="{{ $type=='edit' ? 'editElec'.$elec->classid : 'newElec'}}" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog">
 			<div  class="contact-box">
 	        	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	            <form name="contactform" id="{{ $type=='edit' ? 'editForm' : 'newForm'}}" action="{{ $type=='edit' ? URL::route('module-change-post') : URL::route('module-new-post') }}" method="post">
+	            <form name="contactform" id="{{ $type=='edit' ? 'editFormElec' : 'newFormElec'}}" action="{{ $type=='edit' ? URL::route('module-change-post') : URL::route('module-new-post') }}" method="post">
 	                <fieldset>
-	                    <h4 class="h4">{{ $type=='edit' ? 'Edit Module' : 'Create new Module'}}</h4>
-	                    <div class="form-group">
-	                        <i class="fa fa-university"></i>
-	                        <input type="text" value="{{ $type=='edit' ? $mod->mfulltitle : '' }}" name="mname" id="name" class="form-control" placeholder="Module Title (required)" required>
-	                    </div>
-	                    <div id="mfulltitle" class="isa_error" style="display: none;"></div>
-	                    <div class="form-group">
-	                        <i class="fa fa-university"></i>
-	                        <input type="text" value="{{ $type=='edit' ? $mod->mshorttitle : '' }}" name="mshorttitle" id="name" class="form-control" placeholder="Module Short Title (required)" required>
-	                    </div>
-	                    <div id="mshorttitle_Errors" class="isa_error" style="display: none;"></div>
-	                    <div class="form-group">
-	                        <i class="fa fa-university"></i>
-	                        <textarea type="text" name="mdescription" id="desc" class="form-control" placeholder="Module Description (required)" required>{{ $type=='edit' ? $mod->mdescription : ''}}</textarea>
-	                    </div>
-	                    <div id="mdescription_Errors" class="isa_error" style="display: none;"></div>
-	                    <div class="form-group">
-	                        <i class="fa fa-code"></i>
-	                        <input type="text" value="{{ $type=='edit' ? $mod->mcode : '' }}" name="mcode" id="code" class="form-control" placeholder="Module Code(required)" required>
-	                    </div>
-	                    <div id="mcode_Errors" class="isa_error" style="display: none;"></div>
-	                    <div class="form-group">
-	                        <i class="fa fa-book"></i>
-	                        <input type="text" value="{{ $type=='edit' ? $mod->mfieldofstudy : '' }}" name="mfieldofstudy" id="field" class="form-control" placeholder="Module Field of Study(required)" required>
-	                    </div>
-	                    <div id="mfieldofstudy_Errors" class="isa_error" style="display: none;"></div>
+	                    <h4 class="h4">{{ $type=='edit' ? 'Edit Elective' : 'Create new Elective'}}</h4>
 	                    <div class="form-group">
 	                        <i class="fa fa-user"></i>
-	                        <input type="text" value="{{ $type=='edit' ? $mod->mcoordinator : '' }}" name="mcoordinator" id="coord" list="coordinators" class="form-control" placeholder="Module Coordinator" required>
-							<datalist id="coordinators">
-							   <select onchange="$('#coord').val(this.value)">
+	                        <input type="text" value="{{ $type=='edit' ? User::find($elec->classlecturer)->first()->name : '' }}" name="classlecturer" id="lect" list="lecturers" class="form-control" placeholder="Elective Lecturer" required>
+							<datalist id="lecturers">
+							   <select onchange="$('#lect').val(this.value)">
 							   	@foreach(User::where('rank', '>', '0')->where('rank', '!=', '3')
 							   		->where('department', Auth::user()->department)->get() as $coord);
 							   		<option label="{{ $coord->username }}" value="{{ $coord->name }}"></option>
@@ -46,30 +21,27 @@
 							   </select>
 							</datalist>
 	                    </div>
-	                    <div id="mcoordinator_Errors" class="isa_error" style="display: none;"></div>
+	                    <div id="classlecturer_Errors" class="isa_error" style="display: none;"></div>
 	                    <div id="rank_Errors" class="isa_error" style="display: none;"></div>
 	                    <div class="form-group">
 	                        <i class="fa fa-question"></i>
-	                        <input type="text" name="mlevel" value="{{$type=='edit' ? $mod->mlevel : ''}}" id="level" list="levels" class="form-control" placeholder="Module Level" required>
-							<datalist id="levels">
-							   <select onchange="$('#level').val(this.value)">
-								   <option value="Fundamental"></option>
-								   <option value="Intermediate"></option>
-								   <option value="Advanced"></option>
-								   <option value="Expert"></option>
+	                        <input type="text" name="classmodule" value="{{$type=='edit' ? $elec->classmodule : ''}}" id="module" list="modules" class="form-control" placeholder="Class Module" required>
+							<datalist id="modules">
+							   <select onchange="$('#module').val(this.value)">
+								   <option value="BIG ASS FORLOOP HERE LELELELEL"></option>
 							   </select>
 							</datalist>
 	                    </div>
-	                    <div id="mlevel_Errors" class="isa_error" style="display: none;"></div>
+	                    <div id="classmodule_Errors" class="isa_error" style="display: none;"></div>
 	                    <div class="form-group">
 	                    	<i class="fa fa-sort-numeric-asc"></i>
-	                    	<input type="number" value="{{ $type=='edit' ? $mod->mcredits : '' }}" name="mcredits" id="credits" class="form-control" placeholder="Module Credits Awarded" min="5" max="25" required>
+	                    	<input type="number" value="{{ $type=='edit' ? $elec->classlimit : '' }}" name="classlimit" id="limit" class="form-control" placeholder="Class Limit" min="5" max="30" required>
 	                    </div>
-	                    <div id="mcredits_Errors" class="isa_error" style="display: none;"></div>
-	                    <input type="hidden" name="mid" value="{{$type=='edit' ? $mod->mid : ''}}">
+	                    <div id="classlimit_Errors" class="isa_error" style="display: none;"></div>
+	                    <input type="hidden" name="classid" value="{{$type=='edit' ? $elec->classid : ''}}">
 	                    <div class="form-group">
 	                        <i class="fa fa-arrow-right"></i>
-	                        <button type="submit" id="submit" class="btn btn-info btn-block">Submit new Module</button>
+	                        <button type="submit" id="submit" class="btn btn-info btn-block">Save Elective</button>
 	                		{{Form::token()}}
 	                    </div>
 	                </fieldset>

@@ -120,6 +120,14 @@ Route::group(array('before' => 'auth'), function() {
 	));
 
 	/*
+	| Get Electives
+	*/
+	Route::any('/electives', array(
+		'as'	=> 'electives',
+		'uses'	=> 'ElectiveController@getElectives'
+	));
+
+	/*
 	| Get Images
 	*/
 	Route::get('img/{modName}', array(

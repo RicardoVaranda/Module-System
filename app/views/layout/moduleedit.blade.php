@@ -1,5 +1,5 @@
 <li class="mix all"> 
-	<a data-toggle="modal" role="button" href="{{ $type=='edit' ? '#editMod'.$mod->mcode : '#newMod'}}"> <img src="{{ $type=='edit' ? URL::route('getImg', $mod->mcode) : URL::route('getImg', 'new')}}" alt="portfolio">
+	<a data-toggle="modal" role="button" href="{{ $type=='edit' ? '#editMod'.$mod->mcode : '#newMod'}}"> <img src="{{ $type=='edit' ? URL::route('getImg', $mod->mcode) : URL::route('getImg', 'newMod')}}" alt="portfolio">
 		<div><span>{{ $type=='edit' ? $mod->mshorttitle : 'Create new Module'}}</span></div>
 	</a>
 	<div class="modal fade" id="{{ $type=='edit' ? 'editMod'.$mod->mcode : 'newMod'}}" tabindex="-1" role="dialog" aria-hidden="true">

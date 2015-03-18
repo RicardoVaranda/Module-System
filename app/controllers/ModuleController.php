@@ -184,8 +184,15 @@ class ModuleController extends BaseController {
 					    $font->align('center');
 					});
 
-		        } elseif ($modCode == 'new') {
+		        } elseif ($modCode == 'newMod') {
 		        	$img->text('Create new Module!', 192, 300, function($font) {
+					    $font->file(public_path('fonts/segoeui.ttf'));
+					    $font->size(30);
+					    $font->color('#fff');
+					    $font->align('center');
+					});
+		        } elseif ($modCode == 'newElec') {
+		        	$img->text('Create new Elective!', 192, 300, function($font) {
 					    $font->file(public_path('fonts/segoeui.ttf'));
 					    $font->size(30);
 					    $font->color('#fff');
