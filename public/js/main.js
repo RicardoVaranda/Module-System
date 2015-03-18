@@ -310,14 +310,22 @@ $( document ).on('submit', '.removeStudent', function() {
 $( document ).on('submit', '#createLecturer', function() {
 	// Prevent default action.
 	event.preventDefault();
+	// For some reason form submits twice
+	// This seems to fix it.
+	event.stopImmediatePropagation();
 	
 	// Get form.
     var form = $(this);
+
+     // Disable button to prevent further clicks.
+    form.find('button').prop('disabled', true);
 
     // Get the lecturer details.
     var lecturerName = form.find('#lecturerName').val();
     var lecturerId = form.find('#lecturerId').val();
     var lecturerEmail = form.find('#lecturerEmail').val();
+
+    console.log("create");
 
     $.post( "account/create-lecturer", {
 					name: lecturerName,
@@ -352,19 +360,25 @@ $( document ).on('submit', '#createLecturer', function() {
 	  		// Inform user of errors.
 	  		alert(response.errors[0]);
 	  	}
-
+	  	// Enable button.
+    	form.find('button').prop('disabled', false);
 	  });
 });
 
 $( document ).on('submit', '.removeLecturer', function() {
 	// Prevent default action.
 	event.preventDefault();
+	// For some reason form submits twice
+	// This seems to fix it.
+	event.stopImmediatePropagation();
 	
 	// Get form.
     var form = $(this);
 
     // Get the lecturer Id.
     var lecturerId = form.find('#lecturerId').val();
+
+    console.log("remove");
 
     $.post( "account/remove-lecturer", {
 					id: lecturerId})

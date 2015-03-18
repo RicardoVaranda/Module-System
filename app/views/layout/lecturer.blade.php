@@ -68,11 +68,6 @@
 					<ul class="nav navbar-nav pull-right">
 						<li class="electives-menu"><a class="ascensorLink ascensorLink1" href="#">Electives</a></li>
 						<li class="profile-menu"><a class="ascensorLink ascensorLink2" href="#">Profile</a></li>
-						<li class="service-menu"><a class="ascensorLink ascensorLink3" href="#">Settings</a></li>
-						<li class="team-menu"><a class="ascensorLink ascensorLink4" href="#">Team</a></li>
-						<li class="client-menu"><a class="ascensorLink ascensorLink5" href="#">Clients</a></li>
-						<li class="blog-menu"><a class="ascensorLink ascensorLink6" href="#">Blog</a></li>
-						<li class="contact-menu"><a class="ascensorLink ascensorLink7" href="#">Contact</a></li>
 						<li class="signout-menu"><a class="ascensorLink" href="{{ URL::route('account-sign-out') }}">Sign out</a></li>
 					</ul>
 				</div>
@@ -224,46 +219,17 @@
 					<div class="row">
 						<hr class="metro-hr">
 						<h2 class="h2 lead">Classes</h2>
-
-						<div class="col-lg-12">
-							<div class="profile">
-							<label>Select Class:</label>
-							<select id="class-Select" class="form-control">
-								@foreach(Classes::where('classlecturer', Auth::user()->id)->get() as $class)
-									{{$elective = Modules::where('mid', $class->classmodule)->first() }}
-									<option value="{{ $class->classid }}">{{ $elective->mshorttitle }}</option>
-								@endforeach
-							</select>
-							<br>
-							<form action="" method="POST" id="classForm">
-							<?php 
-								$class = Classes::where('classlecturer', Auth::user()->id)->first();
-							?>
-								<label>Space Limit:</label><input type="text" class="form-control" id="classlimit" placeholder="Class Space Limit" value="{{ $class->classlimit }}" />
-								<label>Space Left:</label><input type="text" class="form-control" id="classleft" placeholder="Space Left in Class" value="{{ ($class->classlimit - $class->classcurrent) }}" disabled/>
-								<input type="hidden" id="classId" value="{{ $class->classid }}"/>
-								<button type="submit" class="btn btn-primary" style="margin-top: 10px;">Update Class</button>
-							</form>
-							</div>
-						</div>
-						<div id="class-students">
-						@foreach(json_decode($class->classstudents) as $student)
-							<div class="col-sm-4" id="student{{ User::find($student)->id }}">
-								<div class="feature-box">
-									<div class="feature-text">
-										<h3>Name: {{ User::find($student)->name }}</h3>
-										<p>Student ID: {{ User::find($student)->username }}</p>
-										<p>Major: {{ Departments::find(User::find($student)->department)->name() }}</p>
-										<form class="removeStudent" action="" method="POST">
-											<input type="hidden" id="classId" value="{{ $class->classid }}" />
-											<input type="hidden" id="studentId" value="{{ User::find($student)->id }}" />
-											<button type="submit" class="btn btn-primary"><i class="fa fa-arrow-right"></i>Remove</button>
-										</form>
-									</div>
+						@if(Classes::where('classlecturer', Auth::user()->id)->count() > 0)
+							<div class="col-lg-12">
+								<div class="profile">
+									@include('layout.classes')
+							@else
+							<div class="col-lg-12">
+								<div class="profile">
+									No Classes Found.
 								</div>
 							</div>
-						@endforeach
-						</div>
+							@endif
 						<hr class="metro-hr">
 					</div>
 						
