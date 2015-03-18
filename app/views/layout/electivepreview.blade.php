@@ -15,8 +15,10 @@
 							<div class="col-sm-8">
 								<img src="images/portfolio/portfolio1.jpg" class="img-responsive" alt="portfolio">
 								<?php
+								if(Auth::user()->rank < 1) {
 								// Extract current user's electives.
 								$electives = Auth::user()->electives;
+
 								$registered = false;
 								// Make sure we got a result.
 								if($electives != null) {
@@ -27,7 +29,7 @@
 											$registered = true;
 										}
 									}
-								} 
+								}
 
 								// Now print forms.
 								if($registered) { ?>
@@ -40,7 +42,7 @@
 										<input type="hidden" id="electiveId" value="{{ $mod->mid }}" />
 										<button type="submit" class="btn-primary elective-btn">Register</button>
 									</form>
-								<?php } ?>
+								<?php } } ?>
 							</div>
 							<div class="col-sm-4">
 								<div class="modal-entery">
