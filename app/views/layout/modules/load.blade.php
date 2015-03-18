@@ -6,4 +6,3 @@
 		->get() as $mod)
 	@include('layout.moduleedit', array('mod' => $mod, 'type' => 'edit'))
 @endforeach
-{{ HTML::script('js/main.js') }}

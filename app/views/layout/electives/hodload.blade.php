@@ -8,4 +8,3 @@
 	@include('layout.electives.hod', array('elec' => $elec, 'type' => 'edit'))
 @endforeach
 @endforeach
-{{ HTML::script('js/main.js') }}
