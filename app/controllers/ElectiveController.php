@@ -424,7 +424,9 @@ class ElectiveController extends BaseController {
 	public function getElectives(){
 		if(Auth::check()){
 			if (Auth::user()->rank >= 2) 
-				return View::make('layout.electives.hodload') ;
+				return View::make('layout.electives.hodload');
+			elseif(Auth::user()->rank == 0)
+				return View::make('layout.electives.student');
 			else
 				return;
 		}

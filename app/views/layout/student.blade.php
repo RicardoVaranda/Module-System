@@ -137,9 +137,6 @@
 							
 						</div>
 						<ul id="grid">
-							@foreach(Modules::where('melective', 1)->get() as $mod)
-								@include('layout.electivepreview', array('mod' => $mod))
-							@endforeach
 							<li class="gap"></li>
 							<!-- "gap" elements fill in the gaps in justified grid -->
 						</ul>
@@ -173,12 +170,27 @@
 					        $("#bussMore").hide();
 					        $("#engMore").hide();
 					    });
-					});
-					$(document).bind('ajaxStart', function(){
+
+					    var list = $("#grid");
+					    list.empty();
+					    $(document).bind('ajaxStart', function(){
 						    $(".load.Elec").show();
 						}).bind('ajaxStop', function(){
 						    $(".load.Elec").hide();
 						});
+					        $.ajax({
+					            type: "GET",
+					            url: "electives",
+					            success:function(modules)
+					            {
+					                list.append(modules);
+					                list.mixitup();
+					                $("#grid li a ").each(function() { 
+										$(this).hoverdir(); 
+									});
+					            }
+					        });
+					});
 				</script>
 
 				<!-- End of Filtering system -->

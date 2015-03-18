@@ -1,5 +1,6 @@
+<?php $mod = Modules::where('mid', $elec->classmodule)->first(); ?>
 <li class="mix {{ $mod->department->faculty->short() }} {{ $mod->department->short() }}"> 
-	<a data-toggle="modal" role="button" href="#{{$mod->mcode}}"> <img src="images/portfolio/portfolio1.jpg" alt="portfolio">
+	<a data-toggle="modal" role="button" href="#{{$mod->mcode}}"> <img src="{{URL::route('getImg', $mod->mcode)}}" alt="portfolio">
 		<div><span>{{ $mod->mshorttitle }}</span></div>
 	</a>
 	<div class="modal fade" id="{{$mod->mcode}}" tabindex="-1" role="dialog" aria-hidden="true">
@@ -13,7 +14,7 @@
 					<div class="container">
 						<div class="row">
 							<div class="col-sm-8">
-								<img src="images/portfolio/portfolio1.jpg" class="img-responsive" alt="portfolio">
+								<img src="{{URL::route('getImg', $mod->mcode)}}" class="img-responsive" alt="portfolio">
 								<?php
 								if(Auth::user()->rank < 1) {
 								// Extract current user's electives.
