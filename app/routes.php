@@ -134,6 +134,14 @@ Route::group(array('before' => 'auth'), function() {
 		'as'	=>	'getImg',
 		'uses'	=>	'ModuleController@getImage'
 	));
+
+	/*
+	| Get Class List
+	*/
+	Route::get('list/{elecName}', array(
+		'as'	=>	'getList',
+		'uses'	=>	'ElectiveController@printClassList'
+	));
 	
 	/*
 	| Change Password (GET)

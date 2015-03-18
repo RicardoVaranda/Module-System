@@ -433,6 +433,36 @@ class ElectiveController extends BaseController {
 			return Redirect::route('account-sign-in');
 		}
 	}
+
+	function printClassList($classId) {
+	    if(Classes::where('classid', $classId)->count()){
+	    	$class = Classes::where('classid', $classId)->first();
+
+	    	if($class->classlecturer != Auth::user()->id){
+	    		return;
+	    	}
+
+		    $filename = Modules::where('mid', $class->classmodule)->first()->mcode."Elec".$classId."List.csv";
+			$delimiter=";";
+		    header('Content-Type: application/csv');
+		    header('Content-Disposition: attachement; filename="'.$filename.'";');
+
+	    	$array = array();
+	    	array_push($array, array('Student ID' => 'Student ID','Name' => 'Student Name'));
+
+	    	foreach(json_decode($class->classstudents) as $student){
+	    		$studentarray = array('Student Id' => User::find($student)->username,
+			           'Name' => User::find($student)->name);
+			    array_push($array, $studentarray);
+	    	}
+
+	    	$f = fopen('php://output', 'w');
+
+		    foreach ($array as $line) {
+		        fputcsv($f, $line, $delimiter);
+		    }
+	    }
+	}   
  
 }
 ?>

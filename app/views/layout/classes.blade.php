@@ -15,6 +15,7 @@
 </form>
 </div>
 </div>
+<a href="{{URL::route('getList', 1)}}" target="_blank">Download List</a>
 <div id="class-students">
 @foreach(json_decode($class->classstudents) as $student)
 	<div class="col-sm-4" id="student{{ User::find($student)->id }}">
