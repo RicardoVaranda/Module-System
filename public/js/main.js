@@ -299,7 +299,10 @@ $( document ).on('submit', '#createLecturer', function() {
 	  		alert('Lecturer Created Successfully!');
 	  	} else {
 	  		// Inform user of errors.
-	  		alert(response.errors[0]);
+	  		//alert(response.errors['email']);
+	  		$.each( response.errors, function( key, value ) {
+			  alert( value );
+			});
 	  	}
 	  	// Enable button.
     	form.find('button').prop('disabled', false);
