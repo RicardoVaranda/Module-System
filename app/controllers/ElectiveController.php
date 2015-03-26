@@ -195,6 +195,7 @@ class ElectiveController extends BaseController {
 				// Save name and username.
 				$name = $user->name;
 				$username = $user->username;
+				$email = $user->email;
 
 				// Get the major.
 				$major = Departments::find($user->department)->name();
@@ -203,7 +204,8 @@ class ElectiveController extends BaseController {
 				array_push($students, array('id' => $s,
 											'name' => $name,
 											'username' => $username,
-											'major' => $major
+											'major' => $major,
+											'email' => $email
 											));
 			}
 
@@ -443,7 +445,7 @@ class ElectiveController extends BaseController {
 	    	}
 
 		    $filename = Modules::where('mid', $class->classmodule)->first()->mcode."Elec".$classId."List.csv";
-			$delimiter=";";
+			$delimiter=",";
 		    header('Content-Type: application/csv');
 		    header('Content-Disposition: attachement; filename="'.$filename.'";');
 

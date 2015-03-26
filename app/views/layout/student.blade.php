@@ -219,21 +219,13 @@
 												<th><b>Major:</b></th>
 												<td colspan="1">{{ Departments::find(Auth::user()->department)->name() }}</td>
 											</tr>
-											<tr>
-												<th><b>Program:</b></th>
-												<td colspan="1">Bachelor of Science</td>
-											</tr>
-											<tr>
-												<th><b>Class:</b></th>
-												<td colspan="1">Third Year</td>
-											</tr>
 										</tbody>
 									</table>
 							</div>
 						</div>
 							
 						<div class="col-sm-6 col-md-4 col-lg-4">
-							<div class="profile" style="padding:40px 20px">
+							<div class="profile settings">
 								<h4 class="h4">Settings</h4>
 								<div class="skill-q" id="changePass">
 									<p>Change Password</p>
@@ -242,17 +234,13 @@
 								@if(Session::has('pass'))
 									<div class="globalU warn arrowU">{{ Session::get('pass') }}</div>
 								@endif
-								<div class="skill-q">
-									<p>Change Secret Question?</p>
-									<a data-toggle="modal" class="submit btn btn-info btn-block" role="button" href="#sQuestion">Change Question Now</a>
-								</div>	
 							</div>
 						</div>
 					</div>
 					@extends('account.password')
 					<div class="row">
 						<hr class="metro-hr">
-						<h2 class="h2 lead">My Modules</h2>
+						<h2 class="h2 lead">My Electives</h2>
 						<div class="col-sm-6 col-md-4">
 							<div class="feature-box">
 								<div class="feature-icon"><i class="fa fa-twitter"></i></div>

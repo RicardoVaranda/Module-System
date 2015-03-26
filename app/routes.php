@@ -112,6 +112,15 @@ Route::group(array('before' => 'auth'), function() {
 	));
 
 	/*
+	| Upload CSV to create users.
+	*/
+	
+	Route::post('/account/uploadCSV', array(
+		'as' => 'upload-CSV',
+		'uses' => 'AccountController@uploadCSV'
+	));
+
+	/*
 	| Get Modules
 	*/
 	Route::any('/modules', array(

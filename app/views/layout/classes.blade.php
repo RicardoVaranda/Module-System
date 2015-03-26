@@ -11,8 +11,11 @@
 	<label>Space Limit:</label><input type="text" class="form-control" id="classlimit" placeholder="Class Space Limit" value="{{ $class->classlimit }}" />
 	<label>Space Left:</label><input type="text" class="form-control" id="classleft" placeholder="Space Left in Class" value="{{ ($class->classlimit - $class->classcurrent) }}" disabled/>
 	<input type="hidden" id="classId" value="{{ $class->classid }}"/>
-	<button type="submit" class="btn btn-primary" style="margin-top: 10px;">Update Class</button>
-</form>
+		<button type="submit" class="btn btn-info pink" style="margin-top: 10px;">Update Class</button>
+		</form>
+		<a id="classAll" target="_blank" href="https://mail.google.com/mail?view=cm&tf=0%22+&to={{ Classes::find($class->classid)->getEmails() }}">
+			<button class="btn btn-info pink">Email All</button>
+		</a>
 </div>
 </div>
 <a href="{{URL::route('getList', 1)}}" target="_blank">Download List</a>
@@ -24,11 +27,22 @@
 				<h3>Name: {{ User::find($student)->name }}</h3>
 				<p>Student ID: {{ User::find($student)->username }}</p>
 				<p>Major: {{ Departments::find(User::find($student)->department)->name() }}</p>
-				<form class="removeStudent" action="" method="POST">
-					<input type="hidden" id="classId" value="{{ $class->classid }}" />
-					<input type="hidden" id="studentId" value="{{ User::find($student)->id }}" />
-					<button type="submit" class="btn btn-primary"><i class="fa fa-arrow-right"></i>Remove</button>
-				</form>
+				<table border="0px">
+				<tbody>
+				<tr><td>
+					<form class="removeStudent" action="" method="POST">
+						<input type="hidden" id="classId" value="{{ $class->classid }}" />
+						<input type="hidden" id="studentId" value="{{ User::find($student)->id }}" />
+						<button type="submit" class="btn btn-info pink"><i class="fa fa-arrow-right"></i>Remove</button>
+					</form>
+				</td>
+				<td>
+					<a target="_blank" href="https://mail.google.com/mail?view=cm&tf=0%22+&to={{ User::find($student)->email }}">
+						<button class="btn btn-info pink">Email</button>
+					</a>
+				</td></tr>
+				</tbody>
+				</table>
 			</div>
 		</div>
 	</div>

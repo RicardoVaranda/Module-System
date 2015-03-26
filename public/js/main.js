@@ -156,6 +156,9 @@ $( document ).on('change', '#class-Select', function() {
 	  		$('#classleft').val(response.space);
 	  		$('#classId').val(classId);
 
+	  		// Prepare variable to hold all emails.
+	  		var emails = '';
+
 	  		// Display students for class.
 	  		$('#class-students').empty();
 	  		for(i = 0; i<response.students.length; i++) {
@@ -166,16 +169,32 @@ $( document ).on('change', '#class-Select', function() {
 												'<h3>Name: '+ student.name +'</h3>'+
 												'<p>Student ID: '+ student.username +'</p>'+
 												'<p>Major: '+ student.major +'</p>'+
-												'<form class="removeStudent" action="" method="POST">'+
-													'<input type="hidden" id="classId" value="'+ classId +'" />'+
-													'<input type="hidden" id="studentId" value="'+ student.id +'" />'+
-													'<button type="submit" class="btn btn-primary"><i class="fa fa-arrow-right"></i>Remove</button>'+
-												'</form>'+
+												'<table border="0px">'+
+													'<tbody>'+
+														'<tr><td>'+
+															'<form class="removeStudent" action="" method="POST">'+
+																'<input type="hidden" id="classId" value="'+ classId +'" />'+
+																'<input type="hidden" id="studentId" value="'+ student.id +'" />'+
+																'<button type="submit" class="btn btn-info pink"><i class="fa fa-arrow-right"></i>Remove</button>'+
+															'</form>'+
+														'</td><td>'+
+															'<a target="_blank" href="https://mail.google.com/mail?view=cm&tf=0%22+&to='+ student.email +'">'+
+																'<button class="btn btn-info pink">Email</button>'+
+															'</a>'+
+														'</td></tr>'+
+													'</tbody>'+
+												'</table>'+
 											'</div>'+
 										'</div>'+
 									'</div>';
 	  			$('#class-students').append(studentObject);
+
+	  			// Store email.
+	  			emails = emails + student.email + ',';
 	  		}
+
+	  		// Now update email all link.
+	  		$('#classAll').attr('href', 'https://mail.google.com/mail?view=cm&tf=0%22+&to='+ emails);
 	  	}
 	});
 });
@@ -281,7 +300,7 @@ $( document ).on('submit', '#createLecturer', function() {
 											'<div class="feature-text">'+
 												'<h3>Name: '+ lecturerName +'</h3>'+
 												'<p>Lecturer ID: '+ lecturerId +'</p>'+
-												'<p>Email: '+ lecturerEmail +'</p>'+
+												'<label>Email:</label><p>'+ lecturerEmail +'</p>'+
 												'<form class="removeLecturer" action="" method="POST">'+
 													'<input type="hidden" id="lecturerId" value="'+ response.id +'" />'+
 													'<button type="submit" class="btn btn-primary"><i class="fa fa-arrow-right"></i>Remove</button>'+
@@ -301,7 +320,15 @@ $( document ).on('submit', '#createLecturer', function() {
 	  		// Inform user of errors.
 	  		//alert(response.errors['email']);
 	  		$.each( response.errors, function( key, value ) {
-			  alert( value );
+	  			/* 
+	  			 * Let's check if key is username, and present it as Id instead.
+	  			 * This is not ideal solution, but oh well it'll do.
+	  			 */
+	  			 if(key === 'username') {
+	  			 	alert(value[0].replace("username", "Id"));
+	  			 } else {
+	  			 	alert(value[0]);
+	  			 }
 			});
 	  	}
 	  	// Enable button.
@@ -346,6 +373,62 @@ $( document ).on('submit', '.removeLecturer', function() {
 	} else {
 		form.find('button').prop('disabled', false);
 	}
+});
+
+$( document ).on('submit', '#createUsersCSV', function() {
+	// Prevent default action.
+	event.preventDefault();
+	
+	// Get form.
+    var form = $(this);
+    // Lock Button.
+	form.find('button').prop('disabled', true);
+
+	// Get the file to upload.
+	var file = form.find('#usersCSV').prop('files');
+
+	var formData = new FormData($(this)[0]);
+
+	$.ajax({
+        url: 'account/uploadCSV',
+        type: 'POST',
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(data){
+    		if(data.success) {
+    			alert("Users created successfully!");
+    		} else {
+    			// Generate CSV string for download link.
+    			var csvString = '';
+    			var counter = 0;
+    			$.each( data.errors, function( row, col ) {
+    				$.each( col, function(key, value) {
+    					if(counter === 5) {
+    						counter = 0;
+    						csvString = csvString + '"' + value + '"\n';
+    					} else {
+	    					csvString = csvString + '"' + value + '",';
+	    					counter++;
+	    				}
+    				});
+    			});
+    			// Data URI
+            	var csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csvString);
+
+            	// Create temporary link to file.
+            	var link = '<a href="'+ csvData +'" target="_blank" download="Errors'+ data.filename +'" id="csvDownload">Text</a>';
+            	$('body').append(link);
+            	$('#csvDownload')[0].click();
+            	$('#csvDownload').remove();
+            	alert("Some users could not be created, please ensure the users in the returned file have a unique Id and Email!");
+    		}
+  		}
+    });
+
+	// Release Button.
+	form.find('button').prop('disabled', false);
 });
 
 /* ==============================================

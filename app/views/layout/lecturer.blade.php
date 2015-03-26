@@ -216,7 +216,7 @@
 						</div>
 							
 						<div class="col-sm-6 col-md-4 col-lg-4">
-							<div class="profile" style="padding:40px 20px">
+							<div class="profile settings">
 								<h4 class="h4">Settings</h4>
 								<div class="skill-q" id="changePass">
 									<p>Change Password</p>
@@ -225,10 +225,6 @@
 								@if(Session::has('pass'))
 									<div class="globalU warn arrowU">{{ Session::get('pass') }}</div>
 								@endif
-								<div class="skill-q">
-									<p>Change Secret Question?</p>
-									<a data-toggle="modal" class="submit btn btn-info btn-block" role="button" href="#sQuestion">Change Question Now</a>
-								</div>	
 							</div>
 						</div>
 					</div>

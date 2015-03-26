@@ -84,6 +84,12 @@ a, a:hover {
 .btn, .alert, .modal-content {
 	border-radius: 0;
 }
+.pink {
+	background-color: #F151FF;
+}
+.pink:hover{
+	background-color: #F151FF;
+}
 .navbar .container {
 	max-width:970px;
 }
@@ -233,6 +239,9 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 .tile-lecturers {
 	background: #FF08FF;
 }
+.tile-users {
+	background: #47E4C4;
+}
 .tile-contact {
 	background: #47E4C4;
 }
@@ -257,6 +266,9 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 	float: left;
 	margin: 5px;
 	background-color: #33CCFF;
+}
+#csvDownload {
+	visibility: hidden;
 }
 .grid-controls li a {
 	color: #FFFFFF;
@@ -403,6 +415,10 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 	color: #FFFFFF;
 	background: #37AFFF;
 	background: rgba(55, 175, 255, 0.9);
+}
+.settings {
+	min-height: 198px;
+	padding:40px 20px;
 }
 .profile p {
 	margin-bottom: 5px;
@@ -563,6 +579,9 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 	color: #FFFFFF;
 	font-size: 22px;
 	margin-bottom: 5px;
+}
+.feature-text p {
+	margin: 0 0 2px;
 }
 /* Team */
 .team {

@@ -318,4 +318,101 @@ class AccountController extends BaseController{
 							'success' => true
 							));
 	}
+
+	/**
+	*	Function that receives a CSV file, and creates
+	*	users from it.
+	*/
+	public function uploadCSV(){
+
+		// Get file uploaded by user.
+		$CSV = $_FILES['usersCSV'];
+
+		// Define user array for User creation.
+		$user = array();
+		$errors = array();
+		$password = '';
+
+		// Create variable to ensure we skip first row.
+		$skipped = false;
+
+		// Now open it so we can parse through it.
+		if (($file = fopen($CSV['tmp_name'], "r")) !== false) {
+			// Pass opened file to fgetcsv for parsing.
+	    	while (($row = fgetcsv($file)) !== false) {
+	    		// Check if we skipped.
+	    		if ($skipped) {
+		    		// Loop through all columns in current row.
+	        		for ($column=0; $column < count($row); $column++) {
+	            		switch($column) {
+	            			case 0:
+	            				$user['username'] = $row[$column];
+	            			break;
+	            			case 1:
+	            				$user['name'] = $row[$column];
+	            			break;
+	            			case 2:
+	            				$user['email'] = $row[$column];
+	            			break;
+	            			case 3:
+	            				// Make copy of plaintext password in case we return error.
+	            				$password = $row[$column];
+	            				$user['password'] = Hash::make($row[$column]);
+	            			break;
+	            			case 4:
+	            				$user['rank'] = $row[$column];
+	            			break;
+	            			case 5:
+	            				$user['department'] = $row[$column];
+
+	            				// This should be the last iteration so generate code.
+	            				$code = str_random(60);
+	            				$user['code'] = $code;
+
+	            				// Verify that user id and email are unique.
+	            				$unique = true;
+
+	            				if(User::where('email', $user['email'])->count() > 0) {
+	            					$unique = false;
+	            				}
+
+	            				if(User::where('username', $user['username'])->count() > 0) {
+	            					$unique = false;
+	            				}
+
+	            				if($unique){
+	            					// Create user.
+	            					User::create($user);
+	            				} else {
+	            					// Reset password to plaintext.
+	            					$user['password'] = $password;
+	            					// Remove code.
+	            					unset($user['code']);
+	            					// Save to array to return for csv file.
+	            					array_push($errors, $user);
+	            				}
+	            			break;
+	            		}
+	        		}
+        		}
+        		$skipped = true;
+    		}
+    		fclose($file);
+		}
+
+		// If we got errors return them.
+		if(count($errors) > 0) {
+			return Response::json(array(
+								'success' => false,
+								'filename' => $CSV['name'],
+								'errors' => $errors
+								));
+
+		} else {
+			// Return successful response to user.
+			return Response::json(array(
+								'success' => true
+								));
+		}
+	}
 }

@@ -67,9 +67,8 @@
 					<ul class="nav navbar-nav pull-right">
 						<li class="modules-menu"><a class="ascensorLink ascensorLink1" href="#">Modules</a></li>
 						<li class="electives-menu"><a class="ascensorLink ascensorLink2" href="#">Electives</a></li>
-						<li class="timetables-menu"><a class="ascensorLink ascensorLink3" href="#">Timetables</a></li>
-						<li class="lecturers-menu"><a class="ascensorLink ascensorLink4" href="#">Lecturers</a></li>
-						<li class="profile-menu"><a class="ascensorLink ascensorLink5" href="#">My Info</a></li>
+						<li class="lecturers-menu"><a class="ascensorLink ascensorLink3" href="#">Lecturers</a></li>
+						<li class="profile-menu"><a class="ascensorLink ascensorLink4" 	 href="#">My Profile</a></li>
 						<li class="signout-menu"><a class="ascensorLink" href="{{ URL::route('account-sign-out') }}">Sign out</a></li>
 					</ul>
 				</div>
@@ -97,21 +96,15 @@
 								<i class="fa fa-windows fa-4x"></i>
 							</a>
 						</div>
-						<div class="tile tile-item tile-timetables">
+						<div class="tile tile-item tile-lecturers">
 							<a class="ascensorLink ascensorLink3 tile-nav" href="#">
-								<h5 class="h5">Timetables</h5>
+								<h5 class="h5">Lecturers</h5>
 								<i class="fa fa-group fa-4x"></i>
 							</a>
 						</div>
-						<div class="tile tile-item tile-lecturers">
-							<a class="ascensorLink ascensorLink4 tile-nav" href="#">
-								<h5 class="h5">Lecturers</h5>
-								<i class="fa fa-sitemap fa-4x"></i>
-							</a>
-						</div>
 						<div class="tile tile-item tile-profile">
-							<a class="ascensorLink ascensorLink5 tile-nav" href="#">
-								<h5 class="h5">My info</h5>
+							<a class="ascensorLink ascensorLink4 tile-nav" href="#">
+								<h5 class="h5">My Profile</h5>
 								<i class="fa fa-sitemap fa-4x"></i>
 							</a>
 						</div>
@@ -352,135 +345,7 @@
 			</section>
 			<!--Electives -->
 			
-			<section class="section service">  
-				<div class="container">	
-					<h1 class="h1">My Info</h1>
-					
-					<div class="row">
-						<hr class="metro-hr">
-						<div class="col-sm-9">
-							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-							Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-							when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-						</div>
-						<div class="col-sm-3">
-							<ul class="check-our-work">
-								<li class="portfolio"><a class="ascensorLink ascensorLink1" href="#">Check our Portfolio</a></li>
-							</ul>
-						</div>
-						<hr class="metro-hr">
-					</div>
-
-					<div class="row">
-						<div class="col-sm-6 col-md-4">
-							<div class="brick">
-							<div class="service-img"> <i class="fa fa-cloud-upload fa-5x"></i> </div>
-								<h6 class="service-title">Save your time for pleasure!</h6>
-								<h4 class="h4">Save On Cloud</h4>
-								<p class="service-desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-								Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-								when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="brick">
-								<div class="service-img"> <i class="fa fa-print fa-5x"></i> </div>
-								<h6 class="service-title">Create your individual website look!</h6>
-								<h4 class="h4">Print Your Document</h4>
-								<p class="service-desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-								Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-								when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="brick">
-								<div class="service-img"> <i class="fa fa-magic fa-5x"></i> </div>
-								<h6 class="service-title">Lorem Ipsum is simply dummy text!</h6>
-								<h4 class="h4">Magic is in Your Hand</h4>
-								<p class="service-desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-								Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-								when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-							</div>
-						</div>
-					</div>
-					
-					<div class="row">
-						<hr class="metro-hr">
-						<h2 class="h2 lead">My Modules</h2>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>Twitter</h3>
-									<p>Justo a urna dolor et lorem vulputate.</p>
-								</div>
-							</div>
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-magic"></i></div>
-								<div class="feature-text">
-									<h3>FontAwesome Icons</h3>
-									<p>Justo a urna dolor et lorem vulputate.</p>
-								</div>
-							</div>
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-font"></i></div>
-								<div class="feature-text">
-									<h3>Google Fonts</h3>
-									<p>Class aptent taciti sociosqu torquent.</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-move"></i></div>
-								<div class="feature-text">
-									<h3>Bootstrap</h3>
-									<p>Justo a urna dolor et lorem vulputate.</p>
-								</div>
-							</div>
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-laptop"></i></div>
-								<div class="feature-text">
-									<h3>HTML 5 / CSS 3</h3>
-									<p>Duis rutrum faucibus massa sagittis.</p>
-								</div>
-							</div>
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-font"></i></div>
-								<div class="feature-text">
-									<h3>Modern</h3>
-									<p>Justo a urna dolor et lorem vulputate.</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>CrossBrowser</h3>
-									<p>Justo a urna dolor et lorem vulputate.</p>
-								</div>
-							</div>
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-magic"></i></div>
-								<div class="feature-text">
-									<h3>FontAwesome Icons</h3>
-									<p>Justo a urna dolor et lorem vulputate.</p>
-								</div>
-							</div>
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-font"></i></div>
-								<div class="feature-text">
-									<h3>Google Fonts</h3>
-									<p>Class aptent taciti sociosqu torquent.</p>
-								</div>
-							</div>
-						</div>
-						<hr class="metro-hr">
-					</div>
-					
-				</div>
-			</section> 
+			
 			<!-- /service -->
 			
             <section class="section team">
@@ -491,7 +356,7 @@
 								<h3>Create Lecturer</h3>
 								<form action="" method="POST" id="createLecturer">
 									<label>Lecturer Name:</label><input type="text" class="form-control" id="lecturerName" placeholder="Lecturer Name" required/>
-									<label>Lecturer Username:</label><input type="text" class="form-control" id="lecturerId" placeholder="Lecturer Username" required/>
+									<label>Lecturer ID:</label><input type="text" class="form-control" id="lecturerId" placeholder="Lecturer ID" required/>
 									<label>Lecturer Email:</label><input type="email" class="form-control" id="lecturerEmail" placeholder="Lecturer Email" required/>
 									<button type="submit" class="btn btn-primary" style="margin-top:10px;">Create Lecturer</button>
 								</form>
@@ -504,7 +369,7 @@
 									<div class="feature-text">
 										<h3>Name: {{ $lecturer->name }}</h3>
 										<p>Lecturer ID: {{ $lecturer->username }}</p>
-										<p>Email: {{ $lecturer->email }}</p>
+										<p>Email:</p> <p>{{ $lecturer->email }}</p>
 										<form class="removeLecturer" action="" method="POST">
 											<input type="hidden" id="lecturerId" value="{{ $lecturer->id }}" />
 											<button type="submit" class="btn btn-primary"><i class="fa fa-arrow-right"></i>Remove</button>
@@ -540,21 +405,13 @@
 												<th><b>Major:</b></th>
 												<td colspan="1">Computing</td>
 											</tr>
-											<tr>
-												<th><b>Program:</b></th>
-												<td colspan="1">Bachelor of Science</td>
-											</tr>
-											<tr>
-												<th><b>Class:</b></th>
-												<td colspan="1">Third Year</td>
-											</tr>
 										</tbody>
 									</table>
 							</div>
 						</div>
 							
 						<div class="col-sm-6 col-md-4 col-lg-4">
-							<div class="profile" style="padding:40px 20px">
+							<div class="profile settings">
 								<h4 class="h4">Settings</h4>
 								<div class="skill-q" id="changePass">
 									<p>Change Password</p>
@@ -563,10 +420,6 @@
 								@if(Session::has('pass'))
 									<div class="globalU warn arrowU">{{ Session::get('global') }}</div>
 								@endif
-								<div class="skill-q">
-									<p>Change Secret Question?</p>
-									<a data-toggle="modal" class="submit btn btn-info btn-block" role="button" href="#sQuestion">Change Question Now</a>
-								</div>	
 							</div>
 						</div>
 					</div>

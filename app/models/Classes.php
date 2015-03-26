@@ -27,4 +27,13 @@ class Classes extends Eloquent {
     {
         return $this->where('lecturerid', $lecturer);
     }
+
+    public function getEmails() {
+        $result = "";
+        foreach(json_decode($this->classstudents) as $student) {
+            $result = $result.User::find($student)->email.',';
+        }
+
+        return $result;
+    }
 }
