@@ -48,6 +48,8 @@
 		
     </head>
     <body>
+    	<div class="message">
+    	</div>
 	
 		<div class="wrapper">
 		

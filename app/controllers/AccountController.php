@@ -372,7 +372,7 @@ class AccountController extends BaseController{
 	            				// Verify that user id and email are unique.
 	            				$unique = true;
 
-	            				if(User::where('email', $user['email'])->count() > 0) {
+	            				if(!filter_var($user['email'], FILTER_VALIDATE_EMAIL) || User::where('email', $user['email'])->count() > 0) {
 	            					$unique = false;
 	            				}
 
@@ -380,7 +380,14 @@ class AccountController extends BaseController{
 	            					$unique = false;
 	            				}
 
-	            				if($unique){
+	            				// Verify that all input is correct.
+	            				$correct = true;
+
+	            				if(!is_int($user['rank']) || !is_int($user['department'])) {
+	            					$correct = false;
+	            				}
+
+	            				if($unique && $correct){
 	            					// Create user.
 	            					User::create($user);
 	            				} else {

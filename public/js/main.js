@@ -86,14 +86,14 @@ $( document ).on('submit', '.electiveRegister', function() {
 		// TODO: Replace alerts with divs or something.
 	  	if(response.success) {
 	  		// Inform user.
-	  		alert("Successfully registered to module!");
+	  		successMessage("Successfully registered to module!");
 	  		
 	  		// Replace form with deregister form.
 	  		form.removeClass('electiveRegister').addClass('electiveUnregister');
 	  		form.find('button').html("Unregister");
 	  	} else {
 	  		// Inform user of error.
-	  		alert(response.errors);
+	  		failMessage(response.errors);
 	  	}
 	  	// Update spaces.
 	  	$('#elective'+electiveId).html(response.spaces);
@@ -124,14 +124,14 @@ $( document ).on('submit', '.electiveUnregister', function() {
 		// TODO: Replace alerts with divs or something.
 	  	if(response.success) {
 	  		// Inform user.
-	  		alert("Successfully unregistered from module!");
+	  		successMessage("Successfully unregistered from module!");
 	  		
 	  		// Replace form with deregister form.
 	  		form.removeClass('electiveUnregister').addClass('electiveRegister');
 	  		form.find('button').html("Register");
 	  	} else {
 	  		// Inform user of error.
-	  		alert(response.errors);
+	  		failMessage(response.errors);
 	  	}
 	  	// Update spaces.
 	  	$('#elective'+electiveId).html(response.spaces);
@@ -219,7 +219,7 @@ $( document ).on('submit', '#classForm', function() {
 		var response = data;
 	  	if(response.success) {
 	  		$('#classleft').val(response.space);
-	  		alert('Class updated successfully!');
+	  		successMessage('Class updated successfully!');
 	  	}
 
 	  });
@@ -254,11 +254,11 @@ $( document ).on('submit', '.removeStudent', function() {
 		  	if(response.success) {
 		  		$('#classleft').val(response.space);
 		  		$('#student'+studentId).remove();
-		  		alert('Student Removed Successfully!');
+		  		successMessage('Student Removed Successfully!');
 		  	} else {
 		  		$('#classleft').val($('#classleft').val()+1);
 		  		$('#student'+studentId).remove();
-		  		alert(response.errors);
+		  		failMessage(response.errors);
 		  	}
 		  	// Release Button.
 			form.find('button').prop('disabled', false);
@@ -284,8 +284,6 @@ $( document ).on('submit', '#createLecturer', function() {
     var lecturerName = form.find('#lecturerName').val();
     var lecturerId = form.find('#lecturerId').val();
     var lecturerEmail = form.find('#lecturerEmail').val();
-
-    console.log("create");
 
     $.post( "account/create-lecturer", {
 					name: lecturerName,
@@ -315,7 +313,7 @@ $( document ).on('submit', '#createLecturer', function() {
   			form.find('#lecturerId').val('');
   			form.find('#lecturerEmail').val('');
 
-	  		alert('Lecturer Created Successfully!');
+	  		successMessage('Lecturer Created Successfully!');
 	  	} else {
 	  		// Inform user of errors.
 	  		//alert(response.errors['email']);
@@ -325,9 +323,9 @@ $( document ).on('submit', '#createLecturer', function() {
 	  			 * This is not ideal solution, but oh well it'll do.
 	  			 */
 	  			 if(key === 'username') {
-	  			 	alert(value[0].replace("username", "Id"));
+	  			 	failMessage(value[0].replace("username", "Id"));
 	  			 } else {
-	  			 	alert(value[0]);
+	  			 	failMessage(value[0]);
 	  			 }
 			});
 	  	}
@@ -352,8 +350,6 @@ $( document ).on('submit', '.removeLecturer', function() {
 	    // Get the lecturer Id.
 	    var lecturerId = form.find('#lecturerId').val();
 
-	    console.log("remove");
-
 	    $.post( "account/remove-lecturer", {
 						id: lecturerId})
 		.done(function( data ) {
@@ -362,10 +358,10 @@ $( document ).on('submit', '.removeLecturer', function() {
 		  		// Remove lecturer.
 		  		$('#lecturer'+lecturerId).remove();
 		  			
-		  		alert('Lecturer Removed Successfully!');
+		  		successMessage('Lecturer Removed Successfully!');
 		  	} else {
 		  		// Inform user of errors.
-		  		alert(response.errors);
+		  		failMessage(response.errors);
 		  	}
 		  	form.find('button').prop('disabled', false);
 		  });
@@ -398,7 +394,7 @@ $( document ).on('submit', '#createUsersCSV', function() {
         processData: false,
         success: function(data){
     		if(data.success) {
-    			alert("Users created successfully!");
+    			successMessage("Users created successfully!");
     		} else {
     			// Generate CSV string for download link.
     			var csvString = '';
@@ -422,7 +418,7 @@ $( document ).on('submit', '#createUsersCSV', function() {
             	$('body').append(link);
             	$('#csvDownload')[0].click();
             	$('#csvDownload').remove();
-            	alert("Some users could not be created, please ensure the users in the returned file have a unique Id and Email!");
+            	failMessage("Some users could not be created, please ensure the users in the returned file have a unique Id and Email!");
     		}
   		}
     });
@@ -430,6 +426,55 @@ $( document ).on('submit', '#createUsersCSV', function() {
 	// Release Button.
 	form.find('button').prop('disabled', false);
 });
+
+function successMessage(m) {
+	// Empty out message.
+	$('.message').empty();
+	// Check if we are dealing with an array.
+	if(m.constructor === Array) {
+		$.each(m, function(key, value) {
+			message(value, true);
+		});
+	} else {
+		message(m, true);
+	}
+	// Make message visible.
+	$('.message').show();
+
+	// Hide message after 5 seconds.
+	setTimeout(function() {
+      $('.message').fadeOut();
+	}, 5000);
+
+}
+
+function failMessage(m) {
+	// Empty out message.
+	$('.message').empty();
+	// Check if we are dealing with an array.
+	if(m.constructor === Array) {
+		$.each(m, function(key, value) {
+			message(value, false);
+		});
+	} else {
+		message(m, false);
+	}
+	// Make message visible.
+	$('.message').show();
+
+	// Hide message after 5 seconds.
+	setTimeout(function() {
+      $('.message').fadeOut();
+	}, 5000);
+}
+
+function message(message, success) {
+	if(success) {
+		$('.message').append('<div class="message-content success">'+ message +'</div>');
+	} else {
+		$('.message').append('<div class="message-content fail">'+ message +'</div>');
+	}
+}
 
 /* ==============================================
 Loading
