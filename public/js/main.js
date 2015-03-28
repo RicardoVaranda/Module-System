@@ -298,7 +298,7 @@ $( document ).on('submit', '#createLecturer', function() {
 											'<div class="feature-text">'+
 												'<h3>Name: '+ lecturerName +'</h3>'+
 												'<p>Lecturer ID: '+ lecturerId +'</p>'+
-												'<label>Email:</label><p>'+ lecturerEmail +'</p>'+
+												'<p>Email:</p><p>'+ lecturerEmail +'</p>'+
 												'<form class="removeLecturer" action="" method="POST">'+
 													'<input type="hidden" id="lecturerId" value="'+ response.id +'" />'+
 													'<button type="submit" class="btn btn-primary"><i class="fa fa-arrow-right"></i>Remove</button>'+
@@ -307,6 +307,21 @@ $( document ).on('submit', '#createLecturer', function() {
 										'</div>'+
 									'</div>';
   			$('#lecturerContainer').append(lecturerObject);
+
+  			// Now let's loop through lecturers and ensure we reset every 3 lecturers.
+  			var counter = 0;
+  			$('#lecturerContainer > .col-sm-4').each(function(){
+  				if(counter === 3) {
+  					$(this).addClass("clear");
+  					counter = 0;
+  				} else {
+  					$(this).removeClass("clear");
+  					counter++;
+  				}
+  			});
+
+  			// Now close form.
+  			$('#lecturer-close').click();
 
   			// Reset Form.
   			form.find('#lecturerName').val('');
@@ -357,6 +372,18 @@ $( document ).on('submit', '.removeLecturer', function() {
 		  	if(response.success) {
 		  		// Remove lecturer.
 		  		$('#lecturer'+lecturerId).remove();
+
+		  		// Now let's loop through lecturers and ensure we reset every 3 lecturers.
+	  			var counter = 0;
+	  			$('#lecturerContainer > .col-sm-4').each(function(){
+	  				if(counter === 3) {
+	  					$(this).addClass("clear");
+	  					counter = 0;
+	  				} else {
+	  					$(this).removeClass("clear");
+	  					counter++;
+	  				}
+	  			});
 		  			
 		  		successMessage('Lecturer Removed Successfully!');
 		  	} else {

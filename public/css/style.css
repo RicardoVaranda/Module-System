@@ -912,6 +912,20 @@ Blog
 	color: #ffffff;
 	background-color: rgba(208, 58, 55, 0.8);
 }
+.lecturer {
+  	min-height: 136px;
+  	margin: auto;
+  	display: table;
+}
+.lecturer-box {
+	display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    font-weight: bold;
+}
+.clear {
+	clear: both;
+}
 #map {
 	top: 0;
 	width: 100%;

@@ -353,20 +353,41 @@
             <section class="section team">
 					<div class="container">
 						<h1 class="h1">Lecturers</h1>
-						<div class="col-lg-12">
-							<div class="profile">
-								<h3>Create Lecturer</h3>
-								<form action="" method="POST" id="createLecturer">
-									<label>Lecturer Name:</label><input type="text" class="form-control" id="lecturerName" placeholder="Lecturer Name" required/>
-									<label>Lecturer ID:</label><input type="text" class="form-control" id="lecturerId" placeholder="Lecturer ID" required/>
-									<label>Lecturer Email:</label><input type="email" class="form-control" id="lecturerEmail" placeholder="Lecturer Email" required/>
-									<button type="submit" class="btn btn-primary" style="margin-top:10px;">Create Lecturer</button>
-								</form>
+						<div id="lecturerContainer"> 
+							<div class="col-sm-4">
+								<a data-toggle="modal" role="button" href="#newLecturer">
+									<div class="feature-box">
+										<div class="lecturer">
+											<div class="lecturer-box">
+												<span>Create New Lecturer</span>
+											</div>
+										</div>
+									</div>
+								</a>
 							</div>
-						</div>
-						<div id="lecturerContainer">
+							<div class="modal fade" id="newLecturer" tabindex="-1" role="dialog" aria-hidden="true">
+								<div class="modal-dialog">
+									<div  class="contact-box">
+							        	<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="lecturer-close">&times;</button>
+							            <form name="contactform" id="createLecturer" action="" method="post">
+							                <label>Lecturer Name:</label><input type="text" class="form-control" id="lecturerName" placeholder="Lecturer Name" required/>
+											<label>Lecturer ID:</label><input type="text" class="form-control" id="lecturerId" placeholder="Lecturer ID" required/>
+											<label>Lecturer Email:</label><input type="email" class="form-control" id="lecturerEmail" placeholder="Lecturer Email" required/>
+											<button type="submit" class="btn btn-primary" style="margin-top:10px;">Create Lecturer</button>
+							            </form>
+									</div>
+								</div>
+							</div>
+							<?php $counter = 1; ?>
 							@foreach(User::where('rank', 1)->where('department', Auth::user()->department)->get() as $lecturer)
-								<div class="col-sm-4" id="lecturer{{ $lecturer->id }}">
+								<?php if($counter == 3) {
+									$counter = 0; ?>
+									<div class="col-sm-4 clear" id="lecturer{{ $lecturer->id }}">
+								<?php } else { ?>
+									<div class="col-sm-4" id="lecturer{{ $lecturer->id }}">
+								<?php 
+									$counter++;
+									} ?>
 								<div class="feature-box">
 									<div class="feature-text">
 										<h3>Name: {{ $lecturer->name }}</h3>
