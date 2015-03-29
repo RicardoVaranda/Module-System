@@ -189,7 +189,31 @@
 				<!-- End of Filtering system -->
 			</section>
 			<!-- /portfolio -->
-			
+			<?php
+				// Let's define what semester we are in.
+				$today = date('Y-m-d');
+				$semester = date('Y-m-d', strtotime(date('Y', strtotime($today)).'-06-01'));
+				// If current date is greater than semester 2
+				// Change current to semester 1.
+				if($today > $semester) {
+					// Get next year.
+					$year = date('Y',strtotime(date("Y-m-d", time()) . " + 365 day"));
+					$semester = date('Y-m-d', strtotime($year.'-01-01'));
+				}
+
+				// Get the number of classes so we can display it.
+				$classes = Classes::where('classlecturer', Auth::user()->id)->get();
+				$total = 0;
+				foreach($classes as $c) {
+					// Check if this class belongs to this year.
+					if(date('Y', strtotime($c->created)) === date('Y', strtotime($today))) {
+						// Now check that it is part of this semester.
+						if(date('Y-m-d', strtotime($c->created)) < $semester) {
+							$total++;
+						}
+					}
+				} 
+			?>
 			<section class="section about">
 				<div class="container">
 					<h1 class="h1">Profile</h1>						
@@ -210,7 +234,7 @@
 											</tr>
 											<tr>
 												<th><b>Number of Classes:</b></th>
-												<td colspan="1">{{ count(Classes::where('classlecturer', Auth::user()->id)->get()) }}</td>
+												<td colspan="1">{{ $total }}</td>
 											</tr>
 										</tbody>
 									</table>
@@ -234,7 +258,7 @@
 					<div class="row">
 						<hr class="metro-hr">
 						<h2 class="h2 lead">Classes</h2>
-						@if(Classes::where('classlecturer', Auth::user()->id)->count() > 0)
+						@if($total > 0)
 							<div class="col-lg-12">
 								<div class="profile">
 									@include('layout.classes')

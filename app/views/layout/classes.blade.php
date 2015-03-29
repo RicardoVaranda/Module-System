@@ -1,13 +1,34 @@
 <label>Select Class:</label>
+<?php 
+	// Let's define what semester we are in.
+	$today = date('Y-m-d');
+	$semester = date('Y-m-d', strtotime(date('Y', strtotime($today)).'-06-01'));
+	// If current date is greater than semester 2
+	// Change current to semester 1.
+	if($today > $semester) {
+		// Get next year.
+		$year = date('Y',strtotime(date("Y-m-d", time()) . " + 365 day"));
+		$semester = date('Y-m-d', strtotime($year.'-01-01'));
+	}
+	$class = null;
+?>
 <select id="class-Select" class="form-control">
-	@foreach(Classes::where('classlecturer', Auth::user()->id)->get() as $class)
-		<?php $elective = Modules::where('mid', $class->classmodule)->first(); ?>
-		<option value="{{ $class->classid }}">{{ $elective->mshorttitle }}</option>
-	@endforeach
+	<?php foreach(Classes::where('classlecturer', Auth::user()->id)->get() as $c) {
+		// Check if this class belongs to this year.
+		if(date('Y', strtotime($c->created)) === date('Y', strtotime($today))) {
+			// Now check that it is part of this semester.
+			if(date('Y-m-d', strtotime($c->created)) < $semester) {
+				if(!isset($class)) {
+					$class = $c;
+				}
+				$elective = Modules::where('mid', $c->classmodule)->first(); ?>
+				<option value="{{ $c->classid }}">{{ $elective->mshorttitle }}</option>
+			<?php }
+		} 
+	} ?>
 </select>
 <br>
 <form action="" method="POST" id="classForm">
-	<?php $class = Classes::where('classlecturer', Auth::user()->id)->first(); ?>
 	<label>Space Limit:</label><input type="text" class="form-control" id="classlimit" placeholder="Class Space Limit" value="{{ $class->classlimit }}" />
 	<label>Space Left:</label><input type="text" class="form-control" id="classleft" placeholder="Space Left in Class" value="{{ ($class->classlimit - $class->classcurrent) }}" disabled/>
 	<input type="hidden" id="classId" value="{{ $class->classid }}"/>

@@ -1,4 +1,7 @@
-<?php $mod = Modules::where('mid', $elec->classmodule)->first(); ?>
+<?php
+	// Get the module.
+	$mod = Modules::where('mid', $elec->classmodule)->first();
+?>
 <li class="mix {{ $mod->department->faculty->short() }} {{ $mod->department->short() }}"> 
 	<a data-toggle="modal" role="button" href="#{{$mod->mcode}}"> <img src="{{URL::route('getImg', $mod->mcode)}}" alt="portfolio">
 		<div><span>{{ $mod->mshorttitle }}</span></div>
@@ -57,11 +60,28 @@
 									<h4 class="h4">Module Credits</h4>
 									{{ $mod->mcredits }}
 									<?php
+									// Let's define what semester we are in.
+									$today = date('Y-m-d');
+									$semester = date('Y-m-d', strtotime(date('Y', strtotime($today)).'-06-01'));
+									// If current date is greater than semester 2
+									// Change current to semester 1.
+									if($today > $semester) {
+										// Get next year.
+										$year = date('Y',strtotime(date("Y-m-d", time()) . " + 365 day"));
+										$semester = date('Y-m-d', strtotime($year.'-01-01'));
+									}
 									// Let's get the total spaces in elective.
 									$spaces = 0;
 									$classes = Classes::where('classmodule', $mod->mid)->get();
 									foreach($classes as $c){
-										$spaces+=($c->classlimit-$c->classcurrent);
+										
+										// Check if this class belongs to this year.
+										if(date('Y', strtotime($c->created)) === date('Y', strtotime($today))) {
+											// Now check that it is part of this semester.
+											if(date('Y-m-d', strtotime($c->created)) < $semester) {
+												$spaces+=($c->classlimit-$c->classcurrent);
+											}
+										}
 									}
 									?>
 									<h4 class="h4">Spaces Available</h4>
