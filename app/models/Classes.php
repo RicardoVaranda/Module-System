@@ -14,7 +14,11 @@ class Classes extends Eloquent {
      *
      * @var array
      */
+<<<<<<< Updated upstream
     protected $fillable = array('classlecturer', 'classstudents', 'classmodule', 'classlimit', 'classtimes', 'created');
+=======
+    protected $fillable = array('classlecturer', 'classstudents', 'classmodule', 'classlimit', 'classtimes', 'classrequests');
+>>>>>>> Stashed changes
     /**
      * 
      */
