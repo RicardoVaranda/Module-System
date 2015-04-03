@@ -81,7 +81,7 @@ $(document).ready(function(){
 	   $("#pass").focus();
 	});
 	$('#pass').change(function(){
-		$('#loginForm').submit();
+		$('#submit').click();
 	});
 	$('#user').keyup(function(e){
 		if(e.keyCode == 13)$(this).trigger("enterKey");
