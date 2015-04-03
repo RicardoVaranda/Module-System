@@ -70,6 +70,8 @@
 						<li class="electives-menu"><a class="ascensorLink ascensorLink2" href="#">Electives</a></li>
 						<li class="users-menu"><a class="ascensorLink ascensorLink3" href="#">Users</a></li>
 						<li class="profile-menu"><a class="ascensorLink ascensorLink4" 	 href="#">My Profile</a></li>
+						<li class="profile-menu"><a class="ascensorLink ascensorLink5" 	 href="#">Faculties</a></li>
+						<li class="profile-menu"><a class="ascensorLink ascensorLink6" 	 href="#">Departments</a></li>
 						<li class="signout-menu"><a class="ascensorLink" href="{{ URL::route('account-sign-out') }}">Sign out</a></li>
 					</ul>
 				</div>
@@ -106,6 +108,18 @@
 						<div class="tile tile-item tile-profile">
 							<a class="ascensorLink ascensorLink4 tile-nav" href="#">
 								<h5 class="h5">My Profile</h5>
+								<i class="fa fa-sitemap fa-4x"></i>
+							</a>
+						</div>
+						<div class="tile tile-item tile-faculty">
+							<a class="ascensorLink ascensorLink5 tile-nav" href="#">
+								<h5 class="h5">Faculties</h5>
+								<i class="fa fa-sitemap fa-4x"></i>
+							</a>
+						</div>
+						<div class="tile tile-item tile-departments">
+							<a class="ascensorLink ascensorLink6 tile-nav" href="#">
+								<h5 class="h5">Departments</h5>
 								<i class="fa fa-sitemap fa-4x"></i>
 							</a>
 						</div>
@@ -361,7 +375,8 @@
 								</form>
 							</div>
 						</div>
-            </section> 
+            </section>
+
 			<!-- /team -->
 
 			<section class="section about">
@@ -419,6 +434,66 @@
 		                            </fieldset>
 		                        </form>
 		                        <div id="state-message"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+            </section>
+            <section class="section about">
+				<div class="container">
+						<h1 class="h1">Faculties</h1>
+						<div id="facultyContainer"> 
+							<div class="col-sm-4">
+								<a data-toggle="modal" role="button" href="#newFaculty">
+									<div class="feature-box">
+										<div class="lecturer">
+											<div class="lecturer-box">
+												<span>Create New Faculty</span>
+											</div>
+										</div>
+									</div>
+								</a>
+							</div>
+							<div class="modal fade" id="newFaculty" tabindex="-1" role="dialog" aria-hidden="true">
+								<div class="modal-dialog">
+									<div  class="contact-box">
+							        	<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="lecturer-close">&times;</button>
+							            <form name="contactform" id="createFaculty" action="" method="post">
+							                <label>Faculty Name:</label><input type="text" class="form-control" id="name" placeholder="Faculty Name" required/>
+											<label>Faculty Shortname:</label><input type="text" class="form-control" id="shortname" placeholder="Faculty Shortname" required/>
+											<label>Faculty Description:</label><textarea id="description" class="form-control" rows="5" required placeholder="Faculty Description"></textarea>
+											<button type="submit" class="btn btn-primary" style="margin-top:10px;">Create Faculty</button>
+							            </form>
+									</div>
+								</div>
+							</div>
+							<?php $counter = 1; ?>
+							@foreach(Faculty::all() as $faculty)
+								<?php if($counter == 3) {
+									$counter = 0; ?>
+									<a data-toggle="modal" role="button" id="faculty{{ $faculty->facultyid }}" href="#faculty{{ $faculty->facultyid }}">
+								<?php } else { ?>
+									<a data-toggle="modal" role="button" id="faculty{{ $faculty->facultyid }}" href="#faculty{{ $faculty->facultyid }}">
+								<?php 
+									$counter++;
+									} ?>
+									<div class="feature-box">
+										<div class="lecturer">
+											<div class="lecturer-box">
+												<span>Create New Faculty</span>
+											</div>
+										</div>
+									</div>
+								</a>
+							@endforeach
+            </section>
+            <section class="section about">
+				<div class="container">
+					<h1 class="h1">Departments</h1>						
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="profile" style="padding-bottom:50px;">
+								
 							</div>
 						</div>
 					</div>
