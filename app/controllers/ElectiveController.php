@@ -339,7 +339,7 @@ class ElectiveController extends BaseController {
 	    Validator::extend('ranked', function($attribute, $value, $parameters)
 		{
 			$coord = User::where('name', $value)->first();
-			if($coord->rank < 1){
+			if($coord->rank <= 1){
 				return false;
 			}
 		   
@@ -389,8 +389,8 @@ class ElectiveController extends BaseController {
 	    Validator::extend('ranked', function($attribute, $value, $parameters)
 		{
 			$coord = User::where('name', $value)->first();
-			if($coord->rank < 1){
-				return false;
+			if($coord->rank <= 1){
+				return true;
 			}
 		   
 		  return false;

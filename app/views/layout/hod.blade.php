@@ -101,6 +101,12 @@
 						</div>
 						<div class="tile tile-item tile-lecturers">
 							<a class="ascensorLink ascensorLink3 tile-nav" href="#">
+								<h5 class="h5">Timetables</h5>
+								<i class="fa fa-group fa-4x"></i>
+							</a>
+						</div>
+						<div class="tile tile-item tile-lecturers">
+							<a class="ascensorLink ascensorLink4 tile-nav" href="#">
 								<h5 class="h5">Lecturers</h5>
 								<i class="fa fa-group fa-4x"></i>
 							</a>

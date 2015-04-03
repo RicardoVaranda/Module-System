@@ -505,6 +505,119 @@ function message(message, success) {
 }
 
 /* ==============================================
+Timetables
+=============================================== */
+
+var nClass = '1';
+var classNum = '<br><div class="form-group"><i class="fa fa-sort-numeric-asc"></i>'+
+			'<input type="number" name="classNum" id="numClass"'+
+			'class="form-control" placeholder="Classes per Week" min="1" max="6" value="'+ nClass +'"/></div>';
+
+var day = '';
+var time = '';
+var times = [];
+
+function getClass(day, time)
+{
+	return '<div id="classTime">' +
+			'<select style="width:33.333%;" id="cDay">' +
+				'<option ' + ((day == "monday")? "selected=\"selected\"" : "") + ' value="monday">Monday</option>' +
+				'<option ' + ((day == "tuesday")? "selected=\"selected\"" : "") + ' value="tuesday">Tuesday</option>' +
+				'<option ' + ((day == "wednesday")? "selected=\"selected\"" : "") + ' value="wednesday">Wednesday</option>' +
+				'<option ' + ((day == "thursday")? "selected=\"selected\"" : "") + ' value="thursday">Thursday</option>' +
+				'<option ' + ((day == "friday")? "selected=\"selected\"" : "") + ' value="friday">Friday</option>' +
+			'</select>' +
+			'<select style="width:33.333%;" id="cTime">' +
+				'<option ' + ((time == "9")? "selected=\"selected\"" : "") + ' value="9">9:00</option>' +
+				'<option ' + ((time == "10")? "selected=\"selected\"" : "") + ' value="10">10:00</option>' +
+				'<option ' + ((time == "11")? "selected=\"selected\"" : "") + ' value="11">11:00</option>' +
+				'<option ' + ((time == "12")? "selected=\"selected\"" : "") + ' value="12">12:00</option>' +
+				'<option ' + ((time == "13")? "selected=\"selected\"" : "") + ' value="13">13:00</option>' +
+				'<option ' + ((time == "14")? "selected=\"selected\"" : "") + ' value="14">14:00</option>' +
+				'<option ' + ((time == "15")? "selected=\"selected\"" : "") + ' value="15">15:00</option>' +
+				'<option ' + ((time == "16")? "selected=\"selected\"" : "") + ' value="16">16:00</option>' +
+				'<option ' + ((time == "17")? "selected=\"selected\"" : "") + ' value="17">17:00</option>' +
+			'</select>' +
+			'<input type"text"  style="width:33.333%;" maxlength="5" id="cRoom" placeholder="Room Number"/>'+
+			'</div>';
+}
+
+var saveTimes = '</br><a data-toggle="modal" class="submit btn '+
+				'btn-info btn-block" style="width:25%" role="button" '+
+				'id="saveTime">Save Class Times</a>';
+				
+function getTimes(){
+	times.length = 0;
+	$("#classTimes").children().each(function() {
+		day = $(this).find('#cDay').val();
+		time = $(this).find('#cTime').val();
+		room = $(this).find('#cRoom').val();
+		times.push([day, time, room]);
+	});
+}
+			
+			
+			
+			
+function saveButton(){
+	$('#classTimes').append(saveTimes);
+	$('#saveTime').on("click", function(){
+		getTimes();
+		for(var i = 0; i < parseInt($('#numClass').val()); i++){
+			switch(times[i][0]){
+				case 'monday':
+					$("#timetable").find("tr:eq( "+ (parseInt(times[i][1])-7)+")").find("td:eq(1)");
+				break;
+				case 'tuesday':
+					$("#timetable").find("tr:eq( "+ (parseInt(times[i][1])-7)+")").find("td:eq(2)"); 
+				break;
+				case 'wednesday':
+					$("#timetable").find("tr:eq( "+ (parseInt(times[i][1])-7)+")").find("td:eq(3)");
+				break;
+				case 'thursday':
+					$("#timetable").find("tr:eq( "+ (parseInt(times[i][1])-7)+")").find("td:eq(4)"); 
+				break;
+				case 'friday':
+					$("#timetable").find("tr:eq( "+ (parseInt(times[i][1])-7)+")").find("td:eq(5)"); 
+				break;
+			}
+		}
+	});
+}
+			
+			
+$("#loadTT").click(
+	function(){
+		var opt = $('option[value="'+$('#elective').val()+'"]');
+		if(!opt.length){
+			alert('Error: No Elective Selected.')
+			return;
+		}
+
+		$('#numClasses').empty();
+		$('#classTimes').empty();
+		
+		$('#numClasses').append(classNum);
+		$('#classTimes').append(getClass());
+		$('#numClasses').append(saveButton());
+		
+		$('#numClass').change(function(){
+			getTimes();
+			$('#classTimes').empty();
+			for(var i = 0 ; i< parseInt($('#numClass').val()); i++){
+				if(times[i, 0] == null){
+					times.push(['monday', '9', '']);
+				}
+				
+				$('#classTimes').append(getClass(times[i][0], times[i][1], times[i][2]));
+			}
+			$('#classTimes').append(saveButton());
+		});
+		
+	});
+			
+
+/* ==============================================
 Loading
 =============================================== */
 $(window).load(function(){
