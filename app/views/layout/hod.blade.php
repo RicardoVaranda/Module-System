@@ -582,7 +582,7 @@
 							</div>
 						</div>
 							
-						<div class="col-sm-6 col-md-4 col-lg-4">
+					<div class="col-sm-6 col-md-4 col-lg-4">
 							<div class="profile settings">
 								<h4 class="h4">Settings</h4>
 								<div class="skill-q" id="changePass">
@@ -590,40 +590,12 @@
 									<a data-toggle="modal" class="submit btn btn-info btn-block" role="button" href="#contact">Change Password Now</a>
 								</div>
 								@if(Session::has('pass'))
-									<div class="globalU warn arrowU">{{ Session::get('global') }}</div>
+									<div class="globalU warn arrowU">{{ Session::get('pass') }}</div>
 								@endif
 							</div>
 						</div>
 					</div>
-					<div class="modal fade" id="contact" tabindex="-1" role="dialog" aria-hidden="true">
-						<div class="modal-dialog">
-							<div  class="contact-box">
-		                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		                        <form name="contactform" id="contactform" action="php/contactform.php" method="post">
-		                            <fieldset>
-		                                <h4 class="h4">Change Your Password</h4>
-		                                <div class="form-group">
-		                                    <i class="fa fa-unlock"></i>
-		                                    <input type="password" name="pass" id="pass" class="form-control" placeholder="Old Password (required)" required>
-		                                </div>
-		                                <div class="form-group">
-		                                    <i class="fa fa-key"></i>
-		                                    <input type="password" name="newPass" id="npassword" class="form-control" placeholder="New Password (required)" required>
-		                                </div>
-		                                <div class="form-group">
-		                                    <i class="fa fa-key"></i>
-		                            		<input type="password" name="passAgain" id="passagain" class="form-control" placeholder="Password Again (required)" required>
-		         		                </div>
-		                                <div class="form-group">
-		                                    <i class="fa fa-arrow-right"></i>
-		                                    <button  type="submit" id="submit" class="btn btn-info btn-block">Change Password</button>
-		                                </div>
-		                            </fieldset>
-		                        </form>
-		                        <div id="state-message"></div>
-							</div>
-						</div>
-					</div>
+					@extends('account.password')
 					<div class="row">
 						<hr class="metro-hr">
 						<h2 class="h2 lead">My Modules</h2>

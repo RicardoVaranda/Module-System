@@ -130,7 +130,7 @@ class AccountController extends BaseController{
 
 		if($validator->fails()){
 			return Redirect::route('home', ['#changePass'])
-					->withErrors($validator)->with('pass', 'You password failed the validation');
+					->withErrors($validator)->with('pass', 'Your password failed the validation');
 		} else {
 
 			$user = User::find(Auth::user()->id);
