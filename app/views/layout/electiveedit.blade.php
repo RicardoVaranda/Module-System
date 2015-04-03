@@ -1,4 +1,4 @@
-<li class="mix all"> 
+<li class="mix all {{$type=='edit' ? $elec->classid : ''}}"> 
 	<a data-toggle="modal" role="button" href="{{ $type=='edit' ? '#editMod'.$mod->mcode : '#newMod'}}"> <img src="{{ $type=='edit' ? URL::route('getImg', $mod->mcode) : URL::route('getImg', 'new')}}" alt="portfolio">
 		<div><span>{{ $type=='edit' ? $mod->mshorttitle : 'Create new Module'}}</span></div>
 	</a>

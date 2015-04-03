@@ -2,5 +2,7 @@
 
 class TimetableController extends BaseController {
 
+	
 
+}
 ?>

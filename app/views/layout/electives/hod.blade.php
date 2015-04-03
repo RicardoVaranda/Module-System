@@ -1,4 +1,4 @@
-<li class="mix all"> 
+<li class="mix all {{$type=='edit' ? $elec->classid : ''}}"> 
 	<a data-toggle="modal" role="button" href="{{ $type=='edit' ? '#editElec'.$elec->classid : '#newElec'}}"> <img src="{{ $type=='edit' ? URL::route('getImg', $elec->module->mcode) : URL::route('getImg', 'newElec')}}" alt="portfolio">
 		<div><span>{{ $type=='edit' ? $elec->module->mshorttitle : 'Create new Elective'}}</span></div>
 	</a>
@@ -28,7 +28,9 @@
 	                        <input type="text" name="classmodule" value="{{$type=='edit' ? $elec->classmodule : ''}}" id="module" list="modules" class="form-control" placeholder="Class Module" required>
 							<datalist id="modules">
 							   <select onchange="$('#module').val(this.value)">
-								   <option value="BIG ASS FORLOOP HERE LELELELEL"></option>
+								   @foreach(Modules::where('departmentid', Auth::user()->department)->get() as $mod)
+								   <option value="{{$mod->mid}}" label="{{$mod->mshorttitle}}"></option>
+								   @endforeach
 							   </select>
 							</datalist>
 	                    </div>

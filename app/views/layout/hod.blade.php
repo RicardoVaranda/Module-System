@@ -69,8 +69,9 @@
 					<ul class="nav navbar-nav pull-right">
 						<li class="modules-menu"><a class="ascensorLink ascensorLink1" href="#">Modules</a></li>
 						<li class="electives-menu"><a class="ascensorLink ascensorLink2" href="#">Electives</a></li>
-						<li class="lecturers-menu"><a class="ascensorLink ascensorLink3" href="#">Lecturers</a></li>
-						<li class="profile-menu"><a class="ascensorLink ascensorLink4" 	 href="#">My Profile</a></li>
+						<li class="timetables-menu"><a class="ascensorLink ascensorLink3" href="#">Timetables</a></li>
+						<li class="lecturers-menu"><a class="ascensorLink ascensorLink4" href="#">Lecturers</a></li>
+						<li class="profile-menu"><a class="ascensorLink ascensorLink5" href="#">Profile</a></li>
 						<li class="signout-menu"><a class="ascensorLink" href="{{ URL::route('account-sign-out') }}">Sign out</a></li>
 					</ul>
 				</div>
@@ -105,8 +106,8 @@
 							</a>
 						</div>
 						<div class="tile tile-item tile-profile">
-							<a class="ascensorLink ascensorLink4 tile-nav" href="#">
-								<h5 class="h5">My Profile</h5>
+							<a class="ascensorLink ascensorLink5 tile-nav" href="#">
+								<h5 class="h5">Profile</h5>
 								<i class="fa fa-sitemap fa-4x"></i>
 							</a>
 						</div>
@@ -127,10 +128,19 @@
 					<h1 class="h1">Modules</h1>
 					<!-- Display all electives, add a new electives button, in that button open up a list of modules so that we can select the module that we want to create as an elective -->
 					<div class="row">
+						<div class="grid-controls">
+							  	<select class="dep styled-select blue semi-square" id="searchMods">
+									<option label="All" value="all"></option>
+									@foreach(Modules::where('departmentid', Auth::user()->department)->get() as $mod)
+									<option label="{{$mod->mshorttitle}}" value="{{$mod->mid}}"></option>
+									@endforeach
+								</select>
+							</datalist>
+						</div>
 						<ul id="grid" class="mod">
 						</ul>
 					</div>
-				</div>
+				</div> 
 				<!-- Custom JQuery Ajax Next level system - Ricardo -->
 
 				<script type="text/javascript">
@@ -141,6 +151,7 @@
 						    $(".load.Mod").show();
 						}).bind('ajaxStop', function(){
 						    $(".load.Mod").hide();
+						    $("#searchMods").show();
 						});
 					        $.ajax({
 					            type: "POST",
@@ -235,12 +246,24 @@
 			</section>
 			<!-- /modules -->
 
-						<section class="section electives">
+			<section class="section electives">
 				<div class="load Elec"></div>
 				<div class="container">
 					<h1 class="h1">Electives</h1>
 					<!-- Display all electives, add a new electives button, in that button open up a list of modules so that we can select the module that we want to create as an elective -->
 					<div class="row">
+						<div class="grid-controls">
+							  	<select class="elec styled-select blue semi-square" id="searchElecs">
+									<option label="All" value="all"></option>
+									@foreach(Classes::all() as $elec)
+									<?php $mod = Modules::find($elec->classmodule); ?>
+										@if ($mod->departmentid ==  Auth::user()->department)
+											<option label="{{$mod->mshorttitle}}" value="{{$elec->classid}}"></option>
+										@endif
+									@endforeach
+								</select>
+							</datalist>
+						</div>
 						<ul id="grid" class="electives">
 						</ul>
 					</div>
@@ -255,6 +278,7 @@
 						    $(".load.Elec").show();
 						}).bind('ajaxStop', function(){
 						    $(".load.Elec").hide();
+						    $("#searchElecs").show();
 						});
 					        $.ajax({
 					            type: "POST",
@@ -347,7 +371,132 @@
 			</section>
 			<!--Electives -->
 			
-			
+			<section class="section timetables">  
+				<div class="container">	
+					<h1 class="h1">Timetables</h1>
+					
+					<div class="row">
+						<hr class="metro-hr">
+						<div class="col-sm-9">
+							<input type="text" name="electimes" id="elective" list="electives" class="form-control" placeholder="Elective Module" required="">
+							<datalist id="electives">
+							   <select onchange="$('#elective').val(this.value)">
+								   <option value="Maths and Music" label="1"></option>
+							   </select>
+							</datalist>
+
+							<div id="numClasses"></div>
+
+							<br>
+							<div id="classTimes">
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<ul class="check-our-work">
+								<a data-toggle="modal" class="submit btn btn-info btn-block" role="button" id="loadTT">Load Timetable</a>
+							</ul>
+						</div>
+						<hr class="metro-hr">
+					</div>
+
+					<div class="row">
+						<div class="col-sm-12 custTable">
+							    <table id="timetable" class="heavyTable">
+							    	<thead>
+							    		<tr>
+							    			<th colspan="6"><h1>Maths and Music</h1><h4>Spaces Available: <div id="spacesAvailable">DynamicUpdateThis</div></h4></th>
+							    		</tr>
+							    	</thead>
+									<thead>
+										<tr id="days">
+											<th></th>
+											<th>Monday</th>
+											<th>Tuesday</th>
+											<th>Wednesday</th>
+											<th>Thursday</th>
+											<th>Friday</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr id="9">
+											<td class="time">9:00</td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
+										<tr id="10">
+											<td class="time">10:00</td>
+											<td></td>
+										  	<td></td>
+										  	<td></td>
+										  	<td></td>
+										  	<td></td>
+										</tr>
+										<tr id="11">
+										  	<td class="time">11:00</td>
+										  	<td></td>
+										  	<td></td>
+										  	<td></td>
+										  	<td></td>
+										  	<td></td>
+										</tr>
+										<tr id="12">
+										  	<td class="time">12:00</td>
+										  	<td></td>
+										  	<td></td>
+										  	<td></td>
+										  	<td></td>
+										  	<td></td>
+										</tr>
+										<tr id="13">
+										  	<td class="time">13:00</td>
+										  	<td></td>
+										  	<td></td>
+										  	<td></td>
+										  	<td></td>
+										  	<td></td>
+										</tr>
+										<tr id="14">
+										  	<td class="time">14:00</td>
+										  	<td></td>
+										  	<td></td>
+										  	<td></td>
+										  	<td></td>
+										  	<td></td>
+										</tr>
+										<tr id="15">
+										  	<td class="time">15:00</td>
+										  	<td></td>
+										  	<td></td>
+										  	<td></td>
+										  	<td></td>
+										  	<td></td>
+										</tr>
+										<tr id="16">
+										  	<td class="time">16:00</td>
+										  	<td></td>
+										  	<td></td>
+										  	<td></td>
+										  	<td></td>
+										  	<td></td>
+										</tr>
+										<tr id="17">
+										  	<td class="time">17:00</td>
+										  	<td></td>
+										  	<td></td>
+										  	<td></td>
+										  	<td></td>
+										  	<td></td>
+										</tr>
+									</tbody>
+							    </table>
+						</div>
+					</div>
+					<hr class="metro-hr">
+				</div>
+			</section> 
 			<!-- /service -->
 			
             <section class="section team">

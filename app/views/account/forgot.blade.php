@@ -1,14 +1,18 @@
-@extends('layout.main')
+@extends('account.loginTemplate')
 
 @section('content')
-	<form action="{{ URL::route('account-forgot-password-post') }}" method="post">
-		<div class="field">
-			Email: <input type="text" name="email" {{ (Input::old('email')) ? 'value ="'. e(Input::old('email')) . '"' : '' }}>
-			@if($errors->has('email'))
+	<h1>Forgot Password</h1>
+	<h4>Enter email to recover your password</h4>
+	<form style="background:none" action="{{ URL::route('account-forgot-password-post') }}" method="post">
+		<div style="color:white">
+			Email: <input type="text" name="email" {{ (Input::old('email')) ? 'value ="'. e(Input::old('email')) . '"' : '' }}>	
+		<input type="submit" value="Recover"><br />
+		@if($errors->has('email'))
 				{{ $errors->first('email') }}
-			@endif
+		@endif
 		</div>
-		<input type="submit" value="Recover">
 		{{ Form::token() }}
-	</form>
+	</form><br /><br />
+	<a href="signin"><button><< Back</button></a>	
 @stop
+

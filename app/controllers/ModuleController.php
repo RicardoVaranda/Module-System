@@ -141,87 +141,87 @@ class ModuleController extends BaseController {
 		}
 	}
 
-		public function getModules(){
-			if(Auth::check()){
-				if (Auth::user()->rank >= 2) 
-					return View::make('layout.modules.load') ;
-				else
-					return;
-			}
+	public function getModules(){
+		if(Auth::check()){
+			if (Auth::user()->rank >= 2) 
+				return View::make('layout.modules.load') ;
 			else
-			{
-				return Redirect::route('account-sign-in');
-			}
+				return;
 		}
-
-		public function getImage($modCode){
-
-		    $cacheKey = md5($modCode);
-
-		    $image = Cache::remember($cacheKey, 3600, function() use ($modCode) {
-		        // start making our image (this assumes your original image is within "app/storage/img")
-		        $colors = array('#00c6ff', '#f39c12', '#ff0000', '#49E035');
-		        $color = $colors[array_rand($colors)];
-		        $img = Image::canvas(384, 384, $color);
-		        $img->insert(public_path('images/layout.png'), 'top-left', 5, 0);
-
-		        $mod = Modules::where('mcode', $modCode);
-
-		        if($mod->count()){
-		        	$mod = $mod->first();
-
-		        	$img->text($mod->department->name(), 192, 250, function($font) {
-					    $font->file(public_path('fonts/segoeui.ttf'));
-					    $font->size(30);
-					    $font->color('#fff');
-					    $font->align('center');
-					});
-
-					$img->text($mod->mshorttitle, 192, 320, function($font) {
-					    $font->file(public_path('fonts/segoeui.ttf'));
-					    $font->size(25);
-					    $font->color('#fff');
-					    $font->align('center');
-					});
-
-		        } elseif ($modCode == 'newMod') {
-		        	$img->text('Create new Module!', 192, 300, function($font) {
-					    $font->file(public_path('fonts/segoeui.ttf'));
-					    $font->size(30);
-					    $font->color('#fff');
-					    $font->align('center');
-					});
-		        } elseif ($modCode == 'newElec') {
-		        	$img->text('Create new Elective!', 192, 300, function($font) {
-					    $font->file(public_path('fonts/segoeui.ttf'));
-					    $font->size(30);
-					    $font->color('#fff');
-					    $font->align('center');
-					});
-		        } else {
-			        $img->text('Error: Module not Found!', 192, 300, function($font) {
-					    $font->file(public_path('fonts/segoeui.ttf'));
-					    $font->size(30);
-					    $font->color('#fff');
-					    $font->align('center');
-					});
-		   		}
-
-		        // return the image as a JPG
-		        return $img->encode('jpg');
-		    });
-
-		    // return the image
-		    $headers = [
-		        'Content-Type'        => 'image/jpeg',
-		        'Content-Disposition' => 'inline',
-		        'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0',
-		        'Pragma'              => 'public',
-		        'Etag'                => md5($image),
-		    ];
-
-		    return Response::make($image, 200, $headers)->setTtl((60 * 30));
+		else
+		{
+			return Redirect::route('account-sign-in');
 		}
- 
 	}
+
+	public function getImage($modCode){
+
+	    $cacheKey = md5($modCode);
+
+	    $image = Cache::remember($cacheKey, 3600, function() use ($modCode) {
+	        // start making our image (this assumes your original image is within "app/storage/img")
+	        $colors = array('#00c6ff', '#f39c12', '#ff0000', '#49E035');
+	        $color = $colors[array_rand($colors)];
+	        $img = Image::canvas(384, 384, $color);
+	        $img->insert(public_path('images/layout.png'), 'top-left', 5, 0);
+
+	        $mod = Modules::where('mcode', $modCode);
+
+	        if($mod->count()){
+	        	$mod = $mod->first();
+
+	        	$img->text($mod->department->name(), 192, 250, function($font) {
+				    $font->file(public_path('fonts/segoeui.ttf'));
+				    $font->size(30);
+				    $font->color('#fff');
+				    $font->align('center');
+				});
+
+				$img->text($mod->mshorttitle, 192, 320, function($font) {
+				    $font->file(public_path('fonts/segoeui.ttf'));
+				    $font->size(25);
+				    $font->color('#fff');
+				    $font->align('center');
+				});
+
+	        } elseif ($modCode == 'newMod') {
+	        	$img->text('Create new Module!', 192, 300, function($font) {
+				    $font->file(public_path('fonts/segoeui.ttf'));
+				    $font->size(30);
+				    $font->color('#fff');
+				    $font->align('center');
+				});
+	        } elseif ($modCode == 'newElec') {
+	        	$img->text('Create new Elective!', 192, 300, function($font) {
+				    $font->file(public_path('fonts/segoeui.ttf'));
+				    $font->size(30);
+				    $font->color('#fff');
+				    $font->align('center');
+				});
+	        } else {
+		        $img->text('Error: Module not Found!', 192, 300, function($font) {
+				    $font->file(public_path('fonts/segoeui.ttf'));
+				    $font->size(30);
+				    $font->color('#fff');
+				    $font->align('center');
+				});
+	   		}
+
+	        // return the image as a JPG
+	        return $img->encode('jpg');
+	    });
+
+	    // return the image
+	    $headers = [
+	        'Content-Type'        => 'image/jpeg',
+	        'Content-Disposition' => 'inline',
+	        'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0',
+	        'Pragma'              => 'public',
+	        'Etag'                => md5($image),
+	    ];
+
+	    return Response::make($image, 200, $headers)->setTtl((60 * 30));
+	}
+ 
+}
 ?>

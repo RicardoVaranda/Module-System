@@ -125,6 +125,11 @@ form{
 #showPass:active{
 	background: url(../images/eye_active.jpg);
 }
+
+.forgotPass {
+	margin-left: 20px;
+}
+
 p{
 	font-family: segoelight;
 	color: white;

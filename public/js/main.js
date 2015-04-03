@@ -26,8 +26,6 @@ $(document).ready(function () {
 		}
 	})
 	
-	$("#about-carousel").carousel({interval: 2000});
-	
 	// portfolio
 	$("#grid").mixitup();
 	
@@ -38,7 +36,10 @@ $(document).ready(function () {
 
 	$('.dep').on('change', function() {
 	  $("#grid").mixitup('filter', this.value);
-	})
+	});
+	$('.elec').on('change', function() {
+	  $("#grid.electives").mixitup('filter', this.value);
+	});
 
 	// center box
 	function centerBox(){

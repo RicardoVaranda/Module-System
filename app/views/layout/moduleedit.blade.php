@@ -1,5 +1,5 @@
-<li class="mix all"> 
-	<a data-toggle="modal" role="button" href="{{ $type=='edit' ? '#editMod'.$mod->mcode : '#newMod'}}"> <img src="{{ $type=='edit' ? URL::route('getImg', $mod->mcode) : URL::route('getImg', 'newMod')}}" alt="portfolio">
+<li class="mix all {{$type=='edit' ? $mod->mid : ''}}"> 
+	<a data-toggle="modal" role="button" href="{{ $type=='edit' ? '#editMod'.$mod->mcode : '#newMod'}}"> <img src="" alt="portfolio">
 		<div><span>{{ $type=='edit' ? $mod->mshorttitle : 'Create new Module'}}</span></div>
 	</a>
 	<div class="modal fade" id="{{ $type=='edit' ? 'editMod'.$mod->mcode : 'newMod'}}" tabindex="-1" role="dialog" aria-hidden="true">
@@ -69,7 +69,7 @@
 	                    <input type="hidden" name="mid" value="{{$type=='edit' ? $mod->mid : ''}}">
 	                    <div class="form-group">
 	                        <i class="fa fa-arrow-right"></i>
-	                        <button type="submit" id="submit" class="btn btn-info btn-block">Submit new Module</button>
+	                        <button type="submit" id="submit" class="btn btn-info btn-block">{{$type=='edit' ? 'Edit' : 'Submit new'}} Module</button>
 	                		{{Form::token()}}
 	                    </div>
 	                </fieldset>
