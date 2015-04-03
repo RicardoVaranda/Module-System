@@ -86,12 +86,25 @@ $( document ).on('submit', '.electiveRegister', function() {
 		var response = data;
 		// TODO: Replace alerts with divs or something.
 	  	if(response.success) {
+	  		var classBlock = '<div class="col-sm-6 col-md-4 myclass'+electiveId+'"><div class="feature-box">' +
+	  							'<div class="feature-icon"><i class="fa fa-twitter"></i></div>'+
+	  							'<div class="feature-text"><h3>'+ response.shorttitle +'</h3>'+
+	  							'<small style="float:right"><u>'+ response.credits +' Credits</u></small>'+
+	  							'<p>'+ response.lecturer +'</p></br></div><form class="electiveUnregister">'+
+	  								'<input type="hidden" id="electiveId" value="'+ electiveId +'" />'+
+	  								'<button type="submit" class="pull-left btn-elec btn-primary"><i class="fa fa-arrow-right"></i>remove elective</button>'+
+	  							'</form><button type="button" class="pull-right btn-elec btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>'+
+	  						 '</div></div>';
+
+	  		// Insert classBlock to myelectives.
+	  		$('#myelectives').append(classBlock);
+
 	  		// Inform user.
 	  		successMessage("Successfully registered to module!");
 	  		
 	  		// Replace form with deregister form.
-	  		form.removeClass('electiveRegister').addClass('electiveUnregister');
-	  		form.find('button').html("Unregister");
+	  		$('#registration'+electiveId).closest('form').removeClass('electiveRegister').addClass('electiveUnregister');
+	  		$('#registration'+electiveId).html("Unregister");
 	  	} else {
 	  		// Inform user of error.
 	  		failMessage(response.errors);
@@ -122,14 +135,17 @@ $( document ).on('submit', '.electiveUnregister', function() {
 					electiveId: electiveId})
 	.done(function( data ) {
 		var response = data;
-		// TODO: Replace alerts with divs or something.
 	  	if(response.success) {
+	  		// Remove from myelectives.
+	  		var myclass = $('.myclass'+electiveId).remove();
+
+
 	  		// Inform user.
 	  		successMessage("Successfully unregistered from module!");
 	  		
 	  		// Replace form with deregister form.
-	  		form.removeClass('electiveUnregister').addClass('electiveRegister');
-	  		form.find('button').html("Register");
+	  		$('#registration'+electiveId).closest('form').removeClass('electiveUnregister').addClass('electiveRegister');
+	  		$('#registration'+electiveId).html("Register");
 	  	} else {
 	  		// Inform user of error.
 	  		failMessage(response.errors);

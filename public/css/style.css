@@ -245,6 +245,12 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 .tile-contact {
 	background: #47E4C4;
 }
+.tile-faculty {
+	background: #47E4C4;
+}
+.tile-departments {
+	background: #47E4C4;
+}
 .tile-signout {
 	background: #3cf;
 }

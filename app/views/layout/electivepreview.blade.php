@@ -39,12 +39,12 @@
 								if($registered) { ?>
 									<form class="electiveUnregister" action="" method="POST">
 									<input type="hidden" id="electiveId" value="{{ $mod->mid }}" />
-									<button type="submit" class="btn-primary elective-btn">Unregister</button>
+									<button type="submit" class="btn-primary elective-btn" id="registration{{ $mod->mid }}">Unregister</button>
 								</form>
 								<?php } else { ?>
 									<form class="electiveRegister" action="" method="POST">
 										<input type="hidden" id="electiveId" value="{{ $mod->mid }}" />
-										<button type="submit" class="btn-primary elective-btn">Register</button>
+										<button type="submit" class="btn-primary elective-btn" id="registration{{ $mod->mid }}">Register</button>
 									</form>
 								<?php } } ?>
 							</div>

@@ -21,7 +21,7 @@
 	                    <div id="mshorttitle_Errors" class="isa_error" style="display: none;"></div>
 	                    <div class="form-group">
 	                        <i class="fa fa-university"></i>
-	                        <textarea type="text" name="mdescription" id="desc" class="form-control" placeholder="Module Description (required)" required>{{ $type=='edit' ? $mod->mdescription : ''}}</textarea>
+	                        <textarea type="text" name="mdescription" id="desc" class="form-control" rows="5" placeholder="Module Description (required)" required>{{ $type=='edit' ? $mod->mdescription : ''}}</textarea>
 	                    </div>
 	                    <div id="mdescription_Errors" class="isa_error" style="display: none;"></div>
 	                    <div class="form-group">

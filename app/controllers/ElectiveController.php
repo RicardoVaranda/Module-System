@@ -103,9 +103,17 @@ class ElectiveController extends BaseController {
 			}
 
 			if($errors == '') {
+				// Get Module info.
+				$module = Modules::find(Input::get('electiveId'));
+				// Get lecturer info.
+				$lecturer = User::find($class->classlecturer);
+
 				return Response::json(array(
 										'success' => true,
-										'spaces' => $spaces
+										'spaces' => $spaces,
+										'shorttitle' => $module->mshorttitle,
+										'credits'	=> $module->mcredits,
+										'lecturer' => $lecturer->name
 									));
 			}
 
@@ -147,6 +155,13 @@ class ElectiveController extends BaseController {
 					}
 				}
 			}
+			// Santize elective array.
+			$temp = array();
+			foreach($electives as $e) {
+				array_push($temp, $e);
+			}
+			$electives = $temp;
+
 
 			if($classId != '') {
 

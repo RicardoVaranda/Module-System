@@ -243,9 +243,17 @@
 					<div class="row">
 						<hr class="metro-hr">
 						<h2 class="h2 lead">My Electives</h2>
-							@foreach(json_decode(Auth::user()->electives) as $elec)
-								@include('layout.myelectives', array('elec' => $elec))
-							@endforeach
+							<div id="myelectives">
+								<?php 
+									// Get the electives.
+									$electives = Auth::user()->electives;
+									// Make sure we actually got something.
+									if($electives != null) {
+										foreach(json_decode($electives) as $elec) { ?>
+											@include('layout.myelectives', array('elec' => $elec))
+									<?php	}
+									}
+								?>
 						<hr class="metro-hr">
 					</div>
 						
