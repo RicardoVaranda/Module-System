@@ -457,8 +457,8 @@
 							<div class="modal fade" id="newFaculty" tabindex="-1" role="dialog" aria-hidden="true">
 								<div class="modal-dialog">
 									<div  class="contact-box">
-							        	<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="lecturer-close">&times;</button>
-							            <form name="contactform" id="createFaculty" action="" method="post">
+							        	<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="faculty-close">&times;</button>
+							            <form id="createFaculty" action="" method="post">
 							                <label>Faculty Name:</label><input type="text" class="form-control" id="name" placeholder="Faculty Name" required/>
 											<label>Faculty Shortname:</label><input type="text" class="form-control" id="shortname" placeholder="Faculty Shortname" required/>
 											<label>Faculty Description:</label><textarea id="description" class="form-control" rows="5" required placeholder="Faculty Description"></textarea>
@@ -469,22 +469,31 @@
 							</div>
 							<?php $counter = 1; ?>
 							@foreach(Faculty::all() as $faculty)
-								<?php if($counter == 3) {
-									$counter = 0; ?>
-									<a data-toggle="modal" role="button" id="faculty{{ $faculty->facultyid }}" href="#faculty{{ $faculty->facultyid }}">
-								<?php } else { ?>
-									<a data-toggle="modal" role="button" id="faculty{{ $faculty->facultyid }}" href="#faculty{{ $faculty->facultyid }}">
-								<?php 
-									$counter++;
-									} ?>
-									<div class="feature-box">
-										<div class="lecturer">
-											<div class="lecturer-box">
-												<span>Create New Faculty</span>
+								<div class="col-sm-4">
+									<a data-toggle="modal" role="button" id="faculty{{ $faculty->facultyid }}" href="#editFaculty{{ $faculty->facultyid }}">
+										<div class="feature-box">
+											<div class="lecturer">
+												<div class="lecturer-box">
+													<span>{{ $faculty->facultyname }}</span>
+												</div>
 											</div>
 										</div>
+									</a>
+								</div>
+								<div class="modal fade" id="editFaculty{{ $faculty->facultyid }}" tabindex="-1" role="dialog" aria-hidden="true">
+									<div class="modal-dialog">
+										<div  class="contact-box">
+								        	<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="faculty-close">&times;</button>
+							                <form class="editFaculty" action="" method="post">
+							                	<label>Faculty Name:</label><input type="text" class="form-control" id="name" placeholder="Faculty Name" value="{{ $faculty->facultyname }}" required/>
+												<label>Faculty Shortname:</label><input type="text" class="form-control" id="shortname" placeholder="Faculty Shortname" value="{{ $faculty->facultyshort }}" required/>
+												<label>Faculty Description:</label><textarea id="description" class="form-control" rows="5" required placeholder="Faculty Description">{{ $faculty->facultydescription }}</textarea>
+												<input type="hidden" id="facultyid" value="{{ $faculty->facultyid }}" />
+												<button type="submit" class="btn btn-primary" style="margin-top:10px;">Update Faculty</button>
+								            </form>
+										</div>
 									</div>
-								</a>
+								</div>
 							@endforeach
             </section>
             <section class="section about">

@@ -84,7 +84,6 @@ $( document ).on('submit', '.electiveRegister', function() {
 					electiveId: electiveId })
 	.done(function( data ) {
 		var response = data;
-		// TODO: Replace alerts with divs or something.
 	  	if(response.success) {
 	  		var classBlock = '<div class="col-sm-6 col-md-4 myclass'+electiveId+'"><div class="feature-box">' +
 	  							'<div class="feature-icon"><i class="fa fa-twitter"></i></div>'+
@@ -470,6 +469,113 @@ $( document ).on('submit', '#createUsersCSV', function() {
 	// Release Button.
 	form.find('button').prop('disabled', false);
 });
+
+
+$( document ).on('submit', '#createFaculty', function() {
+	// Prevent default action.
+	event.preventDefault();
+	
+	// Get form.
+    var form = $(this);
+    // Lock Button.
+	form.find('button').prop('disabled', true);
+
+    // Get the Faculty Information.
+    var name = form.find('#name').val();
+    var shortname = form.find('#shortname').val();
+    var description = form.find('#description').val();
+
+    $.post( "account/create-faculty", {
+					name: name,
+					shortname: shortname,
+					description: description })
+	.done(function( data ) {
+		var response = data;
+	  	if(response.success) {
+	  		// Clean form.
+	  		form.find('#name').val('');
+	  		form.find('#shortname').val('');
+	  		form.find('#description').val('');
+
+	  		// Insert faculty to facultyContainer.
+	  		var faculty = '<div class="col-sm-4">'+
+								'<a data-toggle="modal" role="button" id="faculty'+ response.facultyId +'" href="#editFaculty'+ response.facultyId +'">'+
+									'<div class="feature-box">'+
+										'<div class="lecturer">'+
+											'<div class="lecturer-box">'+
+												'<span>'+ name +'</span>'+
+											'</div>'+
+										'</div>'+
+									'</div>'+
+								'</a>'+
+							'</div>'+
+							'<div class="modal fade" id="editFaculty'+ response.facultyId +'" tabindex="-1" role="dialog" aria-hidden="true">'+
+								'<div class="modal-dialog">'+
+									'<div  class="contact-box">'+
+							        	'<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="faculty-close">&times;</button>'+
+						                '<form class="editFaculty" action="" method="post">'+
+						                	'<label>Faculty Name:</label><input type="text" class="form-control" id="name" placeholder="Faculty Name" value="'+ name +'" required/>'+
+											'<label>Faculty Shortname:</label><input type="text" class="form-control" id="shortname" placeholder="Faculty Shortname" value="'+ shortname +'" required/>'+
+											'<label>Faculty Description:</label><textarea id="description" class="form-control" rows="5" required placeholder="Faculty Description">'+ description +'</textarea>'+
+											'<input type="hidden" id="facultyid" value="'+ response.facultyId +'" />'+
+											'<button type="submit" class="btn btn-primary" style="margin-top:10px;">Update Faculty</button>'+
+							            '</form>'+
+									'</div>'+
+								'</div>'+
+							'</div>';
+
+			$('#facultyContainer').append(faculty);
+
+			// Close window and inform user.
+			$('#faculty-close').click();
+
+	  		successMessage('Faculty created Successfully!');
+	  	} else {
+	  		// Inform user of errors.
+	  		failMessage(response.errors);
+	  	}
+	  	form.find('button').prop('disabled', false);
+	  });
+		form.find('button').prop('disabled', false);
+
+});
+
+$( document ).on('submit', '.editFaculty', function() {
+	// Prevent default action.
+	event.preventDefault();
+	
+	// Get form.
+    var form = $(this);
+    // Lock Button.
+	form.find('button').prop('disabled', true);
+
+    // Get the Faculty Information.
+    var name = form.find('#name').val();
+    var shortname = form.find('#shortname').val();
+    var description = form.find('#description').val();
+    var id = form.find('#facultyid').val();
+
+    $.post( "account/update-faculty", {
+					name: name,
+					shortname: shortname,
+					description: description,
+					id: id })
+	.done(function( data ) {
+		var response = data;
+	  	if(response.success) {
+	  		// Close window and inform user.
+	  		$('#faculty-close').click();
+	  		successMessage('Faculty updated Successfully!');
+	  	} else {
+	  		// Inform user of errors.
+	  		failMessage(response.errors);
+	  	}
+	  	form.find('button').prop('disabled', false);
+	  });
+		form.find('button').prop('disabled', false);
+
+});
+
 
 function successMessage(m) {
 	// Empty out message.

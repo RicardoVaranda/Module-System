@@ -112,6 +112,24 @@ Route::group(array('before' => 'auth'), function() {
 	));
 
 	/*
+	| Create Faculty.
+	*/
+	
+	Route::post('/account/create-faculty', array(
+		'as' => 'create-faculty',
+		'uses' => 'FacultyController@createFaculty'
+	));
+
+	/*
+	| Update Faculty.
+	*/
+	
+	Route::post('/account/update-faculty', array(
+		'as' => 'create-faculty',
+		'uses' => 'FacultyController@updateFaculty'
+	));
+
+	/*
 	| Upload CSV to create users.
 	*/
 	

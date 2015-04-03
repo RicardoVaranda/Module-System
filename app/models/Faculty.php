@@ -14,7 +14,7 @@ class Faculty extends Eloquent {
      */
     protected $primaryKey='facultyid';
 
-    protected $fillable = array('facultyname', 'facultyshort');
+    protected $fillable = array('facultyname', 'facultyshort', 'facultydescription');
 
     public function departments()
     {
