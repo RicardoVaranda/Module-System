@@ -915,12 +915,14 @@ Blog
 	color: #ffffff;
 	background-color: rgba(208, 58, 55, 0.8);
 }
-.lecturer {
+.lecturer, .department,
+.faculty {
   	min-height: 136px;
   	margin: auto;
   	display: table;
 }
-.lecturer-box {
+.lecturer-box, .department-box,
+.faculty-box {
 	display: table-cell;
     vertical-align: middle;
     text-align: center;

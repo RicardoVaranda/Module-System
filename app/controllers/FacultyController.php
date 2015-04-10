@@ -42,7 +42,8 @@ class FacultyController extends BaseController {
 			array(
 				'name' => 'required',
 				'shortname' => 'required',
-				'description' => 'required'
+				'description' => 'required',
+				'id'	=> 'required'
 				));
 
 		if($validator->fails()) {

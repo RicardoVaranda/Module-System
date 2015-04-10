@@ -446,8 +446,8 @@
 							<div class="col-sm-4">
 								<a data-toggle="modal" role="button" href="#newFaculty">
 									<div class="feature-box">
-										<div class="lecturer">
-											<div class="lecturer-box">
+										<div class="faculty">
+											<div class="faculty-box">
 												<span>Create New Faculty</span>
 											</div>
 										</div>
@@ -457,7 +457,7 @@
 							<div class="modal fade" id="newFaculty" tabindex="-1" role="dialog" aria-hidden="true">
 								<div class="modal-dialog">
 									<div  class="contact-box">
-							        	<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="faculty-close">&times;</button>
+							        	<button type="button" class="close" data-dismiss="modal" aria-hidden="true" class="faculty-close">&times;</button>
 							            <form id="createFaculty" action="" method="post">
 							                <label>Faculty Name:</label><input type="text" class="form-control" id="name" placeholder="Faculty Name" required/>
 											<label>Faculty Shortname:</label><input type="text" class="form-control" id="shortname" placeholder="Faculty Shortname" required/>
@@ -467,13 +467,12 @@
 									</div>
 								</div>
 							</div>
-							<?php $counter = 1; ?>
 							@foreach(Faculty::all() as $faculty)
 								<div class="col-sm-4">
 									<a data-toggle="modal" role="button" id="faculty{{ $faculty->facultyid }}" href="#editFaculty{{ $faculty->facultyid }}">
 										<div class="feature-box">
-											<div class="lecturer">
-												<div class="lecturer-box">
+											<div class="faculty">
+												<div class="faculty-box">
 													<span>{{ $faculty->facultyname }}</span>
 												</div>
 											</div>
@@ -483,7 +482,7 @@
 								<div class="modal fade" id="editFaculty{{ $faculty->facultyid }}" tabindex="-1" role="dialog" aria-hidden="true">
 									<div class="modal-dialog">
 										<div  class="contact-box">
-								        	<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="faculty-close">&times;</button>
+								        	<button type="button" class="close" data-dismiss="modal" aria-hidden="true" class="faculty-close">&times;</button>
 							                <form class="editFaculty" action="" method="post">
 							                	<label>Faculty Name:</label><input type="text" class="form-control" id="name" placeholder="Faculty Name" value="{{ $faculty->facultyname }}" required/>
 												<label>Faculty Shortname:</label><input type="text" class="form-control" id="shortname" placeholder="Faculty Shortname" value="{{ $faculty->facultyshort }}" required/>
@@ -495,18 +494,78 @@
 									</div>
 								</div>
 							@endforeach
+						</div>
+					</div>
             </section>
             <section class="section about">
 				<div class="container">
-					<h1 class="h1">Departments</h1>						
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="profile" style="padding-bottom:50px;">
-								
+						<h1 class="h1">Departments</h1>
+						<div id="departmentContainer"> 
+							<div class="col-sm-4">
+								<a data-toggle="modal" role="button" href="#newDepartment">
+									<div class="feature-box">
+										<div class="department">
+											<div class="department-box">
+												<span>Create New Department</span>
+											</div>
+										</div>
+									</div>
+								</a>
 							</div>
+							<div class="modal fade" id="newDepartment" tabindex="-1" role="dialog" aria-hidden="true">
+								<div class="modal-dialog">
+									<div  class="contact-box">
+							        	<button type="button" class="close" data-dismiss="modal" aria-hidden="true" class="department-close">&times;</button>
+							            <form id="createDepartment" action="" method="post">
+							                <label>Department Name:</label><input type="text" class="form-control" id="name" placeholder="Department Name" required/>
+											<label>Department Shortname:</label><input type="text" class="form-control" id="shortname" placeholder="Department Shortname" required/>
+											<label>Department Head:</label><input type="text" class="form-control" id="head" placeholder="Department Head" required/>
+											<label>Department Description:</label><textarea id="description" class="form-control" rows="5" required placeholder="Department Description"></textarea>
+											<label for='facultyId'>Faculty:</label><select id="facultyId" class="form-control faculty-list">
+												@foreach(Faculty::all() as $faculty)
+													<option value="{{ $faculty->facultyid}}" >{{ $faculty->facultyname }}</option>
+												@endforeach
+												</select>
+											<button type="submit" class="btn btn-primary" style="margin-top:10px;">Create Department</button>
+							            </form>
+									</div>
+								</div>
+							</div>
+							@foreach(Departments::all() as $department)
+								<div class="col-sm-4">
+									<a data-toggle="modal" role="button" id="department{{ $department->deparmentid }}" href="#editDepartment{{ $department->departmentid }}">
+										<div class="feature-box">
+											<div class="department">
+												<div class="department-box">
+													<span>{{ $department->departmentname }}</span>
+												</div>
+											</div>
+										</div>
+									</a>
+								</div>
+								<div class="modal fade" id="editDepartment{{ $department->departmentid }}" tabindex="-1" role="dialog" aria-hidden="true">
+									<div class="modal-dialog">
+										<div  class="contact-box">
+								        	<button type="button" class="close" data-dismiss="modal" aria-hidden="true" class="faculty-close">&times;</button>
+							                <form class="editDepartment" action="" method="post">
+							                	<label>Department Name:</label><input type="text" class="form-control" id="name" placeholder="Department Name" value="{{ $department->departmentname }}" required/>
+												<label>Department Shortname:</label><input type="text" class="form-control" id="shortname" placeholder="Department Shortname" value="{{ $department->departmentshort }}" required/>
+												<label>Department Head:</label><input type="text" class="form-control" id="head" placeholder="Department Head" value="{{ $department->departmenthead }}" required/>
+												<label>Department Description:</label><textarea id="description" class="form-control" rows="5" required placeholder="Faculty Description">{{ $department->departmentdescription }}</textarea>
+												<label for='facultyId'>Faculty:</label><select id="facultyId" class="form-control faculty-list">
+												@foreach(Faculty::all() as $faculty)
+													<option value="{{ $faculty->facultyid }}" {{ ($faculty->facultyid == $department->facultyid) ? 'selected' : '' }}>{{ $faculty->facultyname }}</option>
+												@endforeach
+												</select>
+												<input type="hidden" id="departmentid" value="{{ $department->departmentid }}" />
+												<button type="submit" class="btn btn-primary" style="margin-top:10px;">Update Department</button>
+								            </form>
+										</div>
+									</div>
+								</div>
+							@endforeach
 						</div>
 					</div>
-				</div>
             </section> 
 			<!-- /about -->
 			

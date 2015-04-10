@@ -501,8 +501,8 @@ $( document ).on('submit', '#createFaculty', function() {
 	  		var faculty = '<div class="col-sm-4">'+
 								'<a data-toggle="modal" role="button" id="faculty'+ response.facultyId +'" href="#editFaculty'+ response.facultyId +'">'+
 									'<div class="feature-box">'+
-										'<div class="lecturer">'+
-											'<div class="lecturer-box">'+
+										'<div class="faculty">'+
+											'<div class="faculty-box">'+
 												'<span>'+ name +'</span>'+
 											'</div>'+
 										'</div>'+
@@ -512,7 +512,7 @@ $( document ).on('submit', '#createFaculty', function() {
 							'<div class="modal fade" id="editFaculty'+ response.facultyId +'" tabindex="-1" role="dialog" aria-hidden="true">'+
 								'<div class="modal-dialog">'+
 									'<div  class="contact-box">'+
-							        	'<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="faculty-close">&times;</button>'+
+							        	'<button type="button" class="close" data-dismiss="modal" aria-hidden="true" class="faculty-close">&times;</button>'+
 						                '<form class="editFaculty" action="" method="post">'+
 						                	'<label>Faculty Name:</label><input type="text" class="form-control" id="name" placeholder="Faculty Name" value="'+ name +'" required/>'+
 											'<label>Faculty Shortname:</label><input type="text" class="form-control" id="shortname" placeholder="Faculty Shortname" value="'+ shortname +'" required/>'+
@@ -527,7 +527,7 @@ $( document ).on('submit', '#createFaculty', function() {
 			$('#facultyContainer').append(faculty);
 
 			// Close window and inform user.
-			$('#faculty-close').click();
+			form.closest('.faculty-close').click();
 
 	  		successMessage('Faculty created Successfully!');
 	  	} else {
@@ -564,8 +564,134 @@ $( document ).on('submit', '.editFaculty', function() {
 		var response = data;
 	  	if(response.success) {
 	  		// Close window and inform user.
-	  		$('#faculty-close').click();
+	  		form.closest('.faculty-close').click();
 	  		successMessage('Faculty updated Successfully!');
+	  	} else {
+	  		// Inform user of errors.
+	  		failMessage(response.errors);
+	  	}
+	  	form.find('button').prop('disabled', false);
+	  });
+		form.find('button').prop('disabled', false);
+
+});
+
+
+$( document ).on('submit', '#createDepartment', function() {
+	// Prevent default action.
+	event.preventDefault();
+	
+	// Get form.
+    var form = $(this);
+    // Lock Button.
+	form.find('button').prop('disabled', true);
+
+    // Get the Faculty Information.
+    var name = form.find('#name').val();
+    var shortname = form.find('#shortname').val();
+    var head = form.find('#head').val();
+    var description = form.find('#description').val();
+    var facultyId = form.find('#facultyId').val();
+
+    $.post( "account/create-department", {
+					name: name,
+					shortname: shortname,
+					head: head,
+					description: description,
+					facultyId: facultyId })
+	.done(function( data ) {
+		var response = data;
+	  	if(response.success) {
+	  		// Clean form.
+	  		form.find('#name').val('');
+	  		form.find('#shortname').val('');
+	  		form.find('#head').val('');
+	  		form.find('#description').val('');
+
+	  		// Insert department to departmentContainer.
+	  		var department = '<div class="col-sm-4">'+
+								'<a data-toggle="modal" role="button" id="department'+ response.departmentId +'" href="#editDepartment'+ response.departmentId +'">'+
+									'<div class="feature-box">'+
+										'<div class="department">'+
+											'<div class="department-box">'+
+												'<span>'+ name +'</span>'+
+											'</div>'+
+										'</div>'+
+									'</div>'+
+								'</a>'+
+							'</div>'+
+							'<div class="modal fade" id="editDepartment'+ response.departmentId +'" tabindex="-1" role="dialog" aria-hidden="true">'+
+								'<div class="modal-dialog">'+
+									'<div  class="contact-box">'+
+							        	'<button type="button" class="close" data-dismiss="modal" aria-hidden="true" class="department-close">&times;</button>'+
+						                '<form class="editDepartment" action="" method="post">'+
+						                	'<label>Department Name:</label><input type="text" class="form-control" id="name" placeholder="Department Name" value="'+ name +'" required/>'+
+											'<label>Department Shortname:</label><input type="text" class="form-control" id="shortname" placeholder="Department Shortname" value="'+ shortname +'" required/>'+
+											'<label>Department Head:</label><input type="text" class="form-control" id="head" placeholder="Department Head" value="'+ head +'" required/>'+
+											'<label>Department Description:</label><textarea id="description" class="form-control" rows="5" required placeholder="Department Description">'+ description +'</textarea>'+
+											'<input type="hidden" id="departmentid" value="'+ response.departmentId +'" /><label for="facultyId">Faculty:</label><select id="facultyId" class="form-control faculty-list">';
+											
+			// Loop through faculties to create dropbox.
+			$.each(response.faculties, function(key, value) {
+				if(value['facultyid'] === facultyId) {
+					department = department + '<option value="'+ value['facultyid'] +'" selected>'+ value['facultyname'] +'</option>';
+				} else {
+					department = department + '<option value="'+ value['facultyid'] +'" >'+ value['facultyname'] +'</option>';
+				}
+			});
+
+			department = department + '</select><button type="submit" class="btn btn-primary" style="margin-top:10px;">Update Department</button>'+
+							        '</form>'+
+								'</div>'+
+							'</div>'+
+						'</div>';
+
+			$('#departmentContainer').append(department);
+
+			// Close window and inform user.
+			form.closest('.department-close').click();
+
+	  		successMessage('Department created Successfully!');
+	  	} else {
+	  		// Inform user of errors.
+	  		failMessage(response.errors);
+	  	}
+	  	form.find('button').prop('disabled', false);
+	  });
+		form.find('button').prop('disabled', false);
+
+});
+
+$( document ).on('submit', '.editDepartment', function() {
+	// Prevent default action.
+	event.preventDefault();
+	
+	// Get form.
+    var form = $(this);
+    // Lock Button.
+	form.find('button').prop('disabled', true);
+
+    // Get the Faculty Information.
+    var name = form.find('#name').val();
+    var shortname = form.find('#shortname').val();
+    var head = form.find('#head').val();
+    var description = form.find('#description').val();
+    var id = form.find('#departmentid').val();
+    var facultyId = form.find('#facultyId').val();
+
+    $.post( "account/update-department", {
+					name: name,
+					shortname: shortname,
+					head: head,
+					description: description,
+					id: id,
+					facultyId : facultyId })
+	.done(function( data ) {
+		var response = data;
+	  	if(response.success) {
+	  		// Close window and inform user.
+	  		form.closest('.department-close').click();
+	  		successMessage('Department updated Successfully!');
 	  	} else {
 	  		// Inform user of errors.
 	  		failMessage(response.errors);
@@ -581,7 +707,7 @@ function successMessage(m) {
 	// Empty out message.
 	$('.message').empty();
 	// Check if we are dealing with an array.
-	if(m.constructor === Array) {
+	if(m.constructor === Array || typeof m === 'object') {
 		$.each(m, function(key, value) {
 			message(value, true);
 		});
@@ -602,7 +728,7 @@ function failMessage(m) {
 	// Empty out message.
 	$('.message').empty();
 	// Check if we are dealing with an array.
-	if(m.constructor === Array) {
+	if(m.constructor === Array || typeof m === 'object') {
 		$.each(m, function(key, value) {
 			message(value, false);
 		});

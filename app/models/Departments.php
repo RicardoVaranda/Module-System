@@ -16,7 +16,7 @@ class Departments extends Eloquent {
     protected $primaryKey='departmentid';
     protected $foreignKey='facultyid';
 
-    protected $fillable = array('departmentname', 'departmentshort', 'departmenthead', 'facultyid');
+    protected $fillable = array('departmentname', 'departmentshort', 'departmentdescription', 'departmenthead', 'facultyid');
 
     public function modules()
     {

@@ -116,7 +116,6 @@ Route::group(array('before' => 'auth'), function() {
 	*/
 	
 	Route::post('/account/create-faculty', array(
-		'as' => 'create-faculty',
 		'uses' => 'FacultyController@createFaculty'
 	));
 
@@ -125,8 +124,23 @@ Route::group(array('before' => 'auth'), function() {
 	*/
 	
 	Route::post('/account/update-faculty', array(
-		'as' => 'create-faculty',
 		'uses' => 'FacultyController@updateFaculty'
+	));
+
+	/*
+	| Create Department.
+	*/
+	
+	Route::post('/account/create-department', array(
+		'uses' => 'DepartmentController@createDepartment'
+	));
+
+	/*
+	| Update Department.
+	*/
+	
+	Route::post('/account/update-department', array(
+		'uses' => 'DepartmentController@updateDepartment'
 	));
 
 	/*
