@@ -67,6 +67,14 @@ Route::group(array('before' => 'auth'), function() {
 	));
 
 	/*
+	| Request an elective new class.
+	*/
+	
+	Route::post('/account/request-elective', array(
+		'uses' => 'ElectiveController@postRequestElective'
+	));
+
+	/*
 	| Load Class.
 	*/
 	

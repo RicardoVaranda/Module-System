@@ -117,6 +117,8 @@ $( document ).on('submit', '.electiveRegister', function() {
     return;
 });
 
+
+
 $( document ).on('submit', '.electiveUnregister', function() {
 	// Prevent default action.
 	event.preventDefault();
@@ -157,6 +159,38 @@ $( document ).on('submit', '.electiveUnregister', function() {
     
     return;
 });
+
+$( document ).on('submit', '.electiveRequest', function() {
+	// Prevent default action.
+	event.preventDefault();
+	
+	// Get form.
+    var form = $(this);
+    
+    // Disable button to prevent further clicks.
+    form.find('button').prop('disabled', true);
+    
+    // Get the electiveId
+    var electiveId = form.find('#electiveId').val();
+    
+    $.post( "account/request-elective", {
+					electiveId: electiveId })
+	.done(function( data ) {
+		var response = data;
+	  	if(response.success) {
+	  		// Inform user.
+	  		successMessage("Successfully requested a new class!");
+	  	} else {
+	  		// Inform user of error.
+	  		failMessage(response.errors);
+	  	}
+	  	// Release Button.
+		form.find('button').prop('disabled', false);
+	});
+    
+    return;
+});
+
 
 $( document ).on('change', '#class-Select', function() {
 

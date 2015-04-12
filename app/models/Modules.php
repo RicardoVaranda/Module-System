@@ -17,7 +17,7 @@ class Modules extends Eloquent {
 
     protected $fillable = array('mfulltitle', 'mshorttitle', 'mdescription', 'mcode', 
         'mcrn', 'mfieldofstudy', 'mcoordinator','mlevel', 
-        'mcredits', 'departmentid');
+        'mcredits', 'departmentid', 'mrequests');
 
     public function department()
     {

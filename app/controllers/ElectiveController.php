@@ -5,6 +5,20 @@ class ElectiveController extends BaseController {
 
 	public function postRegisterElective() {
 
+		$validator = Validator::make(Input::all(),
+			array(
+				'electiveId' => 'required'
+				));
+
+		if($validator->fails()) {
+
+			// If not inform user of errors.
+			return Response::json(array(
+									'success' => false,
+									'errors'  => $validator->messages()
+									));
+		} else {
+
 			// Let's define what semester we are in.
 			$today = date('Y-m-d');
 			$semester = date('Y-m-d', strtotime(date('Y', strtotime($today)).'-06-01'));
@@ -122,99 +136,182 @@ class ElectiveController extends BaseController {
 										'spaces' => $spaces,
 										'errors' => $errors
 									));
+		}
 		
 		}
 
 
 		public function postUnregisterElective() {
-			//TODO: Verify that student registered to elective in current semester.
 
-			$errors = '';
+			$validator = Validator::make(Input::all(),
+				array(
+					'electiveId' => 'required'
+					));
 
-			// Get the user.
-			$user = Auth::user();
+			if($validator->fails()) {
 
-			// Get the electives.
-			$electives = $user->electives;
-
-			$classId = '';
-
-			// Check if they are null.
-			if($electives == null) {
-				return Response::json(array('success' => false, 'errors' => 'You are not enrolled to any modules!'));
-				
-			} else {
-				$electives = json_decode($electives);
-
-				// Remove the elective from user
-				foreach($electives as $key => $value){
-					if($value->electiveId == Input::get('electiveId')) {
-						// Get classId and remove elective.
-						$classId = $value->classId;
-						unset($electives[$key]);
-					}
-				}
-			}
-			// Santize elective array.
-			$temp = array();
-			foreach($electives as $e) {
-				array_push($temp, $e);
-			}
-			$electives = $temp;
-
-
-			if($classId != '') {
-
-				// Get the Class and it's students.
-				$class = Classes::where('classId', $classId)->first();
-				$students = json_decode($class->classstudents);
-				$found = false;
-
-				// Now remove student from class.
-				foreach($students as $key => $value) {
-					if($value == $user->id) {
-						$found = true;
-						unset($students[$key]);
-					}
-				}
-
-				// Make sure we got a result before saving everything.
-				if($found) {
-					$class->classcurrent = $class->classcurrent - 1;
-					// Normalize students array.
-					$students = array_values($students);
-					$class->classstudents = json_encode($students);
-					$class->save();
-
-					$user->electives = json_encode($electives);
-					$user->save();
-				} else {
-					$errors = 'You are not registered in a class with this elective!';
-				}
-			} else {
-				$errors = 'You are not registered to this elective!';
-			}
-
-
-			// Get the remaining spaces for elective.
-			$classes = Classes::where('classmodule', Input::get('electiveId'))->get();
-			$spaces = 0;
-			foreach($classes as $c){
-				$spaces+=($c->classlimit-$c->classcurrent);
-			}
-
-			if($errors == '') {
+				// If not inform user of errors.
 				return Response::json(array(
-										'success' => true,
-										'spaces' => $spaces
-									));
-			}
-
-			return Response::json(array(
 										'success' => false,
-										'spaces' => $spaces,
-										'errors' => $errors
-									));
+										'errors'  => $validator->messages()
+										));
+			} else {
+				//TODO: Verify that student registered to elective in current semester.
+
+				$errors = '';
+
+				// Get the user.
+				$user = Auth::user();
+
+				// Get the electives.
+				$electives = $user->electives;
+
+				$classId = '';
+
+				// Check if they are null.
+				if($electives == null) {
+					return Response::json(array('success' => false, 'errors' => 'You are not enrolled to any modules!'));
+					
+				} else {
+					$electives = json_decode($electives);
+
+					// Remove the elective from user
+					foreach($electives as $key => $value){
+						if($value->electiveId == Input::get('electiveId')) {
+							// Get classId and remove elective.
+							$classId = $value->classId;
+							unset($electives[$key]);
+						}
+					}
+				}
+				// Santize elective array.
+				$temp = array();
+				foreach($electives as $e) {
+					array_push($temp, $e);
+				}
+				$electives = $temp;
+
+
+				if($classId != '') {
+
+					// Get the Class and it's students.
+					$class = Classes::where('classId', $classId)->first();
+					$students = json_decode($class->classstudents);
+					$found = false;
+
+					// Now remove student from class.
+					foreach($students as $key => $value) {
+						if($value == $user->id) {
+							$found = true;
+							unset($students[$key]);
+						}
+					}
+
+					// Make sure we got a result before saving everything.
+					if($found) {
+						$class->classcurrent = $class->classcurrent - 1;
+						// Normalize students array.
+						$students = array_values($students);
+						$class->classstudents = json_encode($students);
+						$class->save();
+
+						$user->electives = json_encode($electives);
+						$user->save();
+					} else {
+						$errors = 'You are not registered in a class with this elective!';
+					}
+				} else {
+					$errors = 'You are not registered to this elective!';
+				}
+
+
+				// Get the remaining spaces for elective.
+				$classes = Classes::where('classmodule', Input::get('electiveId'))->get();
+				$spaces = 0;
+				foreach($classes as $c){
+					$spaces+=($c->classlimit-$c->classcurrent);
+				}
+
+				if($errors == '') {
+					return Response::json(array(
+											'success' => true,
+											'spaces' => $spaces
+										));
+				}
+
+				return Response::json(array(
+											'success' => false,
+											'spaces' => $spaces,
+											'errors' => $errors
+										));
+			}
+		}
+
+		public function postRequestElective() {
+
+			$validator = Validator::make(Input::all(),
+				array(
+					'electiveId' => 'required'
+					));
+
+			if($validator->fails()) {
+
+				// If not inform user of errors.
+				return Response::json(array(
+										'success' => false,
+										'errors'  => $validator->messages()
+										));
+			} else {
+
+				$errors = '';
+
+				// Get the user.
+				$user = Auth::user();
+
+				// Get the module with that id.
+				$module = Modules::where('mid', Input::get('electiveId'))->first();
+
+				// Check if it's an elective.
+				if(!$module->melective) {
+					return Response::json(array('success' => false, 'errors' => 'There is no such elective.'));
+					
+				} else {
+					// Extract that existing requests.
+					$requests = ($module->mrequests == '') ? array() : json_decode($module->mrequests);
+
+					// Check that the user hasn't already requested a class.
+					foreach($requests as $request) {
+						if($request == $user->id) {
+							$errors = 'You have already requested this class!';
+							return Response::json(array(
+													'success' => false,
+													'errors' => $errors
+												));
+						}
+					}
+
+					// Mark user has having made a request.
+					array_push($requests, $user->id);
+					$module->mrequests = json_encode($requests);
+					$module->save();
+
+					// Now check amount of users that have requested this class.
+					if((count($requests) % 10) == 0) {
+						// Email HOD to inform users want a new class.
+						$department = $module->departmentid;
+						$HOD = User::where('rank', 2)->where('department', $department)->first();
+						Mail::send('emails.auth.request', array('name' => $name, 'requestCount' => count($requests), 'electiveName' => $module->mshorttitle), function($message) use ($HOD) {
+							$message->to($HOD->email, $HOD->username)->subject('A new class has been requested');
+						});
+
+					}
+
+					// Inform user request was made.
+					return Response::json(array(
+											'success' => true
+										));
+				}
+			}
 		}
 
 

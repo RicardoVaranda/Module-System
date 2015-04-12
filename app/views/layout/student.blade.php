@@ -29,7 +29,6 @@
 		=============================================== -->
 		{{ HTML::script('js/jquery-1.10.2.min.js') }}
 		{{ HTML::script('js/modernizr.custom.97074.js') }}
-		{{ HTML::script('http://maps.googleapis.com/maps/api/js?sensor=true') }}
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         
 		<!--[if lt IE 9]>

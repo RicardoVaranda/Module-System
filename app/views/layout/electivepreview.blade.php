@@ -20,46 +20,6 @@
 								<img src="{{URL::route('getImg', $mod->mcode)}}" class="img-responsive" alt="portfolio">
 								<?php
 								if(Auth::user()->rank < 1) {
-								// Extract current user's electives.
-								$electives = Auth::user()->electives;
-
-								$registered = false;
-								// Make sure we got a result.
-								if($electives != null) {
-									$electives = json_decode($electives);
-									//Search for current elective.
-									foreach($electives as $key => $value) {
-										if($value->electiveId == $mod->mid){
-											$registered = true;
-										}
-									}
-								}
-
-								// Now print forms.
-								if($registered) { ?>
-									<form class="electiveUnregister" action="" method="POST">
-									<input type="hidden" id="electiveId" value="{{ $mod->mid }}" />
-									<button type="submit" class="btn-primary elective-btn" id="registration{{ $mod->mid }}">Unregister</button>
-								</form>
-								<?php } else { ?>
-									<form class="electiveRegister" action="" method="POST">
-										<input type="hidden" id="electiveId" value="{{ $mod->mid }}" />
-										<button type="submit" class="btn-primary elective-btn" id="registration{{ $mod->mid }}">Register</button>
-									</form>
-								<?php } } ?>
-							</div>
-							<div class="col-sm-4">
-								<div class="modal-entery">
-									<p>{{ $mod->mdescription }}</p>
-									<h4 class="h4">Lecturer</h4>
-									{{ $mod->mcoordinator }}
-									<h4 class="h4">Field of Study</h4>
-									{{ $mod->mfieldofstudy }}
-									<h4 class="h4">Module Level</h4>
-									{{ $mod->mlevel }}
-									<h4 class="h4">Module Credits</h4>
-									{{ $mod->mcredits }}
-									<?php
 									// Let's define what semester we are in.
 									$today = date('Y-m-d');
 									$semester = date('Y-m-d', strtotime(date('Y', strtotime($today)).'-06-01'));
@@ -83,7 +43,54 @@
 											}
 										}
 									}
-									?>
+
+
+									// Extract current user's electives.
+									$electives = Auth::user()->electives;
+
+									$registered = false;
+									// Make sure we got a result.
+									if($electives != null) {
+										$electives = json_decode($electives);
+										//Search for current elective.
+										foreach($electives as $key => $value) {
+											if($value->electiveId == $mod->mid){
+												$registered = true;
+											}
+										}
+									}
+
+									// Now print forms.
+									if($registered) { ?>
+										<form class="electiveUnregister" action="" method="POST">
+											<input type="hidden" id="electiveId" value="{{ $mod->mid }}" />
+											<button type="submit" class="btn-primary elective-btn" id="registration{{ $mod->mid }}">Unregister</button>
+										</form>
+									<?php } else { 
+										// Let's verify if there is space in elective.
+											if($spaces > 0) { ?>
+											<form class="electiveRegister" action="" method="POST">
+												<input type="hidden" id="electiveId" value="{{ $mod->mid }}" />
+												<button type="submit" class="btn-primary elective-btn" id="registration{{ $mod->mid }}">Register</button>
+											</form>
+										<?php } else { ?>
+											<form class="electiveRequest" action="" method="POST">
+												<input type="hidden" id="electiveId" value="{{ $mod->mid }}" />
+												<button type="submit" class="btn-primary elective-btn">Request Additional Class</button>
+											</form>
+								<?php } } } ?>
+							</div>
+							<div class="col-sm-4">
+								<div class="modal-entery">
+									<p>{{ $mod->mdescription }}</p>
+									<h4 class="h4">Lecturer</h4>
+									{{ $mod->mcoordinator }}
+									<h4 class="h4">Field of Study</h4>
+									{{ $mod->mfieldofstudy }}
+									<h4 class="h4">Module Level</h4>
+									{{ $mod->mlevel }}
+									<h4 class="h4">Module Credits</h4>
+									{{ $mod->mcredits }}
 									<h4 class="h4">Spaces Available</h4>
 									<span id="elective{{ $mod->mid }}">{{ $spaces }}</span>
 								</div>
