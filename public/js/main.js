@@ -560,6 +560,9 @@ $( document ).on('submit', '#createFaculty', function() {
 
 			$('#facultyContainer').append(faculty);
 
+			// Append faculty to all faculty lists.
+			$('.faculty-list').append('<option value="'+ response.facultyId +'">'+ name +'</option>');
+
 			// Close window and inform user.
 			form.closest('.faculty-close').click();
 

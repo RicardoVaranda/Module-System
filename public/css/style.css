@@ -1213,6 +1213,15 @@ input[type=text]::-webkit-calendar-picker-indicator, input[type=text]::calendar-
 
 .blue    { background-color: #3b8ec2; }
 
+.yellow { 
+	color: rgb(219, 255, 0);
+	font-weight: bold;
+}
+
+.hodClasses {
+	min-height: 152px;
+}
+
   .globalD {
     position: relative;
     width: 454px;

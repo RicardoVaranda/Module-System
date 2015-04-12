@@ -572,16 +572,12 @@
 									<table>
 										<tbody>
 											<tr>
-												<th><b>Student ID:</b></th>
+												<th><b>User ID:</b></th>
 												<td colspan="1">{{ Auth::user()->username }}</td>
 											</tr>
 											<tr>
-												<th><b>Degree:</b></th>
-												<td colspan="1">Ordinary Bachelor Degree</td>
-											</tr>
-											<tr>
-												<th><b>Major:</b></th>
-												<td colspan="1">Computing</td>
+												<th><b>Department:</b></th>
+												<td colspan="1">{{ Departments::find(Auth::user()->department)->departmentname }}</td>
 											</tr>
 										</tbody>
 									</table>
@@ -604,115 +600,53 @@
 					@extends('account.password')
 					<div class="row">
 						<hr class="metro-hr">
-						<h2 class="h2 lead">My Modules</h2>
+						<h2 class="h2 lead">Classes</h2>
+
+						@foreach(Modules::where('departmentid', Auth::user()->department)->where('melective', true)->get() as $module)
 						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
+							<div class="feature-box hodClasses">
 								<div class="feature-text">
-									<h3>Object Oriented Analysis & Design</h3>
-									<small style="float:right"><u>Manditory</u></small>
-									<p>Mary Davin</p>
-									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
-									</br>
+								<?php
+									// Let's define what semester we are in.
+									$today = date('Y-m-d');
+									$semester = date('Y-m-d', strtotime(date('Y', strtotime($today)).'-06-01'));
+									// If current date is greater than semester 2
+									// Change current to semester 1.
+									if($today > $semester) {
+										// Get next year.
+										$year = date('Y',strtotime(date("Y-m-d", time()) . " + 365 day"));
+										$semester = date('Y-m-d', strtotime($year.'-01-01'));
+									}
+									// Let's get the total students and total limit of elective.
+									$totalStudents = 0;
+									$totalLimit = 0;
+									// Get all classes of current elective.
+									$classes = Classes::where('classmodule', $module->mid)->get();
+									foreach($classes as $c){
+										
+										// Check if this class belongs to this year.
+										if(date('Y', strtotime($c->created)) === date('Y', strtotime($today))) {
+											// Now check that it is part of this semester.
+											if(date('Y-m-d', strtotime($c->created)) < $semester) {
+												$totalStudents += $c->classcurrent;
+												$totalLimit += $c->classlimit;
+											}
+										}
+									}
+
+									// Define total requested.
+									$totalRequested = count(json_decode($module->mrequests));
+								 ?>
+									<h3>{{ $module->mshorttitle }}</h3>
+									<p>Total Classes: {{ count($classes) }}</p>
+									<p>Students: {{ $totalStudents }}/{{ $totalLimit }}</p>
+									@if($module->mrequests != '')
+										<p class='yellow'>{{ $totalRequested }} student{{ ($totalRequested == 1) ? ' has' : 's have' }} requested a new class.</p>
+									@endif
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>Internet Network & Services</h3>
-									<small style="float:right"><u>Manditory</u></small>
-									<p>Mary Davin</p>
-									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
-									</br>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>Server-Side Web Development</h3>
-									<small style="float:right"><u>Manditory</u></small>
-									<p>Mary Davin</p>
-									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
-									</br>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>Object Oriented Analysis & Design</h3>
-									<small style="float:right"><u>Manditory</u></small>
-									<p>Mary Davin</p>
-									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
-									</br>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>Internet Network & Services</h3>
-									<small style="float:right"><u>Manditory</u></small>
-									<p>Mary Davin</p>
-									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
-									</br>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>Server-Side Web Development</h3>
-									<small style="float:right"><u>Manditory</u></small>
-									<p>Mary Davin</p>
-									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
-									</br>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>Object Oriented Analysis & Design</h3>
-									<small style="float:right"><u>Manditory</u></small>
-									<p>Mary Davin</p>
-									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
-									</br>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>Internet Network & Services</h3>
-									<small style="float:right"><u>Manditory</u></small>
-									<p>Mary Davin</p>
-									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
-									</br>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>Server-Side Web Development</h3>
-									<small style="float:right"><u>Manditory</u></small>
-									<p>Mary Davin</p>
-									<button type="button" class="pull-right btn btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
-									</br>
-								</div>
-							</div>
-						</div>
+						@endforeach
 						<hr class="metro-hr">
 					</div>
 						
