@@ -387,7 +387,12 @@
 							<input type="text" name="electimes" id="elective" list="electives" class="form-control" placeholder="Elective Module" required="">
 							<datalist id="electives">
 							   <select onchange="$('#elective').val(this.value)">
-								   <option value="Maths and Music" label="1"></option>
+							   		@foreach(Classes::all() as $elec)
+									<?php $mod = Modules::find($elec->classmodule); ?>
+										@if ($mod->departmentid ==  Auth::user()->department)
+											<option label="{{$mod->mshorttitle}}" value="{{$elec->classid}}"></option>
+										@endif
+									@endforeach
 							   </select>
 							</datalist>
 
@@ -405,100 +410,8 @@
 						<hr class="metro-hr">
 					</div>
 
-					<div class="row">
-						<div class="col-sm-12 custTable">
-							    <table id="timetable" class="heavyTable">
-							    	<thead>
-							    		<tr>
-							    			<th colspan="6"><h1>Maths and Music</h1><h4>Spaces Available: <div id="spacesAvailable">DynamicUpdateThis</div></h4></th>
-							    		</tr>
-							    	</thead>
-									<thead>
-										<tr id="days">
-											<th></th>
-											<th>Monday</th>
-											<th>Tuesday</th>
-											<th>Wednesday</th>
-											<th>Thursday</th>
-											<th>Friday</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr id="9">
-											<td class="time">9:00</td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-										<tr id="10">
-											<td class="time">10:00</td>
-											<td></td>
-										  	<td></td>
-										  	<td></td>
-										  	<td></td>
-										  	<td></td>
-										</tr>
-										<tr id="11">
-										  	<td class="time">11:00</td>
-										  	<td></td>
-										  	<td></td>
-										  	<td></td>
-										  	<td></td>
-										  	<td></td>
-										</tr>
-										<tr id="12">
-										  	<td class="time">12:00</td>
-										  	<td></td>
-										  	<td></td>
-										  	<td></td>
-										  	<td></td>
-										  	<td></td>
-										</tr>
-										<tr id="13">
-										  	<td class="time">13:00</td>
-										  	<td></td>
-										  	<td></td>
-										  	<td></td>
-										  	<td></td>
-										  	<td></td>
-										</tr>
-										<tr id="14">
-										  	<td class="time">14:00</td>
-										  	<td></td>
-										  	<td></td>
-										  	<td></td>
-										  	<td></td>
-										  	<td></td>
-										</tr>
-										<tr id="15">
-										  	<td class="time">15:00</td>
-										  	<td></td>
-										  	<td></td>
-										  	<td></td>
-										  	<td></td>
-										  	<td></td>
-										</tr>
-										<tr id="16">
-										  	<td class="time">16:00</td>
-										  	<td></td>
-										  	<td></td>
-										  	<td></td>
-										  	<td></td>
-										  	<td></td>
-										</tr>
-										<tr id="17">
-										  	<td class="time">17:00</td>
-										  	<td></td>
-										  	<td></td>
-										  	<td></td>
-										  	<td></td>
-										  	<td></td>
-										</tr>
-									</tbody>
-							    </table>
-						</div>
+					<div class="row" id="timetableRow">
+						
 					</div>
 					<hr class="metro-hr">
 				</div>

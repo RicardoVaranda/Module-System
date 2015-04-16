@@ -793,10 +793,6 @@ function message(message, success) {
 Timetables
 =============================================== */
 
-var nClass = '1';
-var classNum = '<br><div class="form-group"><i class="fa fa-sort-numeric-asc"></i>'+
-			'<input type="number" name="classNum" id="numClass"'+
-			'class="form-control" placeholder="Classes per Week" min="1" max="6" value="'+ nClass +'"/></div>';
 
 var day = '';
 var time = '';
@@ -841,32 +837,11 @@ function getTimes(){
 	});
 }
 			
-			
-			
-			
 function saveButton(){
 	$('#classTimes').append(saveTimes);
 	$('#saveTime').on("click", function(){
 		getTimes();
-		for(var i = 0; i < parseInt($('#numClass').val()); i++){
-			switch(times[i][0]){
-				case 'monday':
-					$("#timetable").find("tr:eq( "+ (parseInt(times[i][1])-7)+")").find("td:eq(1)");
-				break;
-				case 'tuesday':
-					$("#timetable").find("tr:eq( "+ (parseInt(times[i][1])-7)+")").find("td:eq(2)"); 
-				break;
-				case 'wednesday':
-					$("#timetable").find("tr:eq( "+ (parseInt(times[i][1])-7)+")").find("td:eq(3)");
-				break;
-				case 'thursday':
-					$("#timetable").find("tr:eq( "+ (parseInt(times[i][1])-7)+")").find("td:eq(4)"); 
-				break;
-				case 'friday':
-					$("#timetable").find("tr:eq( "+ (parseInt(times[i][1])-7)+")").find("td:eq(5)"); 
-				break;
-			}
-		}
+		
 	});
 }
 			
@@ -881,25 +856,43 @@ $("#loadTT").click(
 
 		$('#numClasses').empty();
 		$('#classTimes').empty();
-		
-		$('#numClasses').append(classNum);
-		$('#classTimes').append(getClass());
-		$('#numClasses').append(saveButton());
-		
-		$('#numClass').change(function(){
-			getTimes();
-			$('#classTimes').empty();
-			for(var i = 0 ; i< parseInt($('#numClass').val()); i++){
-				if(times[i, 0] == null){
-					times.push(['monday', '9', '']);
-				}
-				
-				$('#classTimes').append(getClass(times[i][0], times[i][1], times[i][2]));
-			}
-			$('#classTimes').append(saveButton());
+
+		$.get("timetables/"+$('#elective').val()).done(function(data){
+			$("#timetableRow").empty();
+			$("#timetableRow").html(data);
+
+			var classNum = '<br><div class="form-group"><i class="fa fa-sort-numeric-asc"></i>'+
+			'<input type="number" name="classNum" id="numClass"'+
+			'class="form-control" placeholder="Classes per Week" min="1" max="6" value="'+ $("#classesPerWeek").val() +'"/></div>';
+
+			$('#numClasses').append(classNum);
+			$('#classTimes').append(getClass());
+			$('#numClasses').append(saveButton());
+			totalClassTimes($('#numClasses').text());
+			
+			$('#numClass').change(function(){
+				totalClassTimes();
+			});
+
 		});
-		
+
+				
 	});
+
+function totalClassTimes($data){
+	if($data == null)
+		getTimes();
+
+	$('#classTimes').empty();
+	for(var i = 0 ; i< parseInt($('#numClass').val()); i++){
+		if(times[i, 0] == null){
+			times.push(['monday', '9', '']);
+		}
+		
+		$('#classTimes').append(getClass(times[i][0], times[i][1], times[i][2]));
+	}
+	$('#classTimes').append(saveButton());
+}
 			
 
 /* ==============================================

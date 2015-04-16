@@ -4,9 +4,9 @@ Route::get('/', array(
 	'uses' => 'HomeController@home'
 ));
 
-Route::get('/user/{username}', array(
-	'as' => 'profile-user',
-	'uses' => 'ProfileController@user'
+Route::get('/timetables/{elec}', array(
+	'as' => 'timetable-get',
+	'uses' => 'TimetableController@getTimetable'
 ));
 
 /*
@@ -21,7 +21,7 @@ Route::group(array('before' => 'auth'), function() {
 	Route::group(array('before' => 'csrf'), function(){
 
 		/*
-		| Change Password (POST) 
+		| Change Password (POST)
 		*/
 
 		Route::post('/account/change-password', array(
@@ -209,7 +209,6 @@ Route::group(array('before' => 'auth'), function() {
 		'as' 	=> 'account-sign-out',
 		'uses' 	=> 'AccountController@getSignOut'
 	));
-
 
 
 });
