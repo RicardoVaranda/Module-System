@@ -2,9 +2,15 @@
 	// Get the module.
 	$mod = Modules::where('mid', $elec->classmodule)->first();
 ?>
-<li class="mix {{ $mod->department->faculty->short() }} {{ $mod->department->short() }}"> 
-	<a data-toggle="modal" role="button" href="#{{$mod->mcode}}"> <img src="{{URL::route('getImg', $mod->mcode)}}" alt="portfolio">
-		<div><span>{{ $mod->mshorttitle }}</span></div>
+<div class="mix {{ $mod->department->faculty->short() }} {{ $mod->department->short() }} col-sm-4"> 
+	<a data-toggle="modal" role="button" href="#{{$mod->mcode}}">
+		<div class="feature-box">
+			<div class="department">
+				<div class="department-box">
+					<span>{{ $mod->mshorttitle }}</span>
+				</div>
+			</div>
+		</div>
 	</a>
 	<div class="modal fade" id="{{$mod->mcode}}" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog">
@@ -102,4 +108,4 @@
 		  	</div>
 		</div>
 	</div>
-</li>
+</div>

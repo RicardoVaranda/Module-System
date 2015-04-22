@@ -137,10 +137,8 @@
 							@endforeach
 							
 						</div>
-						<ul id="grid">
-							<li class="gap"></li>
-							<!-- "gap" elements fill in the gaps in justified grid -->
-						</ul>
+						<div id="grid">
+						</div>
 					</div>
 				</div>
 				<!-- Custom Javascript Filtering system - Ricardo -->

@@ -1,6 +1,16 @@
-<li class="mix all {{$type=='edit' ? $mod->mid : ''}}"> 
-	<a data-toggle="modal" role="button" href="{{ $type=='edit' ? '#editMod'.$mod->mcode : '#newMod'}}"> <img src="{{ $type=='edit' ? URL::route('getImg', $mod->mcode) : URL::route('getImg', 'newMod')}}" alt="portfolio">
-		<div><span>{{ $type=='edit' ? $mod->mshorttitle : 'Create new Module'}}</span></div>
+<div class="mix all {{$type=='edit' ? $mod->mid : ''}} col-sm-4"> 
+	<a data-toggle="modal" role="button" href="{{ $type=='edit' ? '#editMod'.$mod->mcode : '#newMod'}}"> 
+		<div class="feature-box">
+			<div class="department">
+				<div class="department-box">
+					<span>{{ $type=='edit' ? $mod->mshorttitle : 'Create new Module'}}</span>
+				</div>
+			</div>
+		</div>
+
+		<!--<div>
+			<span>{{ $type=='edit' ? $mod->mshorttitle : 'Create new Module'}}</span>
+		</div>-->
 	</a>
 	<div class="modal fade" id="{{ $type=='edit' ? 'editMod'.$mod->mcode : 'newMod'}}" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog">
@@ -78,4 +88,4 @@
 			</div>
 		</div>
 	</div>
-</li>
+</div>

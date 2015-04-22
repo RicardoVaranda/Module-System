@@ -1506,6 +1506,11 @@ td input:focus {
   animation: float 5s infinite;
 }
 
+#grid .mix{
+      opacity: 0;
+      display: none;
+}
+
 /*
 *	Stoped Modifing it here
 *

@@ -143,8 +143,8 @@
 								</select>
 							</datalist>
 						</div>
-						<ul id="grid" class="mod">
-						</ul>
+						<div id="grid" class="mod">
+						</div>
 					</div>
 				</div> 
 				<!-- Custom JQuery Ajax Next level system - Ricardo -->
@@ -270,8 +270,8 @@
 								</select>
 							</datalist>
 						</div>
-						<ul id="grid" class="electives">
-						</ul>
+						<div id="grid" class="electives">
+						</div>
 					</div>
 				</div>
 				<!-- Custom JQuery Ajax Next level system - Ricardo -->

@@ -140,8 +140,17 @@
 					<h1 class="h1">Modules</h1>
 					<!-- Display all electives, add a new electives button, in that button open up a list of modules so that we can select the module that we want to create as an elective -->
 					<div class="row">
-						<ul id="grid" class="mod">
-						</ul>
+						<div class="grid-controls">
+							  	<select class="dep styled-select blue semi-square" id="searchMods">
+									<option label="All" value="all"></option>
+									@foreach(Modules::where('departmentid', Auth::user()->department)->get() as $mod)
+									<option label="{{$mod->mshorttitle}}" value="{{$mod->mid}}"></option>
+									@endforeach
+								</select>
+							</datalist>
+						</div>
+						<div id="grid" class="mod">
+						</div>
 					</div>
 				</div>
 				<!-- Custom JQuery Ajax Next level system - Ricardo -->
@@ -154,6 +163,7 @@
 						    $(".load.Mod").show();
 						}).bind('ajaxStop', function(){
 						    $(".load.Mod").hide();
+						    $("#searchMods").show();
 						});
 					        $.ajax({
 					            type: "POST",
@@ -254,8 +264,20 @@
 					<h1 class="h1">Electives</h1>
 					<!-- Display all electives, add a new electives button, in that button open up a list of modules so that we can select the module that we want to create as an elective -->
 					<div class="row">
-						<ul id="grid" class="electives">
-						</ul>
+					<div class="grid-controls">
+							  	<select class="elec styled-select blue semi-square" id="searchElecs">
+									<option label="All" value="all"></option>
+									@foreach(Classes::all() as $elec)
+									<?php $mod = Modules::find($elec->classmodule); ?>
+										@if ($mod->departmentid ==  Auth::user()->department)
+											<option label="{{$mod->mshorttitle}}" value="{{$elec->classid}}"></option>
+										@endif
+									@endforeach
+								</select>
+							</datalist>
+						</div>
+						<div id="grid" class="electives">
+						</div>
 					</div>
 				</div>
 				<!-- Custom JQuery Ajax Next level system - Ricardo -->
@@ -268,6 +290,7 @@
 						    $(".load.Elec").show();
 						}).bind('ajaxStop', function(){
 						    $(".load.Elec").hide();
+						    $("#searchElecs").show();
 						});
 					        $.ajax({
 					            type: "POST",
