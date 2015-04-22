@@ -223,6 +223,116 @@ class ModuleController extends BaseController {
 
 	    return Response::make($image, 200, $headers)->setTtl((60 * 30));
 	}
+
+
+	public function postElectiveNew(){
+
+		$inputData = Input::get('elecData');
+	    parse_str($inputData, $formFields);  
+	    $moduleData = array(
+	      'classlecturer'      => User::where('name', $formFields['classlecturer'])->first()->id,
+	      'classmodule'		=> $formFields['classmodule'],
+	      'classlimit'     =>  $formFields['classlimit'],
+	    ); 
+
+	    Validator::extend('ranked', function($attribute, $value, $parameters)
+		{
+			// This is the correct way to do this.
+			$coord = User::find($value);
+			if($coord->rank < 1){
+				return false;
+			}
+		   
+		  return true;
+		});
+
+	    $rules = array(
+			'classmodule'	=> 'required|exists:modules,mid',
+			'classlecturer' 	=> 'required|exists:users,id|ranked',
+			'classlimit'	 	=> 'required|integer|between:5,30',
+		);
+		
+		$messages = [
+		    'ranked' => "This user can't coordinate this class.",
+		];
+
+		$validator = Validator::make($moduleData,$rules,$messages);
+
+		if($validator->fails()){
+	        return Response::json(array(
+	            'fail' => true,
+	            'errors' => $validator->getMessageBag()->toArray()
+	        ));
+	    } else {
+
+	    	if(Classes::create($moduleData)){
+	    		Session::flash('global', 'You have created an elective.');
+	    		  //return success  message
+		        return Response::json(array(
+		          'success' => true,
+		          'mName' => Modules::find($moduleData['classmodule'])->mshorttitle 
+		        ));
+	    	}
+		}
+	}
+
+	public function postElectiveChange(){
+
+		$inputData = Input::get('elecData');
+	    parse_str($inputData, $formFields);  
+	    $moduleData = array(
+	      'classlecturer'      => User::where('name', $formFields['classlecturer'])->first()->id,
+	      'classmodule'		=> $formFields['classmodule'],
+	      'classlimit'     =>  $formFields['classlimit'],
+	    ); 
+
+	    Validator::extend('ranked', function($attribute, $value, $parameters)
+		{
+			// This is the correct way to do this.
+			$coord = User::find($value);
+			if($coord->rank < 1){
+				return false;
+			}
+		   
+		  return true;
+		});
+
+	    $rules = array(
+			'classmodule'	=> 'required|exists:modules,mid',
+			'classlecturer' 	=> 'required|exists:users,id|ranked',
+			'classlimit'	 	=> 'required|integer|between:5,30',
+		);
+
+		$messages = [
+		    'ranked' => "This user can't coordinate this class.",
+		];
+
+		$validator = Validator::make($moduleData,$rules,$messages);
+		
+
+		if($validator->fails()){
+	        return Response::json(array(
+	            'fail' => true,
+	            'errors' => $validator->getMessageBag()->toArray()
+	        ));
+	    } else {
+
+	    	$elec = Classes::where('classid', $formFields['classid'])->first();
+
+	    	$elec->classmodule = $moduleData['classmodule'];
+	    	$elec->classlecturer = $moduleData['classlecturer'];
+	    	$elec->classlimit = $moduleData['classlimit'];
+	    	
+	    	if($elec->save()){
+	    		Session::flash('global', 'You have edited a module.');
+	    		  //return success  message
+		        return Response::json(array(
+		          'success' => true,
+		          'mName' => Modules::find($moduleData['classmodule'])->mshorttitle
+		        ));
+	    	}
+		}
+	}
  
 }
 ?>

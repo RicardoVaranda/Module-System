@@ -13,5 +13,23 @@ class TimetableController extends BaseController {
 		 App::abort(404, 'Timetable Not Found');
 	}
 
+	public function postSaveTimetable(){
+		if (Request::ajax())
+		{
+			$class = Classes::find(Input::get('id'));
+
+			$times = Input::get('time');
+
+			$times = substr($times, 1, -1);
+
+			$class->classtimes = $times;
+
+
+			if($class->save()){
+				return Response::json('success', 200);
+			}
+		}
+	}
+
 }
 ?>

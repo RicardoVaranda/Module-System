@@ -798,7 +798,7 @@ var day = '';
 var time = '';
 var times = [];
 
-function getClass(day, time)
+function getClass(day, time, room)
 {
 	return '<div id="classTime">' +
 			'<select style="width:33.333%;" id="cDay">' +
@@ -819,13 +819,15 @@ function getClass(day, time)
 				'<option ' + ((time == "16")? "selected=\"selected\"" : "") + ' value="16">16:00</option>' +
 				'<option ' + ((time == "17")? "selected=\"selected\"" : "") + ' value="17">17:00</option>' +
 			'</select>' +
-			'<input type"text"  style="width:33.333%;" maxlength="5" id="cRoom" placeholder="Room Number"/>'+
+			'<input type"text"  style="width:33.333%;" maxlength="5" id="cRoom" value="'+ ((room == null)? "":room) +'" placeholder="Room Number"/>'+
 			'</div>';
 }
 
-var saveTimes = '</br><a data-toggle="modal" class="submit btn '+
+var saveTimes = '</br><form name="saveTimetable">'+
+				'<input type="hidden" name="_token" value="{{ csrf_token() }}">'+
+				'<a type="submit" class="submit btn '+
 				'btn-info btn-block" style="width:25%" role="button" '+
-				'id="saveTime">Save Class Times</a>';
+				'id="saveTime">Save Class Times</a><form>';
 				
 function getTimes(){
 	times.length = 0;
@@ -841,7 +843,17 @@ function saveButton(){
 	$('#classTimes').append(saveTimes);
 	$('#saveTime').on("click", function(){
 		getTimes();
-		
+		times.length = $('#numClass').val();
+		$.ajax({
+			  method: "POST",
+			  url: "./timetable/save",
+			  data: { id: $('#classId').html(), time: JSON.stringify(times)} ,
+		  	  statusCode: {
+		    	200: function() {
+		    		$("#loadTT").click();
+		    	}
+		  	}
+		});
 	});
 }
 			
@@ -891,6 +903,7 @@ function totalClassTimes($data){
 		
 		$('#classTimes').append(getClass(times[i][0], times[i][1], times[i][2]));
 	}
+	times.length = $('#numClass').val();
 	$('#classTimes').append(saveButton());
 }
 			

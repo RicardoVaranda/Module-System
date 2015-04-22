@@ -262,49 +262,64 @@
 			
 			<section class="section service">  
 				<div class="container">	
-					<h1 class="h1">Timetable</h1>
+					<h1 class="h1">Timetables</h1>
 					
 					<div class="row">
 						<hr class="metro-hr">
-						<div class="col-sm-9">
-									<!-- tables inside this DIV could have draggable content -->
-		<div id="drag">
-			<!-- left container -->
-			<div id="left_container">
-				<!-- this block will become sticky (with a little JavaScript help)-->
-				<div id="left">
-					<table id="table1">
-						<colgroup>
-							<col width="150"/>
-							<col width="150"/>
-							<col width="150"/>
-						</colgroup>
-						
-						<!-- function will display rows ($person Array is used in mylib.php) -->
-						<tr><td><div id="p00" class="drag">Darlene Jonas</div><button type="button">Click Me!</button></td><td></tr>
-					</table>
-					<div class="instructions">
-						
-					</div>
-				</div>
-			</div><!-- left container -->
-			
-			<!-- right container -->
-			<div id="right">
-				<table cellspacing="0" cellpadding="0">
-					<colgroup><col width="400"/></colgroup>
-					<tr class="maintd"><td></td></tr>
-				</table>
-			</div>
-		</div>
+						<div class="col-sm-12">
+							<input type="text" name="electimes" id="elective" list="electives" class="form-control" placeholder="Choose Elective Module to view Timetable" required="">
+							<datalist id="electives">
+							   <select onchange="$('#elective').val(this.value)">
+							   <?php 
+							   		$electives = Auth::user()->electives;
+
+									if($electives != null) {
+										$electives = json_decode($electives);
+										//Search for current elective.
+										foreach($electives as $key => $value) {
+											$elec= Classes::find($value->classId);
+											$mod= Modules::find($elec->classmodule);
+											print('<option label="'.$mod->mshorttitle.'" value="'.$elec->classid.'"></option>');
+										}
+									}
+
+							    ?>
+							   </select>
+							</datalist>
 						</div>
 						<hr class="metro-hr">
 					</div>
 
-					
+					<div class="row" id="timetableRow">
+						
+					</div>
+					<hr class="metro-hr">
 				</div>
 			</section> 
 			<!-- /timetable -->	
+
+			<script type="text/javascript">
+
+			$("#elective").bind('change', function () {
+						var opt = $('option[value="'+$('#elective').val()+'"]');
+						if(!opt.length){
+							alert('Error: No Elective Selected.')
+							return;
+						}
+
+						$.get("timetables/"+$('#elective').val()).done(function(data){
+							$("#timetableRow").empty();
+							$("#timetableRow").html(data);
+						});			
+					});
+
+			function loadTime($id){
+				$.get("timetables/"+$id).done(function(data){
+							$("#timetableRow").empty();
+							$("#timetableRow").html(data);
+						});	
+			}
+			</script>
 		</div> 
 		<!-- /ascensor -->
 		

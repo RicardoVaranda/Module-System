@@ -12,7 +12,7 @@
 			<input type="hidden" id="electiveId" value="{{ $mod->mid }}" /> 
 			<button type="submit" class="pull-left btn-elec btn-primary"><i class="fa fa-arrow-right"></i>remove elective</button>
 		</form>
-	<button type="button" class="pull-right btn-elec btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
+	<button type="button" id="checkTime" onclick="loadTime({{$elec->classId}})" class="ascensorLink ascensorLink3 pull-right btn-elec btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>
 
 	</div>
 </div>

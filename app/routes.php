@@ -46,6 +46,25 @@ Route::group(array('before' => 'auth'), function() {
 			'uses' 	=> 'ModuleController@postModuleNew'
 		));
 
+		/*
+		|	Add Elective
+		*/
+		Route::post('/elective-new', array(
+			'as' 	=> 'elective-new-post',
+			'uses' 	=> 'ModuleController@postElectiveNew'
+		));
+
+		/*
+		| Edit Elective
+		*/
+
+		Route::post('/elective-change', array(
+			'as' 	=> 'elective-change-post',
+			'uses' 	=> 'ModuleController@postElectiveChange'
+		));
+
+	
+
 	});
 	
 	/*
@@ -64,6 +83,15 @@ Route::group(array('before' => 'auth'), function() {
 	Route::post('/account/unregister-elective', array(
 		'as' => 'unregister-elective',
 		'uses' => 'ElectiveController@postUnregisterElective'
+	));
+
+	/*
+	| Save Timetable
+	*/
+
+	Route::post('/timetable/save', array(
+		'as' 	=> 'save-timetable',
+		'uses' 	=> 'TimetableController@postSaveTimetable'
 	));
 
 	/*

@@ -6,7 +6,7 @@
 		<div class="modal-dialog">
 			<div  class="contact-box">
 	        	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	            <form name="contactform" id="{{ $type=='edit' ? 'editFormElec' : 'newFormElec'}}" action="{{ $type=='edit' ? URL::route('module-change-post') : URL::route('module-new-post') }}" method="post">
+	            <form name="contactform" id="{{ $type=='edit' ? 'editFormElec' : 'newFormElec'}}" action="{{ $type=='edit' ? URL::route('elective-change-post') : URL::route('elective-new-post') }}" method="post">
 	                <fieldset>
 	                    <h4 class="h4">{{ $type=='edit' ? 'Edit Elective' : 'Create new Elective'}}</h4>
 	                    <div class="form-group">

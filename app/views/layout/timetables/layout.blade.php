@@ -39,7 +39,7 @@
     <table id="timetable" class="heavyTable">
     	<thead>
     		<tr>
-    			<th colspan="6"><h1>{{$mod->mshorttitle}}</h1><h4>ID:{{$elec->classid}}  --   Spaces Available: {{($elec->classlimit-$elec->classcurrent)}}</h4></th>
+    			<th colspan="6"><h1>{{$mod->mshorttitle}}</h1><h4>ID:<code id="classId">{{$elec->classid}}</code>  --   Spaces Available: {{($elec->classlimit-$elec->classcurrent)}}</h4></th>
     		</tr>
     	</thead>
 		<thead>

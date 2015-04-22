@@ -6,9 +6,9 @@
 <span id="notyou">(not you?)</span>
 </h1>
 <h4>CIT Module System</h4>
-<form id="loginForm"autocomplete=false action="{{ URL::route('account-sign-in-post') }}" method="POST">
-<input id="username" name="username" style="display:none;" {{ (Input::old('username')) ? ' value="'. e(Input::old('username')) . '"' : '' }} required>
-<input id="pass" name="password" type="password" text="" placeholder="Password" required>
+<form id="loginForm" autocomplete="off" action="{{ URL::route('account-sign-in-post') }}" method="POST">
+<input id="username" autocomplete="off" name="username" style="display:none;" {{ (Input::old('username')) ? ' value="'. e(Input::old('username')) . '"' : '' }} required>
+<input id="pass" autocomplete="off" name="password" type="password" placeholder="Password" required>
 <div id="showPass"></div>
 <div id="submit"></div>
 {{ Form::token()}}

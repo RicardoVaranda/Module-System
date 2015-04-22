@@ -380,10 +380,10 @@
 			<section class="section timetables">  
 				<div class="container">	
 					<h1 class="h1">Timetables</h1>
-					
+
 					<div class="row">
 						<hr class="metro-hr">
-						<div class="col-sm-9">
+						<div class="col-sm-12">
 							<input type="text" name="electimes" id="elective" list="electives" class="form-control" placeholder="Elective Module" required="">
 							<datalist id="electives">
 							   <select onchange="$('#elective').val(this.value)">
@@ -395,6 +395,7 @@
 									@endforeach
 							   </select>
 							</datalist>
+
 
 							<div id="numClasses"></div>
 
