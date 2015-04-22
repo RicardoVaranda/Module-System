@@ -20,12 +20,13 @@ class ModuleController extends BaseController {
 
 	    Validator::extend('ranked', function($attribute, $value, $parameters)
 		{
+			// This is the correct way to do this.
 			$coord = User::where('name', $value)->first();
-			if($coord->rank <= 1){
-				return true;
+			if($coord->rank < 1){
+				return false;
 			}
 		   
-		  return false;
+		  return true;
 		});
 
 	    $rules = array(
@@ -88,7 +89,7 @@ class ModuleController extends BaseController {
 				return false;
 			}
 		   
-		  return false;
+		  return true;
 		});
 
 	    $rules = array(

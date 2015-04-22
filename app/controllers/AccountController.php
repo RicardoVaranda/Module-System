@@ -273,13 +273,13 @@ class AccountController extends BaseController{
 
 				// TODO: Laravel must be configured with a sender address before emails can be used.
 				// Send email to lecturer with credentials and activation link.
-				/*Mail::send('emails.auth.activateLecturer', array('link'		=> URL::route('account-activate', $code), 
+				Mail::send('emails.auth.activateLecturer', array('link'		=> URL::route('account-activate', $code), 
 																'name'		=> $lecturerName,
 																'username'	=> $lecturerId,
 																'password'	=> $password), 
 																function($message) use ($lecturer) {
 																		$message->to($lecturer->email, $lecturer->name)->subject('Account Created');
-																}); */
+																});
 
 				// Return successful response to user.
 				return Response::json(array(
@@ -292,7 +292,7 @@ class AccountController extends BaseController{
 
 
 	/**
-	*	Function that creates new Lecturer and emails them with account info.
+	*	Function that deletes a specific lecturer.
 	*/
 	public function removeLecturer(){
 
@@ -383,7 +383,7 @@ class AccountController extends BaseController{
 	            				// Verify that all input is correct.
 	            				$correct = true;
 
-	            				if(!is_int($user['rank']) || !is_int($user['department'])) {
+	            				if(!is_numeric($user['rank']) || !is_numeric($user['department'])) {
 	            					$correct = false;
 	            				}
 
