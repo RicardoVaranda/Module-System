@@ -32,14 +32,15 @@
 	<label>Space Limit:</label><input type="text" class="form-control" id="classlimit" placeholder="Class Space Limit" value="{{ $class->classlimit }}" />
 	<label>Space Left:</label><input type="text" class="form-control" id="classleft" placeholder="Space Left in Class" value="{{ ($class->classlimit - $class->classcurrent) }}" disabled/>
 	<input type="hidden" id="classId" value="{{ $class->classid }}"/>
-		<button type="submit" class="btn btn-info pink" style="margin-top: 10px;">Update Class</button>
-		</form>
-		<a id="classAll" target="_blank" href="https://mail.google.com/mail?view=cm&tf=0%22+&to={{ Classes::find($class->classid)->getEmails() }}">
-			<button class="btn btn-info pink">Email All</button>
-		</a>
+		<div style="margin-top:10px">
+			<button type="submit" class="btn btn-info pink">Update Class</button>
+			<a id="classAll" target="_blank" href="https://mail.google.com/mail?view=cm&tf=0%22+&to={{ Classes::find($class->classid)->getEmails() }}"><button class="btn btn-info pink">Email All</button></a>
+			<a href="{{URL::route('getList', 1)}}" target="_blank"><button class="btn btn-info pink">Download List</button></a>
+			<button type="button" id="checkTime" onclick="loadTime({{$class->classid}})" class="ascensorLink ascensorLink3 btn btn-info pink">View Timetable</button>
+		</div>
+</form>
 </div>
 </div>
-<a href="{{URL::route('getList', 1)}}" target="_blank">Download List</a>
 <div id="class-students">
 @foreach(json_decode($class->classstudents) as $student)
 	<div class="col-sm-4" id="student{{ User::find($student)->id }}">

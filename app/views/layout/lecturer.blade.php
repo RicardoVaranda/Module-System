@@ -70,6 +70,7 @@
 					<ul class="nav navbar-nav pull-right">
 						<li class="electives-menu"><a class="ascensorLink ascensorLink1" href="#">Electives</a></li>
 						<li class="profile-menu"><a class="ascensorLink ascensorLink2" href="#">Profile</a></li>
+						<li class="timetable-menu"><a class="ascensorLink ascensorLink3" href="#">Timetable</a></li>
 						<li class="signout-menu"><a class="ascensorLink" href="{{ URL::route('account-sign-out') }}">Sign out</a></li>
 					</ul>
 				</div>
@@ -95,6 +96,12 @@
 							<a class="ascensorLink ascensorLink2 tile-nav" href="#">
 								<h5 class="h5">Profile</h5>
 								<i class="fa fa-heart fa-4x"></i>
+							</a>
+						</div>
+						<div class="tile tile-item tile-timetables">
+							<a class="ascensorLink ascensorLink3 tile-nav" href="#">
+								<h5 class="h5">Timetable</h5>
+								<i class="fa fa-calendar fa-4x"></i>
 							</a>
 						</div>
 						<div class="tile tile-item tile-signout">
@@ -276,348 +283,65 @@
 			
 			<section class="section service">  
 				<div class="container">	
-					<h1 class="h1">My Info</h1>
+					<h1 class="h1">Timetables</h1>
 					
 					<div class="row">
 						<hr class="metro-hr">
 						<div class="col-sm-9">
-							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-							Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-							when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+							<input type="text" name="electimes" id="elective" list="electives" class="form-control" placeholder="Choose Elective Module to view Timetable" required="">
+							<datalist id="electives">
+							   <select onchange="$('#elective').val(this.value)">
+							   <?php 
+
+									if($total > 0) {
+										//Search for current elective.
+										foreach($classes as $elec) {
+											$mod= Modules::find($elec->classmodule);
+											print('<option label="'.$mod->mshorttitle.'" value="'.$elec->classid.'"></option>');
+										}
+									}
+
+							    ?>
+							   </select>
+							</datalist>
 						</div>
 						<div class="col-sm-3">
 							<ul class="check-our-work">
-								<li class="portfolio"><a class="ascensorLink ascensorLink1" href="#">Check our Portfolio</a></li>
+								<a data-toggle="modal" class="submit btn btn-info btn-block" role="button" id="loadTimes">Load Timetable</a>
 							</ul>
 						</div>
 						<hr class="metro-hr">
 					</div>
 
-					<div class="row">
-						<div class="col-sm-6 col-md-4">
-							<div class="brick">
-							<div class="service-img"> <i class="fa fa-cloud-upload fa-5x"></i> </div>
-								<h6 class="service-title">Save your time for pleasure!</h6>
-								<h4 class="h4">Save On Cloud</h4>
-								<p class="service-desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-								Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-								when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="brick">
-								<div class="service-img"> <i class="fa fa-print fa-5x"></i> </div>
-								<h6 class="service-title">Create your individual website look!</h6>
-								<h4 class="h4">Print Your Document</h4>
-								<p class="service-desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-								Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-								when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="brick">
-								<div class="service-img"> <i class="fa fa-magic fa-5x"></i> </div>
-								<h6 class="service-title">Lorem Ipsum is simply dummy text!</h6>
-								<h4 class="h4">Magic is in Your Hand</h4>
-								<p class="service-desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-								Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-								when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-							</div>
-						</div>
+					<div class="row" id="timetableRow">
+						
 					</div>
-					
-					<div class="row">
-						<hr class="metro-hr">
-						<h2 class="h2 lead">My Modules</h2>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>Twitter</h3>
-									<p>Justo a urna dolor et lorem vulputate.</p>
-								</div>
-							</div>
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-magic"></i></div>
-								<div class="feature-text">
-									<h3>FontAwesome Icons</h3>
-									<p>Justo a urna dolor et lorem vulputate.</p>
-								</div>
-							</div>
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-font"></i></div>
-								<div class="feature-text">
-									<h3>Google Fonts</h3>
-									<p>Class aptent taciti sociosqu torquent.</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-move"></i></div>
-								<div class="feature-text">
-									<h3>Bootstrap</h3>
-									<p>Justo a urna dolor et lorem vulputate.</p>
-								</div>
-							</div>
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-laptop"></i></div>
-								<div class="feature-text">
-									<h3>HTML 5 / CSS 3</h3>
-									<p>Duis rutrum faucibus massa sagittis.</p>
-								</div>
-							</div>
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-font"></i></div>
-								<div class="feature-text">
-									<h3>Modern</h3>
-									<p>Justo a urna dolor et lorem vulputate.</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-sm-6 col-md-4">
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-twitter"></i></div>
-								<div class="feature-text">
-									<h3>CrossBrowser</h3>
-									<p>Justo a urna dolor et lorem vulputate.</p>
-								</div>
-							</div>
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-magic"></i></div>
-								<div class="feature-text">
-									<h3>FontAwesome Icons</h3>
-									<p>Justo a urna dolor et lorem vulputate.</p>
-								</div>
-							</div>
-							<div class="feature-box">
-								<div class="feature-icon"><i class="fa fa-font"></i></div>
-								<div class="feature-text">
-									<h3>Google Fonts</h3>
-									<p>Class aptent taciti sociosqu torquent.</p>
-								</div>
-							</div>
-						</div>
-						<hr class="metro-hr">
-					</div>
-					
+					<hr class="metro-hr">
 				</div>
-			</section> 
-			<!-- /service -->
-		
-			
-			
-			
-			<section class="section blog">
-					<div class="container">
-						<h1 class="h1">Our Blog</h1>
-						<div class="row">
-						
-							<div class="col-sm-6 col-md-6 col-lg-6 blog-post">
-								<article class="article">
-									<div class="article-media">
-										<a href="#"><img class="img-responsive" src="images/blog/blog-post1.jpg" alt="blog-article"></a>
-									</div>
-									<div class="article-body">
-										<h4 class="h4 article-title"><a href="#">Example Blog Post</a></h4>
-										
-										<div class="article-tag"><i class="fa fa-tag"></i><a href="#">Dinner</a>
-										<span class="separator">|</span><a href="#">Kitchen</a>
-										<span class="separator">|</span><a href="#">Harvesting</a>
-										</div>
-										
-										<p>when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-										It has survived when an unknown printer type and specimen book.</p>
-										
-										<div class="read-more"><a href="#">Read More</a>
-											<i class="fa fa-comment pull-right"> 08</i>
-										</div>
-									</div>
-								</article>
-							</div>
-							<div class="col-sm-6 col-md-6 col-lg-6 blog-post">
-								<article class="article">
-									<div class="article-media">
-										<a href="#"><img class="img-responsive" src="images/blog/blog-post2.jpg" alt="blog-article"></a>
-									</div>
-									<div class="article-body">
-										<h4 class="h4 article-title"><a href="#">Example Blog Post</a></h4>
-										
-										<div class="article-tag"><i class="fa fa-tag"></i><a href="#">Dinner</a>
-										<span class="separator">|</span><a href="#">Kitchen</a>
-										<span class="separator">|</span><a href="#">Harvesting</a>
-										</div>
-										
-										<p>when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-										It has survived when an unknown printer type and specimen book.</p>
-										
-										<div class="read-more"><a href="#">Read More</a>
-											<i class="fa fa-comment pull-right"> 08</i>
-										</div>
-									</div>
-								</article>
-							</div>
-							<div class="col-sm-6 col-md-6 col-lg-6 blog-post">
-								<article class="article">
-									<div class="article-media">
-										<a href="#"><img class="img-responsive" src="images/blog/blog-post3.jpg" alt="blog-article"></a>
-									</div>
-									<div class="article-body">
-										<h4 class="h4 article-title"><a href="#">Example Blog Post</a></h4>
-										
-										<div class="article-tag"><i class="fa fa-tag"></i><a href="#">Dinner</a>
-										<span class="separator">|</span><a href="#">Kitchen</a>
-										<span class="separator">|</span><a href="#">Harvesting</a>
-										</div>
-										
-										<p>when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-										It has survived when an unknown printer type and specimen book.</p>
-										
-										<div class="read-more"><a href="#">Read More</a>
-											<i class="fa fa-comment pull-right"> 08</i>
-										</div>
-									</div>
-								</article>
-							</div>
-						
-							<div class="col-sm-6 col-md-6 col-lg-6 blog-post">
-								<article class="article">
-									<div class="article-media">
-										<a href="#"><img class="img-responsive" src="images/blog/blog-post4.jpg" alt="blog-article"></a>
-									</div>
-									<div class="article-body">
-										<h4 class="h4 article-title"><a href="#">Example Blog Post</a></h4>
-										
-										<div class="article-tag"><i class="fa fa-tag"></i><a href="#">Dinner</a>
-										<span class="separator">|</span><a href="#">Kitchen</a>
-										<span class="separator">|</span><a href="#">Harvesting</a>
-										</div>
-										
-										<p>when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-										It has survived when an unknown printer type and specimen book.</p>
-										
-										<div class="read-more"><a href="#">Read More</a>
-											<i class="fa fa-comment pull-right"> 08</i>
-										</div>
-									</div>
-								</article>
-							</div>
-							<div class="col-sm-6 col-md-6 col-lg-6 blog-post">
-								<article class="article">
-									<div class="article-media">
-										<a href="#"><img class="img-responsive" src="images/blog/blog-post5.jpg" alt="blog-article"></a>
-									</div>
-									<div class="article-body">
-										<h4 class="h4 article-title"><a href="#">Example Blog Post</a></h4>
-										
-										<div class="article-tag"><i class="fa fa-tag"></i><a href="#">Dinner</a>
-										<span class="separator">|</span><a href="#">Kitchen</a>
-										<span class="separator">|</span><a href="#">Harvesting</a>
-										</div>
-										
-										<p>when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-										It has survived when an unknown printer type and specimen book.</p>
-										
-										<div class="read-more"><a href="#">Read More</a>
-											<i class="fa fa-comment pull-right"> 08</i>
-										</div>
-									</div>
-								</article>
-							</div>
-							<div class="col-sm-6 col-md-6 col-lg-6 blog-post">
-								<article class="article">
-									<div class="article-media">
-										<a href="#"><img class="img-responsive" src="images/blog/blog-post6.jpg" alt="blog-article"></a>
-									</div>
-									<div class="article-body">
-										<h4 class="h4 article-title"><a href="#">Example Blog Post</a></h4>
-										
-										<div class="article-tag"><i class="fa fa-tag"></i><a href="#">Dinner</a>
-										<span class="separator">|</span><a href="#">Kitchen</a>
-										<span class="separator">|</span><a href="#">Harvesting</a>
-										</div>
-										
-										<p>when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-										It has survived when an unknown printer type and specimen book.</p>
-										
-										<div class="read-more"><a href="#">Read More</a>
-											<i class="fa fa-comment pull-right"> 08</i>
-										</div>
-									</div>
-								</article>
-							</div>
+			<script type="text/javascript">
 
-						</div>
-					</div>
-			</section> 
-			<!-- /blog -->
+			$("#loadTimes").click(function() {
+						var opt = $('option[value="'+$('#elective').val()+'"]');
+						if(!opt.length){
+							alert('Error: No Elective Selected.')
+							return;
+						}
 
-            <section class="section contact">
-				<div class="center-box">
-					<div class="contact-holder">
-						<div class="container">
-							<div class="row">
-                            
-                            	<div class="col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
-									<div class="contact-box">
-                                         <h3 class="h3 lead">Think we might help?</h3>
-                                         <h3 class="h3 lead">We’d love to hear from you.</h3>
-                                        <a data-toggle="modal" class="submit btn btn-info btn-block" role="button" href="#contact">Write for us</a>
-                                    </div>
-                               		<div class="contact-box">
-										 <h3 class="h3">Where we are</h3>
-										 <address>
-											ThemeArt<br>
-											33 Street Name<br>
-											New York, NY 12345<br>
-										 </address>
-										 <address>
-											<i class="fa fa-phone"></i> <abbr title="Phone">P:</abbr> (123) 456-789
-										 </address>
-										 
-										 <address>
-											Contact :<br>
-											<i class="fa fa-envelope-o"></i> <a href="mailto:#">info@quickmetro.com</a>
-										 </address>
-										 
-									 </div>
-								</div>	
-                            
-							</div>
-						</div>
-					</div>
-				</div>
-				<div id="map"></div>
-            </section> 
-			<!-- /contact -->
+						$.get("timetables/"+$('#elective').val()).done(function(data){
+							$("#timetableRow").empty();
+							$("#timetableRow").html(data);
+						});			
+					});
 
-			<section class="section follow">
-				<div class="center-box">
-					<div class="container">
-						
-						<div class="row">
-							<div class="socialize">
-								<h2 class="h2">See you soon!</h2>
-							</div>
-						</div>
-						
-						<div class="row">
-							<ul id="social-networks">
-								<li class="social-twitter"><a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter fa-4x"></i></a></li>
-								<li class="social-facebook"><a href="http://www.facebook.com" target="_blank"><i class="fa fa-facebook fa-4x"></i></a></li>
-								<li class="social-googleplus"><a href="http://www.google.com" target="_blank"><i class="fa fa-google-plus fa-4x"></i></a></li>
-								<li class="social-youtube"><a href="http://www.youtube.com" target="_blank"><i class="fa fa-youtube fa-4x"></i></a></li>
-								<li class="social-pinterest"><a href="http://www.pinterest.com" target="_blank"><i class="fa fa-pinterest fa-4x"></i></a></li>
-								<li class="social-dribbble"><a href="http://www.dribbble.com" target="_blank"><i class="fa fa-dribbble fa-4x"></i></a></li>
-								<li class="social-linkedin"><a href="http://www.linkedin.com" target="_blank"><i class="fa fa-linkedin fa-4x"></i></a></li>
-								<li class="social-flickr"><a href="http://www.flickr.com" target="_blank"><i class="fa fa-flickr fa-4x"></i></a></li>
-							</ul>
-						</div>
-						
-					</div>
-				</div>
+			function loadTime($id){
+				$.get("timetables/"+$id).done(function(data){
+							$("#timetableRow").empty();
+							$("#timetableRow").html(data);
+						});	
+			}
+			</script>
 			</section> 
-			<!-- /follow -->
+			<!-- /timetable -->	
 			
 		</div> 
 		<!-- /ascensor -->

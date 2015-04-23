@@ -258,13 +258,13 @@
             </section> 
 			<!-- profile -->
 			
-			<section class="section service">  
+			<section class="section timetable">  
 				<div class="container">	
 					<h1 class="h1">Timetables</h1>
 					
 					<div class="row">
 						<hr class="metro-hr">
-						<div class="col-sm-12">
+						<div class="col-sm-9">
 							<input type="text" name="electimes" id="elective" list="electives" class="form-control" placeholder="Choose Elective Module to view Timetable" required="">
 							<datalist id="electives">
 							   <select onchange="$('#elective').val(this.value)">
@@ -280,10 +280,14 @@
 											print('<option label="'.$mod->mshorttitle.'" value="'.$elec->classid.'"></option>');
 										}
 									}
-
 							    ?>
 							   </select>
 							</datalist>
+						</div>
+						<div class="col-sm-3">
+							<ul class="check-our-work">
+								<a data-toggle="modal" class="submit btn btn-info btn-block" role="button" id="loadTimes">Load Timetable</a>
+							</ul>
 						</div>
 						<hr class="metro-hr">
 					</div>
@@ -298,7 +302,7 @@
 
 			<script type="text/javascript">
 
-			$("#elective").bind('change', function () {
+			$("#loadTimes").click(function() {
 						var opt = $('option[value="'+$('#elective').val()+'"]');
 						if(!opt.length){
 							alert('Error: No Elective Selected.')

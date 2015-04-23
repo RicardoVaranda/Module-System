@@ -80,8 +80,11 @@ $(document).ready(function(){
 	   $("#user").html($("#user").html().replace("<br>", "").replace("<br>", ""));
 	   $("#pass").focus();
 	});
-	$('#pass').change(function(){
+	$('#pass').bind("enterKey",function(e){
 		$('#submit').click();
+	});
+	$('#pass').keyup(function(e){
+		if(e.keyCode == 13)$(this).trigger("enterKey");
 	});
 	$('#user').keyup(function(e){
 		if(e.keyCode == 13)$(this).trigger("enterKey");

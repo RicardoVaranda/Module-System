@@ -333,11 +333,11 @@
 					        		});
 
 
-									$("#editFormElec").submit(function(e){
+									$(".editFormElec").submit(function(e){
 						                e.preventDefault();
 						                var form = $(this); 
 						                var errors = document.getElementsByClassName('isa_error');
-
+						                console.log(form.attr("action"));
 									    for (var i = 0; i < errors.length; i++){
 									        errors[i].style.display = 'none';
 									    }
