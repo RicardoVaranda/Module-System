@@ -4,6 +4,8 @@ class ElectiveController extends BaseController {
 
 
 	public function postRegisterElective() {
+		// Quick fix to change form is class is full.
+		$changeForm = false;
 
 		$validator = Validator::make(Input::all(),
 			array(
@@ -101,6 +103,7 @@ class ElectiveController extends BaseController {
 
 				// Inform user class is full.
 				$errors = 'All classes are full!';
+				$changeForm = true;
 			}
 
 			// Get the remaining spaces for elective.
@@ -134,7 +137,8 @@ class ElectiveController extends BaseController {
 			return Response::json(array(
 										'success' => false,
 										'spaces' => $spaces,
-										'errors' => $errors
+										'errors' => $errors,
+										'change' => $changeForm
 									));
 		}
 		

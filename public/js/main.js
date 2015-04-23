@@ -107,6 +107,11 @@ $( document ).on('submit', '.electiveRegister', function() {
 	  	} else {
 	  		// Inform user of error.
 	  		failMessage(response.errors);
+	  		if(response.change) {
+	  			form.removeClass('electiveRegister');
+	  			form.addClass('electiveRequest');
+	  			form.find('button').text('Request Additional Class');
+	  		}
 	  	}
 	  	// Update spaces.
 	  	$('#elective'+electiveId).html(response.spaces);
