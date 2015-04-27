@@ -94,9 +94,13 @@ $( document ).on('submit', '.electiveRegister', function() {
 	  								'<button type="submit" class="pull-left btn-elec btn-primary"><i class="fa fa-arrow-right"></i>remove elective</button>'+
 	  							'</form><button type="button" class="pull-right btn-elec btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>'+
 	  						 '</div></div>';
+	  		var timeStuff = "<option class='myclass"+electiveId+"'' label="+ response.shorttitle +" value="+ electiveId +"></option>";
 
 	  		// Insert classBlock to myelectives.
 	  		$('#myelectives').append(classBlock);
+
+	  		//Insert timeStuff to timetable dropdown
+	  		$('#electives').append(timeStuff);
 
 	  		// Inform user.
 	  		successMessage("Successfully registered to module!");

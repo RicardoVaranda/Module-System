@@ -277,7 +277,7 @@
 										foreach($electives as $key => $value) {
 											$elec= Classes::find($value->classId);
 											$mod= Modules::find($elec->classmodule);
-											print('<option label="'.$mod->mshorttitle.'" value="'.$elec->classid.'"></option>');
+											print('<option class="myclass'.$elec->classId.'" label="'.$mod->mshorttitle.'" value="'.$elec->classid.'"></option>');
 										}
 									}
 							    ?>
