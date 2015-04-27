@@ -34,8 +34,8 @@
 	<input type="hidden" id="classId" value="{{ $class->classid }}"/>
 		<div style="margin-top:10px">
 			<button type="submit" class="btn btn-info pink">Update Class</button>
-			<a id="classAll" target="_blank" onclick="event.preventDefault();" href="https://mail.google.com/mail?view=cm&tf=0%22+&to={{ Classes::find($class->classid)->getEmails() }}"><button class="btn btn-info pink">Email All</button></a>
-			<a href="{{URL::route('getList', 1)}}" onclick="event.preventDefault();" target="_blank"><button class="btn btn-info pink">Download List</button></a>
+			<a id="classAll" target="_blank" onclick="event.preventDefault(); window.open('https://mail.google.com/mail?view=cm&tf=0%22+&to={{ Classes::find($class->classid)->getEmails() }}', '_blank')"><button class="btn btn-info pink">Email All</button></a>
+			<a onclick="event.preventDefault(); window.open('{{URL::route('getList', $class->classid)}}', '_blank')" target="_blank"><button class="btn btn-info pink">Download List</button></a>
 			<button type="button" id="checkTime" onclick="loadTime({{$class->classid}})" class="ascensorLink ascensorLink3 btn btn-info pink">View Timetable</button>
 		</div>
 </form>
