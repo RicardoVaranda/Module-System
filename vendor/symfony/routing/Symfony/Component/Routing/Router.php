@@ -21,7 +21,6 @@ use Symfony\Component\Routing\Matcher\RequestMatcherInterface;
 use Symfony\Component\Routing\Matcher\UrlMatcherInterface;
 use Symfony\Component\Routing\Matcher\Dumper\MatcherDumperInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface;
 
 /**
  * The Router class is an example of the integration of all pieces of the
@@ -70,11 +69,6 @@ class Router implements RouterInterface, RequestMatcherInterface
      * @var LoggerInterface|null
      */
     protected $logger;
-
-    /**
-     * @var ExpressionFunctionProviderInterface[]
-     */
-    private $expressionLanguageProviders = array();
 
     /**
      * Constructor.
@@ -251,25 +245,13 @@ class Router implements RouterInterface, RequestMatcherInterface
         }
 
         if (null === $this->options['cache_dir'] || null === $this->options['matcher_cache_class']) {
-            $this->matcher = new $this->options['matcher_class']($this->getRouteCollection(), $this->context);
-            if (method_exists($this->matcher, 'addExpressionLanguageProvider')) {
-                foreach ($this->expressionLanguageProviders as $provider) {
-                    $this->matcher->addExpressionLanguageProvider($provider);
-                }
-            }
-
-            return $this->matcher;
+            return $this->matcher = new $this->options['matcher_class']($this->getRouteCollection(), $this->context);
         }
 
         $class = $this->options['matcher_cache_class'];
         $cache = new ConfigCache($this->options['cache_dir'].'/'.$class.'.php', $this->options['debug']);
         if (!$cache->isFresh()) {
             $dumper = $this->getMatcherDumperInstance();
-            if (method_exists($dumper, 'addExpressionLanguageProvider')) {
-                foreach ($this->expressionLanguageProviders as $provider) {
-                    $dumper->addExpressionLanguageProvider($provider);
-                }
-            }
 
             $options = array(
                 'class' => $class,
@@ -321,11 +303,6 @@ class Router implements RouterInterface, RequestMatcherInterface
         }
 
         return $this->generator;
-    }
-
-    public function addExpressionLanguageProvider(ExpressionFunctionProviderInterface $provider)
-    {
-        $this->expressionLanguageProviders[] = $provider;
     }
 
     /**

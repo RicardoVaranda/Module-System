@@ -1,13 +1,9 @@
 <?php
 
-namespace PhpParser\Node\Scalar;
-
-use PhpParser\Node\Scalar;
-
 /**
  * @property float $value Number value
  */
-class DNumber extends Scalar
+class PHPParser_Node_Scalar_DNumber extends PHPParser_Node_Scalar
 {
     /**
      * Constructs a float number scalar node.
@@ -25,8 +21,6 @@ class DNumber extends Scalar
     }
 
     /**
-     * @internal
-     *
      * Parses a DNUMBER token like PHP would.
      *
      * @param string $str A string number

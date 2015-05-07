@@ -87,9 +87,6 @@ class ProcessUtils
     public static function validateInput($caller, $input)
     {
         if (null !== $input) {
-            if (is_resource($input)) {
-                return $input;
-            }
             if (is_scalar($input)) {
                 return (string) $input;
             }
@@ -98,7 +95,7 @@ class ProcessUtils
                 return (string) $input;
             }
 
-            throw new InvalidArgumentException(sprintf('%s only accepts strings or stream resources.', $caller));
+            throw new InvalidArgumentException(sprintf('%s only accepts strings.', $caller));
         }
 
         return $input;

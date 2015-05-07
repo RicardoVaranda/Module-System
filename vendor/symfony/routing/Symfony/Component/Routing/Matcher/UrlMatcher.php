@@ -18,7 +18,6 @@ use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
-use Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface;
 
 /**
  * UrlMatcher matches URL based on a set of routes.
@@ -50,11 +49,6 @@ class UrlMatcher implements UrlMatcherInterface, RequestMatcherInterface
 
     protected $request;
     protected $expressionLanguage;
-
-    /**
-     * @var ExpressionFunctionProviderInterface[]
-     */
-    protected $expressionLanguageProviders = array();
 
     /**
      * Constructor.
@@ -99,7 +93,7 @@ class UrlMatcher implements UrlMatcherInterface, RequestMatcherInterface
 
         throw 0 < count($this->allow)
             ? new MethodNotAllowedException(array_unique(array_map('strtoupper', $this->allow)))
-            : new ResourceNotFoundException(sprintf('No routes found for "%s".', $pathinfo));
+            : new ResourceNotFoundException();
     }
 
     /**
@@ -114,11 +108,6 @@ class UrlMatcher implements UrlMatcherInterface, RequestMatcherInterface
         $this->request = null;
 
         return $ret;
-    }
-
-    public function addExpressionLanguageProvider(ExpressionFunctionProviderInterface $provider)
-    {
-        $this->expressionLanguageProviders[] = $provider;
     }
 
     /**
@@ -247,7 +236,7 @@ class UrlMatcher implements UrlMatcherInterface, RequestMatcherInterface
             if (!class_exists('Symfony\Component\ExpressionLanguage\ExpressionLanguage')) {
                 throw new \RuntimeException('Unable to use expressions as the Symfony ExpressionLanguage component is not installed.');
             }
-            $this->expressionLanguage = new ExpressionLanguage(null, $this->expressionLanguageProviders);
+            $this->expressionLanguage = new ExpressionLanguage();
         }
 
         return $this->expressionLanguage;

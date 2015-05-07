@@ -77,8 +77,6 @@ interface KernelInterface extends HttpKernelInterface, \Serializable
      * @return bool true if the class belongs to an active bundle, false otherwise
      *
      * @api
-     *
-     * @deprecated Deprecated since version 2.6, to be removed in 3.0.
      */
     public function isClassInActiveBundle($class);
 

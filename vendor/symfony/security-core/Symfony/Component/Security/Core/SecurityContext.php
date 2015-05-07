@@ -11,13 +11,10 @@
 
 namespace Symfony\Component\Security\Core;
 
-use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundException;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
  * SecurityContext is the main entry point of the Security component.
@@ -26,47 +23,48 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
- * @deprecated Deprecated since version 2.6, to be removed in 3.0.
  */
 class SecurityContext implements SecurityContextInterface
 {
-    /**
-     * @var TokenStorageInterface
-     */
-    private $tokenStorage;
+    private $token;
+    private $accessDecisionManager;
+    private $authenticationManager;
+    private $alwaysAuthenticate;
 
     /**
-     * @var AuthorizationCheckerInterface
-     */
-    private $authorizationChecker;
-
-    /**
-     * For backwards compatibility, the signature of sf <2.6 still works
+     * Constructor.
      *
-     * @param TokenStorageInterface|AuthenticationManagerInterface         $tokenStorage
-     * @param AuthorizationCheckerInterface|AccessDecisionManagerInterface $authorizationChecker
-     * @param bool                                                         $alwaysAuthenticate   only applicable with old signature
+     * @param AuthenticationManagerInterface      $authenticationManager An AuthenticationManager instance
+     * @param AccessDecisionManagerInterface|null $accessDecisionManager An AccessDecisionManager instance
+     * @param bool                                $alwaysAuthenticate
      */
-    public function __construct($tokenStorage, $authorizationChecker, $alwaysAuthenticate = false)
+    public function __construct(AuthenticationManagerInterface $authenticationManager, AccessDecisionManagerInterface $accessDecisionManager, $alwaysAuthenticate = false)
     {
-        $oldSignature = $tokenStorage instanceof AuthenticationManagerInterface && $authorizationChecker instanceof AccessDecisionManagerInterface;
-        $newSignature = $tokenStorage instanceof TokenStorageInterface && $authorizationChecker instanceof AuthorizationCheckerInterface;
+        $this->authenticationManager = $authenticationManager;
+        $this->accessDecisionManager = $accessDecisionManager;
+        $this->alwaysAuthenticate = $alwaysAuthenticate;
+    }
 
-        // confirm possible signatures
-        if (!$oldSignature && !$newSignature) {
-            throw new \BadMethodCallException('Unable to construct SecurityContext, please provide the correct arguments');
+    /**
+     * {@inheritdoc}
+     *
+     * @throws AuthenticationCredentialsNotFoundException when the security context has no authentication token.
+     */
+    final public function isGranted($attributes, $object = null)
+    {
+        if (null === $this->token) {
+            throw new AuthenticationCredentialsNotFoundException('The security context contains no authentication token. One possible reason may be that there is no firewall configured for this URL.');
         }
 
-        if ($oldSignature) {
-            // renamed for clearity
-            $authenticationManager = $tokenStorage;
-            $accessDecisionManager = $authorizationChecker;
-            $tokenStorage = new TokenStorage();
-            $authorizationChecker = new AuthorizationChecker($tokenStorage, $authenticationManager, $accessDecisionManager, $alwaysAuthenticate);
+        if ($this->alwaysAuthenticate || !$this->token->isAuthenticated()) {
+            $this->token = $this->authenticationManager->authenticate($this->token);
         }
 
-        $this->tokenStorage = $tokenStorage;
-        $this->authorizationChecker = $authorizationChecker;
+        if (!is_array($attributes)) {
+            $attributes = array($attributes);
+        }
+
+        return $this->accessDecisionManager->decide($this->token, $attributes, $object);
     }
 
     /**
@@ -74,7 +72,7 @@ class SecurityContext implements SecurityContextInterface
      */
     public function getToken()
     {
-        return $this->tokenStorage->getToken();
+        return $this->token;
     }
 
     /**
@@ -82,14 +80,6 @@ class SecurityContext implements SecurityContextInterface
      */
     public function setToken(TokenInterface $token = null)
     {
-        return $this->tokenStorage->setToken($token);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isGranted($attributes, $object = null)
-    {
-        return $this->authorizationChecker->isGranted($attributes, $object);
+        $this->token = $token;
     }
 }

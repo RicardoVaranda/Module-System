@@ -21,8 +21,6 @@ use Symfony\Component\Console\Input\InputOption;
  * Markdown descriptor.
  *
  * @author Jean-François Simon <contact@jfsimon.fr>
- *
- * @internal
  */
 class MarkdownDescriptor extends Descriptor
 {
@@ -105,7 +103,7 @@ class MarkdownDescriptor extends Descriptor
             $this->write($help);
         }
 
-        if ($command->getNativeDefinition()) {
+        if ($definition = $command->getNativeDefinition()) {
             $this->write("\n\n");
             $this->describeInputDefinition($command->getNativeDefinition());
         }

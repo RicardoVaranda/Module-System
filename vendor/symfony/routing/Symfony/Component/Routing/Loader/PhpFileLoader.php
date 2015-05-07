@@ -38,10 +38,13 @@ class PhpFileLoader extends FileLoader
      */
     public function load($file, $type = null)
     {
+        // the loader variable is exposed to the included file below
+        $loader = $this;
+
         $path = $this->locator->locate($file);
         $this->setCurrentDir(dirname($path));
 
-        $collection = self::includeFile($path, $this);
+        $collection = include $path;
         $collection->addResource(new FileResource($path));
 
         return $collection;
@@ -55,18 +58,5 @@ class PhpFileLoader extends FileLoader
     public function supports($resource, $type = null)
     {
         return is_string($resource) && 'php' === pathinfo($resource, PATHINFO_EXTENSION) && (!$type || 'php' === $type);
-    }
-
-    /**
-     * Safe include. Used for scope isolation.
-     *
-     * @param string        $file   File to include
-     * @param PhpFileLoader $loader the loader variable is exposed to the included file below
-     *
-     * @return RouteCollection
-     */
-    private static function includeFile($file, PhpFileLoader $loader)
-    {
-        return include $file;
     }
 }

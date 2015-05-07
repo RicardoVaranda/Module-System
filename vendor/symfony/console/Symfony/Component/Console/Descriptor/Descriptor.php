@@ -20,8 +20,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @author Jean-François Simon <jeanfrancois.simon@sensiolabs.com>
- *
- * @internal
  */
 abstract class Descriptor implements DescriptorInterface
 {

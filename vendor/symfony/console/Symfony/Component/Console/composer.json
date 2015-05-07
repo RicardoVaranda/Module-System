@@ -20,12 +20,10 @@
     },
     "require-dev": {
         "symfony/event-dispatcher": "~2.1",
-        "symfony/process": "~2.1",
         "psr/log": "~1.0"
     },
     "suggest": {
         "symfony/event-dispatcher": "",
-        "symfony/process": "",
         "psr/log": "For using the console logger"
     },
     "autoload": {
@@ -35,7 +33,7 @@
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
-            "dev-master": "2.6-dev"
+            "dev-master": "2.5-dev"
         }
     }
 }

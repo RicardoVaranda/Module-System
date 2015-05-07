@@ -71,7 +71,7 @@ class ControllerResolver implements ControllerResolverInterface
 
         if (false === strpos($controller, ':')) {
             if (method_exists($controller, '__invoke')) {
-                return $this->instantiateController($controller);
+                return new $controller();
             } elseif (function_exists($controller)) {
                 return $controller;
             }
@@ -153,18 +153,6 @@ class ControllerResolver implements ControllerResolverInterface
             throw new \InvalidArgumentException(sprintf('Class "%s" does not exist.', $class));
         }
 
-        return array($this->instantiateController($class), $method);
-    }
-
-    /**
-     * Returns an instantiated controller
-     *
-     * @param string $class A class name
-     *
-     * @return object
-     */
-    protected function instantiateController($class)
-    {
-        return new $class();
+        return array(new $class(), $method);
     }
 }

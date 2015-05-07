@@ -16,8 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Holds information about the current request.
  *
- * This class implements a fluent interface.
- *
  * @author Fabien Potencier <fabien@symfony.com>
  * @author Tobias Schultze <http://tobion.de>
  *
@@ -69,8 +67,6 @@ class RequestContext
      * Updates the RequestContext information based on a HttpFoundation Request.
      *
      * @param Request $request A Request instance
-     *
-     * @return RequestContext The current instance, implementing a fluent interface
      */
     public function fromRequest(Request $request)
     {
@@ -82,8 +78,6 @@ class RequestContext
         $this->setHttpPort($request->isSecure() ? $this->httpPort : $request->getPort());
         $this->setHttpsPort($request->isSecure() ? $request->getPort() : $this->httpsPort);
         $this->setQueryString($request->server->get('QUERY_STRING', ''));
-
-        return $this;
     }
 
     /**
@@ -101,15 +95,11 @@ class RequestContext
      *
      * @param string $baseUrl The base URL
      *
-     * @return RequestContext The current instance, implementing a fluent interface
-     *
      * @api
      */
     public function setBaseUrl($baseUrl)
     {
         $this->baseUrl = $baseUrl;
-
-        return $this;
     }
 
     /**
@@ -126,14 +116,10 @@ class RequestContext
      * Sets the path info.
      *
      * @param string $pathInfo The path info
-     *
-     * @return RequestContext The current instance, implementing a fluent interface
      */
     public function setPathInfo($pathInfo)
     {
         $this->pathInfo = $pathInfo;
-
-        return $this;
     }
 
     /**
@@ -153,15 +139,11 @@ class RequestContext
      *
      * @param string $method The HTTP method
      *
-     * @return RequestContext The current instance, implementing a fluent interface
-     *
      * @api
      */
     public function setMethod($method)
     {
         $this->method = strtoupper($method);
-
-        return $this;
     }
 
     /**
@@ -181,15 +163,11 @@ class RequestContext
      *
      * @param string $host The HTTP host
      *
-     * @return RequestContext The current instance, implementing a fluent interface
-     *
      * @api
      */
     public function setHost($host)
     {
         $this->host = strtolower($host);
-
-        return $this;
     }
 
     /**
@@ -207,15 +185,11 @@ class RequestContext
      *
      * @param string $scheme The HTTP scheme
      *
-     * @return RequestContext The current instance, implementing a fluent interface
-     *
      * @api
      */
     public function setScheme($scheme)
     {
         $this->scheme = strtolower($scheme);
-
-        return $this;
     }
 
     /**
@@ -233,15 +207,11 @@ class RequestContext
      *
      * @param int $httpPort The HTTP port
      *
-     * @return RequestContext The current instance, implementing a fluent interface
-     *
      * @api
      */
     public function setHttpPort($httpPort)
     {
         $this->httpPort = (int) $httpPort;
-
-        return $this;
     }
 
     /**
@@ -259,15 +229,11 @@ class RequestContext
      *
      * @param int $httpsPort The HTTPS port
      *
-     * @return RequestContext The current instance, implementing a fluent interface
-     *
      * @api
      */
     public function setHttpsPort($httpsPort)
     {
         $this->httpsPort = (int) $httpsPort;
-
-        return $this;
     }
 
     /**
@@ -285,16 +251,12 @@ class RequestContext
      *
      * @param string $queryString The query string (after "?")
      *
-     * @return RequestContext The current instance, implementing a fluent interface
-     *
      * @api
      */
     public function setQueryString($queryString)
     {
         // string cast to be fault-tolerant, accepting null
         $this->queryString = (string) $queryString;
-
-        return $this;
     }
 
     /**
@@ -351,14 +313,10 @@ class RequestContext
      * @param string $name      A parameter name
      * @param mixed  $parameter The parameter value
      *
-     * @return RequestContext The current instance, implementing a fluent interface
-     *
      * @api
      */
     public function setParameter($name, $parameter)
     {
         $this->parameters[$name] = $parameter;
-
-        return $this;
     }
 }
