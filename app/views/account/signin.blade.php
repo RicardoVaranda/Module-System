@@ -2,7 +2,7 @@
 
 @section('content')
 <h1>
-<span id="user" ContentEditable="false" style="text-transform:uppercase">{{ (Input::old('username')) ? e(Input::old('username')) : '[Student ID]' }}</span>
+<span id="user" ContentEditable="false" style="text-transform:uppercase">{{ (Input::old('username')) ? e(Input::old('username')) : '[User ID]' }}</span>
 <span id="notyou">(not you?)</span>
 </h1>
 <h4>CIT Module System</h4>

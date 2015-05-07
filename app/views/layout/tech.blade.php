@@ -386,7 +386,7 @@
 			
 			<!-- /service -->
 			
-            <section class="section team">
+            <section class="section users">
 					<div class="container">
 						<h1 class="h1">Users</h1>
 						<div class="col-lg-12">
@@ -402,7 +402,7 @@
 
 			<!-- /team -->
 
-			<section class="section about">
+			<section class="section">
 				<div class="container">
 					<h1 class="h1">My Profile</h1>						
 					<div class="row">
@@ -421,9 +421,12 @@
 											</tr>
 										</tbody>
 									</table>
-								<div class="skill-q" id="changePass" style="border-top: 1px solid;">
-									<p>Change Password</p>
-									<a data-toggle="modal" class="submit btn btn-info btn-block" role="button" href="#contact">Change Password Now</a>
+								<hr>
+								<div class="col-xs-6">
+									<button data-toggle="modal" class="submit btn btn-info btn-block" role="button" href="#contact">Change Password</button>
+								</div>
+								<div class="col-xs-6">
+									<a class="submit btn btn-info btn-block" role="button" href="{{URL::route('database-backup')}}">Backup Database</a>
 								</div>
 								@if(Session::has('pass'))
 									<div class="globalU warn arrowU">{{ Session::get('global') }}</div>
@@ -462,7 +465,7 @@
 					</div>
 				</div>
             </section>
-            <section class="section about">
+            <section class="section">
 				<div class="container">
 						<h1 class="h1">Faculties</h1>
 						<div id="facultyContainer"> 
@@ -520,7 +523,7 @@
 						</div>
 					</div>
             </section>
-            <section class="section about">
+            <section class="section">
 				<div class="container">
 						<h1 class="h1">Departments</h1>
 						<div id="departmentContainer"> 

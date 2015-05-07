@@ -2,7 +2,7 @@
 	// Get the module.
 	$mod = Modules::where('mid', $elec->classmodule)->first();
 ?>
-<div class="mix {{ $mod->department->faculty->short() }} {{ $mod->department->short() }} col-sm-4"> 
+<div class="mix {{ $mod->department->faculty->short() }} {{ $mod->department->short() }} col-sm-4 col-xs-6"> 
 	<a data-toggle="modal" role="button" href="#{{$mod->mcode}}">
 		<div class="feature-box">
 			<div class="department">

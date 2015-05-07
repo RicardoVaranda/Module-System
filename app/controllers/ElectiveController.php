@@ -357,18 +357,33 @@ class ElectiveController extends BaseController {
 		}
 
 		public function updateClass() {
+			$validator = Validator::make(Input::all(),
+				array(
+					'classId' => 'required',
+					'limit' => 'required|numeric'
+					));
 
-			// Get the Class to update.
-			$class = Classes::where('classId', Input::get('classId'))->first();
+			if($validator->fails()) {
 
-			// Update the class.
-			$class->classlimit = Input::get('limit');
-			$class->save();
+				// If not inform user of errors.
+				return Response::json(array(
+										'success' => false,
+										'errors'  => $validator->messages()
+										));
+			} else {
 
-			return Response::json(array(
-										'success' => true,
-										'space' => ($class->classlimit - $class->classcurrent)
-									));
+				// Get the Class to update.
+				$class = Classes::where('classId', Input::get('classId'))->first();
+
+				// Update the class.
+				$class->classlimit = Input::get('limit');
+				$class->save();
+
+				return Response::json(array(
+											'success' => true,
+											'space' => ($class->classlimit - $class->classcurrent)
+										));
+			}
 		}
 
 		public function removeStudent() {
@@ -438,42 +453,50 @@ class ElectiveController extends BaseController {
 		}
 
 
-
-	// RIC -> ERRORS INBOUND :D
-
 	public function postElectiveNew(){
 
 		$inputData = Input::get('elecData');
 	    parse_str($inputData, $formFields);  
-	    $elecData = array(
-	      'classlecturer'	=> $formFields['clect'],
-	      'classmodule'		=> $formFields['cmod'],
-	      'classlimit'		=> $formFields['climit'],
-	      //'classtimes'				=> $formFields[''],
+	    $moduleData = array(
+	      'classlecturer'      => $formFields['classlecturer'],
+	      'classmodule'		=> $formFields['classmodule'],
+	      'classlimit'     =>  $formFields['classlimit'],
 	    ); 
 
 	    Validator::extend('ranked', function($attribute, $value, $parameters)
 		{
+			// This is the correct way to do this.
 			$coord = User::where('name', $value)->first();
-			if($coord->rank <= 1){
+			if($coord && $coord->rank < 1){
 				return false;
 			}
 		   
-		  return false;
+		  return true;
 		});
 
+        Validator::extend('indep', function($attribute, $value, $parameters)
+    {
+      // This is the correct way to do this.
+      $mod = Modules::find($value);
+      if($mod && $mod->departmentid !== Auth::user()->department){
+        return false;
+      }
+       
+      return true;
+    });
+
 	    $rules = array(
-			'classlecturer' => 'required|max:50|exists:users,name|ranked',
-			'classmodule'	=> 'required|exists:modules,mshorttitle',
-			'classlimit'	=> 'required|min:10|max:30',
-			//'classtimes'	=> 'required|',
+			'classmodule'	=> 'required|exists:modules,mid|indep',
+			'classlecturer' 	=> 'required|exists:users,name|ranked',
+			'classlimit'	 	=> 'required|integer|between:5,30',
 		);
-			
+		
 		$messages = [
 		    'ranked' => "This user can't coordinate this class.",
+		    'indep'  => "This module is not in your department.",
 		];
 
-		$validator = Validator::make($elecData,$rules,$messages);
+		$validator = Validator::make($moduleData,$rules,$messages);
 
 		if($validator->fails()){
 	        return Response::json(array(
@@ -481,13 +504,13 @@ class ElectiveController extends BaseController {
 	            'errors' => $validator->getMessageBag()->toArray()
 	        ));
 	    } else {
-
-	    	if(Classes::create($elecData)){
-	    		Session::flash('global', 'You have created the elective "'. $elecData['classmodule'].'".');
+		$moduleData['classlecturer'] = User::where('name', $moduleData['classlecturer'])->first()->id;
+	    	if(Classes::create($moduleData)){
+	    		Session::flash('global', 'You have created an elective.');
 	    		  //return success  message
 		        return Response::json(array(
 		          'success' => true,
-		          'mName' => $elecData['classmodule']
+		          'mName' => Modules::find($moduleData['classmodule'])->mshorttitle 
 		        ));
 	    	}
 		}
@@ -497,36 +520,45 @@ class ElectiveController extends BaseController {
 
 		$inputData = Input::get('elecData');
 	    parse_str($inputData, $formFields);  
-	    $elecData = array(
-	      'mfulltitle'      => $formFields['mname'],
-	      //add the rest
-	    );
+	    $moduleData = array(
+	      'classlecturer'      => $formFields['classlecturer'],
+	      'classmodule'		=> $formFields['classmodule'],
+	      'classlimit'     =>  $formFields['classlimit'],
+	    ); 
 
 	    Validator::extend('ranked', function($attribute, $value, $parameters)
 		{
+			// This is the correct way to do this.
 			$coord = User::where('name', $value)->first();
-			if($coord->rank <= 1){
-				return true;
-			}
+                        if($coord && $coord->rank < 1){
+                                return false;
+                        }
 		   
-		  return false;
+		  return true;
 		});
 
+        Validator::extend('indep', function($attribute, $value, $parameters)
+    {
+      // This is the correct way to do this.
+      $mod = Modules::find($value);
+      if($mod && $mod->departmentid !== Auth::user()->department){
+        return false;
+      }
+
+      return true;
+    });
+
+
 	    $rules = array(
-			'mfulltitle' 	=> 'required|max:50|unique:modules,mfulltitle,'.$formFields['mcode'].',mcode',
-			'mshorttitle'	=> 'required|max:50|unique:modules,mshorttitle,'.$formFields['mcode'].',mcode',
-			'mdescription'	=> 'required|min:30',
-			'mcode'		 	=> 'required|min:7|max:8|alpha_num|unique:modules,mcode,'.$formFields['mcode'].',mcode',
-			'mfieldofstudy'	=> 'required|max:100',
-			'mcoordinator' 	=> 'required|exists:users,name|ranked',
-			'mlevel' 		=> 'required|in:Fundamental,Intermediate,Advanced,Expert',
-			'mcredits'	 	=> 'required|integer|between:5,25',
-			'mid'			=> 'required|exists:modules,mid',
-			'departmentid'	=> 'required',
+			'classmodule'	=> 'required|exists:modules,mid|indep',
+			'classlecturer' 	=> 'required|exists:users,name|ranked',
+			'classlimit'	 	=> 'required|integer|between:5,30',
 		);
 
 		$messages = [
 		    'ranked' => "This user can't coordinate this class.",
+                    'indep'  => "This module is not in your department.",
+
 		];
 
 		$validator = Validator::make($moduleData,$rules,$messages);
@@ -539,28 +571,24 @@ class ElectiveController extends BaseController {
 	        ));
 	    } else {
 
-	    	$mod = Modules::where('mid', $moduleData['mid'])->first();
+	    	$elec = Classes::where('classid', $formFields['classid'])->first();
 
-	    	$mod->mfulltitle = $moduleData['mfulltitle'];
-	    	$mod->mshorttitle = $moduleData['mshorttitle'];
-	    	$mod->mdescription = $moduleData['mdescription'];
-	    	$mod->mcode = $moduleData['mcode'];
-	    	$mod->mfieldofstudy = $moduleData['mfieldofstudy'];
-	    	$mod->mcoordinator = $moduleData['mcoordinator'];
-	    	$mod->mlevel = $moduleData['mlevel'];
-	    	$mod->mcredits = $moduleData['mcredits'];
-	    	$mod->departmentid = $moduleData['departmentid'];
+	    	$elec->classmodule = $moduleData['classmodule'];
+	    	$elec->classlecturer = User::where('name', $moduleData['classlecturer'])->first()->id;
+	    	$elec->classlimit = $moduleData['classlimit'];
 	    	
-	    	if($mod->save()){
-	    		Session::flash('global', 'You have edited the module "'. $moduleData['mfulltitle'].'".');
+	    	if($elec->save()){
+	    		Session::flash('global', 'You have edited a module.');
 	    		  //return success  message
 		        return Response::json(array(
 		          'success' => true,
-		          'mName' => $moduleData['mfulltitle']
+		          'mName' => Modules::find($moduleData['classmodule'])->mshorttitle
 		        ));
 	    	}
 		}
 	}
+
+
 
 	public function getElectives(){
 		if(Auth::check()){
@@ -603,7 +631,7 @@ class ElectiveController extends BaseController {
 		        fputcsv($f, $line, $delimiter);
 		    }
 	    }
-	}   
- 
+	}
+
 }
 ?>

@@ -4,7 +4,7 @@ class LecturerViewTest extends TestCase {
 	
 	// Define user login credentials.
 	private $username = 'lecturer';
-	private $password = 'abc123';
+	private $password = 'password';
 
 	public function testController() {
 		// Log in so we have an authenticated user.
@@ -37,7 +37,10 @@ class LecturerViewTest extends TestCase {
 		$this->loadClass($class->classid);
 
 		// Update class.
-		$this->updateClass($class->classid);
+		$this->updateClass($class->classid, true, 5);
+
+		// Update class with incorrect values.
+		$this->updateClass($class->classid, false, 'five');
 
 		// Remove student from class.
 		$this->removeStudent($class->classid, $student->id);
@@ -61,11 +64,13 @@ class LecturerViewTest extends TestCase {
 	/**
 	 * Function that updates a class.
 	 */
-	protected function updateClass($id) {
-		$response = $this->call('POST', '/account/update-class', ['classId' => $id, 'limit' => 5]);
+	protected function updateClass($id, $expected, $updateVal) {
+		$response = $this->call('POST', '/account/update-class', ['classId' => $id, 'limit' => $updateVal]);
 		$json = json_decode($response->getContent());
-		$this->assertEquals(true, $json->success);
-		$this->assertEquals(4, $json->space);
+		$this->assertEquals($expected, $json->success);
+		if($expected) {
+			$this->assertEquals(4, $json->space);
+		}
 
 	}
 

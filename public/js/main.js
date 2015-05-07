@@ -92,9 +92,9 @@ $( document ).on('submit', '.electiveRegister', function() {
 	  							'<p>'+ response.lecturer +'</p></br></div><form class="electiveUnregister">'+
 	  								'<input type="hidden" id="electiveId" value="'+ electiveId +'" />'+
 	  								'<button type="submit" class="pull-left btn-elec btn-primary"><i class="fa fa-arrow-right"></i>remove elective</button>'+
-	  							'</form><button type="button" class="pull-right btn-elec btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>'+
+	  							'</form><button type="button" id="checkTime" onclick="loadTime('+response.classnum+')" class="ascensorLink ascensorLink3 pull-right btn-elec btn-primary"><i class="fa fa-arrow-right"></i>check timetable</button>'+
 	  						 '</div></div>';
-	  		var timeStuff = "<option class='myclass"+electiveId+"'' label="+ response.shorttitle +" value="+ electiveId +"></option>";
+	  		var timeStuff = "<option class='myclass"+electiveId+"'' label="+ response.shorttitle +" value="+ response.classnum +"></option>";
 
 	  		// Insert classBlock to myelectives.
 	  		$('#myelectives').append(classBlock);
@@ -148,7 +148,7 @@ $( document ).on('submit', '.electiveUnregister', function() {
 	  	if(response.success) {
 	  		// Remove from myelectives.
 	  		var myclass = $('.myclass'+electiveId).remove();
-
+			var tdelete = $('.myclass'+response.classnum).remove();
 
 	  		// Inform user.
 	  		successMessage("Successfully unregistered from module!");
@@ -279,7 +279,9 @@ $( document ).on('submit', '#classForm', function() {
 	  	if(response.success) {
 	  		$('#classleft').val(response.space);
 	  		successMessage('Class updated successfully!');
-	  	}
+	  	} else {
+			failMessage(response.errors);
+		}
 
 	  });
 
@@ -836,7 +838,7 @@ var saveTimes = '</br><form name="saveTimetable">'+
 				'<input type="hidden" name="_token" value="{{ csrf_token() }}">'+
 				'<a type="submit" class="submit btn '+
 				'btn-info btn-block" style="width:25%" role="button" '+
-				'id="saveTime">Save Class Times</a><form>';
+				'id="saveTime">Save Timetable</a><form>';
 				
 function getTimes(){
 	times.length = 0;
@@ -871,7 +873,7 @@ $("#loadTT").click(
 	function(){
 		var opt = $('option[value="'+$('#elective').val()+'"]');
 		if(!opt.length){
-			alert('Error: No Elective Selected.')
+			failMessage('Error: No Elective Selected.')
 			return;
 		}
 

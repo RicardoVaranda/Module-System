@@ -51,7 +51,7 @@ Route::group(array('before' => 'auth'), function() {
 		*/
 		Route::post('/elective-new', array(
 			'as' 	=> 'elective-new-post',
-			'uses' 	=> 'ModuleController@postElectiveNew'
+			'uses' 	=> 'ElectiveController@postElectiveNew'
 		));
 
 		/*
@@ -60,17 +60,15 @@ Route::group(array('before' => 'auth'), function() {
 
 		Route::post('/elective-change', array(
 			'as' 	=> 'elective-change-post',
-			'uses' 	=> 'ModuleController@postElectiveChange'
+			'uses' 	=> 'ElectiveController@postElectiveChange'
 		));
 
-	
-
 	});
-	
+
 	/*
 	| Register to elective.
 	*/
-	
+
 	Route::post('/account/register-elective', array(
 		'as' => 'register-elective',
 		'uses' => 'ElectiveController@postRegisterElective'
@@ -79,10 +77,15 @@ Route::group(array('before' => 'auth'), function() {
 	/*
 	| Unregister to elective.
 	*/
-	
+
 	Route::post('/account/unregister-elective', array(
 		'as' => 'unregister-elective',
 		'uses' => 'ElectiveController@postUnregisterElective'
+	));
+
+	Route::any('/db/backup', array(
+		'as'	=> 'database-backup',
+		'uses'	=> 'AccountController@backupDB'
 	));
 
 	/*

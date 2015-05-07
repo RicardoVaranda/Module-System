@@ -22,7 +22,7 @@ class ModuleController extends BaseController {
 		{
 			// This is the correct way to do this.
 			$coord = User::where('name', $value)->first();
-			if($coord->rank < 1){
+			if(!$coord && $coord->rank < 1){
 				return false;
 			}
 		   
@@ -85,7 +85,7 @@ class ModuleController extends BaseController {
 	    Validator::extend('ranked', function($attribute, $value, $parameters)
 		{
 			$coord = User::where('name', $value)->first();
-			if($coord->rank < 1){
+			if($coord && $coord->rank < 1){
 				return false;
 			}
 		   
@@ -155,74 +155,6 @@ class ModuleController extends BaseController {
 		}
 	}
 
-	public function getImage($modCode){
-
-	    $cacheKey = md5($modCode);
-
-	    $image = Cache::remember($cacheKey, 3600, function() use ($modCode) {
-	        // start making our image (this assumes your original image is within "app/storage/img")
-	        $colors = array('#00c6ff', '#f39c12', '#ff0000', '#49E035');
-	        $color = $colors[array_rand($colors)];
-	        $img = Image::canvas(384, 384, $color);
-	        $img->insert(public_path('images/layout.png'), 'top-left', 5, 0);
-
-	        $mod = Modules::where('mcode', $modCode);
-
-	        if($mod->count()){
-	        	$mod = $mod->first();
-
-	        	$img->text($mod->department->name(), 192, 250, function($font) {
-				    $font->file(public_path('fonts/segoeui.ttf'));
-				    $font->size(30);
-				    $font->color('#fff');
-				    $font->align('center');
-				});
-
-				$img->text($mod->mshorttitle, 192, 320, function($font) {
-				    $font->file(public_path('fonts/segoeui.ttf'));
-				    $font->size(25);
-				    $font->color('#fff');
-				    $font->align('center');
-				});
-
-	        } elseif ($modCode == 'newMod') {
-	        	$img->text('Create new Module!', 192, 300, function($font) {
-				    $font->file(public_path('fonts/segoeui.ttf'));
-				    $font->size(30);
-				    $font->color('#fff');
-				    $font->align('center');
-				});
-	        } elseif ($modCode == 'newElec') {
-	        	$img->text('Create new Elective!', 192, 300, function($font) {
-				    $font->file(public_path('fonts/segoeui.ttf'));
-				    $font->size(30);
-				    $font->color('#fff');
-				    $font->align('center');
-				});
-	        } else {
-		        $img->text('Error: Module not Found!', 192, 300, function($font) {
-				    $font->file(public_path('fonts/segoeui.ttf'));
-				    $font->size(30);
-				    $font->color('#fff');
-				    $font->align('center');
-				});
-	   		}
-
-	        // return the image as a JPG
-	        return $img->encode('jpg');
-	    });
-
-	    // return the image
-	    $headers = [
-	        'Content-Type'        => 'image/jpeg',
-	        'Content-Disposition' => 'inline',
-	        'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0',
-	        'Pragma'              => 'public',
-	        'Etag'                => md5($image),
-	    ];
-
-	    return Response::make($image, 200, $headers)->setTtl((60 * 30));
-	}
 
 
 	public function postElectiveNew(){
@@ -230,7 +162,7 @@ class ModuleController extends BaseController {
 		$inputData = Input::get('elecData');
 	    parse_str($inputData, $formFields);  
 	    $moduleData = array(
-	      'classlecturer'      => User::where('name', $formFields['classlecturer'])->first()->id,
+	      'classlecturer'      => $formFields['classlecturer'],
 	      'classmodule'		=> $formFields['classmodule'],
 	      'classlimit'     =>  $formFields['classlimit'],
 	    ); 
@@ -238,22 +170,34 @@ class ModuleController extends BaseController {
 	    Validator::extend('ranked', function($attribute, $value, $parameters)
 		{
 			// This is the correct way to do this.
-			$coord = User::find($value);
-			if($coord->rank < 1){
+			$coord = User::where('name', $value)->first();
+			if($coord && $coord->rank < 1){
 				return false;
 			}
 		   
 		  return true;
 		});
 
+        Validator::extend('indep', function($attribute, $value, $parameters)
+    {
+      // This is the correct way to do this.
+      $mod = Modules::find($value);
+      if($mod && $mod->departmentid !== Auth::user()->department){
+        return false;
+      }
+       
+      return true;
+    });
+
 	    $rules = array(
-			'classmodule'	=> 'required|exists:modules,mid',
-			'classlecturer' 	=> 'required|exists:users,id|ranked',
+			'classmodule'	=> 'required|exists:modules,mid|indep',
+			'classlecturer' 	=> 'required|exists:users,name|ranked',
 			'classlimit'	 	=> 'required|integer|between:5,30',
 		);
 		
 		$messages = [
 		    'ranked' => "This user can't coordinate this class.",
+		    'indep'  => "This module is not in your department.",
 		];
 
 		$validator = Validator::make($moduleData,$rules,$messages);
@@ -290,21 +234,35 @@ class ModuleController extends BaseController {
 		{
 			// This is the correct way to do this.
 			$coord = User::find($value);
-			if($coord->rank < 1){
+			if($coord && $coord->rank < 1){
 				return false;
 			}
 		   
 		  return true;
 		});
 
+        Validator::extend('indep', function($attribute, $value, $parameters)
+    {
+      // This is the correct way to do this.
+      $mod = Modules::find($value);
+      if($mod && $mod->departmentid !== Auth::user()->department){
+        return false;
+      }
+
+      return true;
+    });
+
+
 	    $rules = array(
-			'classmodule'	=> 'required|exists:modules,mid',
+			'classmodule'	=> 'required|exists:modules,mid|indep',
 			'classlecturer' 	=> 'required|exists:users,id|ranked',
 			'classlimit'	 	=> 'required|integer|between:5,30',
 		);
 
 		$messages = [
 		    'ranked' => "This user can't coordinate this class.",
+                    'indep'  => "This module is not in your department.",
+
 		];
 
 		$validator = Validator::make($moduleData,$rules,$messages);

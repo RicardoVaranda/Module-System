@@ -266,12 +266,12 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 	display: inline-block;
 }
 .grid-controls li {
-	max-width: 30%;
 	min-width: 30%;
+	min-height: 85px;
 	height: 40px;
 	float: left;
 	margin: 5px;
-	background-color: #33CCFF;
+	background-color: #24A8D4;
 }
 #csvDownload {
 	visibility: hidden;
@@ -544,6 +544,7 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 .feature-box {
 	padding: 15px;
 	max-width: 293px;
+	min-width: 136px;
 	min-height: 140px;
 	margin-top: 20px;
 	background: #00CCFF;

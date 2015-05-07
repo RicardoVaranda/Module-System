@@ -10,7 +10,7 @@ class DepartmentController extends BaseController {
 				'shortname' => 'required',
 				'head' => 'required',
 				'description' => 'required',
-				'facultyId' => 'required'
+				'facultyId' => 'required|numeric'
 				));
 
 		if($validator->fails()) {
@@ -53,7 +53,7 @@ class DepartmentController extends BaseController {
 				'shortname' => 'required',
 				'head'	=>	'required',
 				'description' => 'required',
-				'facultyId'	=> 'required'
+				'facultyId'	=> 'required|numeric'
 				));
 
 		if($validator->fails()) {

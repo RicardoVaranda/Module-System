@@ -28,7 +28,7 @@
 		                </div>
                     <div class="form-group">
                         <i class="fa fa-arrow-right"></i>
-                        <input  type="submit" id="submit" class="btn btn-info btn-block">Change Password</input>
+                        <button type="submit" id="submit" class="btn btn-info btn-block">Change Password</button>
                 		{{Form::token()}}
                     </div>
                 </fieldset>

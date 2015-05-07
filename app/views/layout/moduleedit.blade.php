@@ -1,15 +1,15 @@
-<div class="mix all {{$type=='edit' ? $mod->mid : ''}} col-sm-4"> 
+<div class="mix all {{$type=='edit' ? $mod->mid : ''}} col-sm-4 col-xs-6"> 
 	<a data-toggle="modal" role="button" href="{{ $type=='edit' ? '#editMod'.$mod->mcode : '#newMod'}}"> 
 		<div class="feature-box">
 			<div class="department">
 				<div class="department-box">
-					<span>{{ $type=='edit' ? $mod->mshorttitle : 'Create new Module'}}</span>
+					<span>{{ $type=='edit' ? $mod->mshorttitle : 'Create New Module'}}</span>
 				</div>
 			</div>
 		</div>
 
 		<!--<div>
-			<span>{{ $type=='edit' ? $mod->mshorttitle : 'Create new Module'}}</span>
+			<span>{{ $type=='edit' ? $mod->mshorttitle : 'Create New Module'}}</span>
 		</div>-->
 	</a>
 	<div class="modal fade" id="{{ $type=='edit' ? 'editMod'.$mod->mcode : 'newMod'}}" tabindex="-1" role="dialog" aria-hidden="true">
@@ -79,7 +79,7 @@
 	                    <input type="hidden" name="mid" value="{{$type=='edit' ? $mod->mid : ''}}">
 	                    <div class="form-group">
 	                        <i class="fa fa-arrow-right"></i>
-	                        <button type="submit" id="submit" class="btn btn-info btn-block">{{$type=='edit' ? 'Edit' : 'Submit new'}} Module</button>
+	                        <button type="submit" id="submit" class="btn btn-info btn-block">{{$type=='edit' ? 'Update' : 'Create'}} Module</button>
 	                		{{Form::token()}}
 	                    </div>
 	                </fieldset>

@@ -277,15 +277,9 @@
 				<!-- Custom JQuery Ajax Next level system - Ricardo -->
 
 				<script type="text/javascript">
-					$(document).ready(function(){
-					    var list = $("#grid.electives");
+				function loadElectives(){
+					var list = $("#grid.electives");
 					    list.empty();
-					    $(document).bind('ajaxStart', function(){
-						    $(".load.Elec").show();
-						}).bind('ajaxStop', function(){
-						    $(".load.Elec").hide();
-						    $("#searchElecs").show();
-						});
 					        $.ajax({
 					            type: "POST",
 					            url: "electives",
@@ -325,51 +319,62 @@
 											} else {
 												$('#newElec .close').click(); //hiding form
 
-												setTimeout(function() { loadModules(); }, 1000);
+												setTimeout(function() { loadElectives(); }, 1000);
 												
 											}
 										});
 
 					        		});
 
+								$(".editFormElec").submit(function(e) {
+                                                                e.preventDefault();
+                                                                var form = $(this); 
+                                                                var errors = document.getElementsByClassName('isa_error');
+                                                                console.log(form.attr("action"));
+                                                                            for (var i = 0; i < errors.length; i++){
+                                                                                errors[i].style.display = 'none';
+                                                                            }
+                                                                $.ajax({
+                                                                    type: "POST",
+                                                                    url : form.attr("action"),
+                                                                    data : {elecData: form.serialize()},
+                                                                    headers: {
+                                                                                        'X-CSRF-Token': $('input[name="_token"]').val()
+                                                                                    }
+                                                                })
+                                                                                .done(function(data){
+                                                                                        if(data.fail){
+                                                                                                $.each(data.errors, function( index, value ) {
+                                                                                                var errorDiv = form.find('#'+index+'_Errors');
+                                                                                                errorDiv.empty();
+                                                                                                errorDiv.append('<i class="fa fa-times-circle"></i>'+value);
+                                                                                                errorDiv.show();
+                                                                                            });
+                                                                                      $('#successMessage').empty();    
+                                                                                        } else {
+                                                                                                $('#newElec .close').click(); //hiding form
+                                                                                                //FIX THIS 
+                                                                                                //setTimeout(function() { loadModules(); }, 1000);
 
-									$(".editFormElec").submit(function(e){
-						                e.preventDefault();
-						                var form = $(this); 
-						                var errors = document.getElementsByClassName('isa_error');
-						                console.log(form.attr("action"));
-									    for (var i = 0; i < errors.length; i++){
-									        errors[i].style.display = 'none';
-									    }
-						                $.ajax({
-						                    type: "POST",
-						                    url : form.attr("action"),
-						                    data : {elecData: form.serialize()},
-						                    headers: {
-										        'X-CSRF-Token': $('input[name="_token"]').val()
-										    }
-						                })
-										.done(function(data){
-											if(data.fail){
-												$.each(data.errors, function( index, value ) {
-											        var errorDiv = form.find('#'+index+'_Errors');
-											        errorDiv.empty();
-											        errorDiv.append('<i class="fa fa-times-circle"></i>'+value);
-											        errorDiv.show();
-											    });
-										      $('#successMessage').empty();    
-											} else {
-												$('#newElec .close').click(); //hiding form
-												//FIX THIS 
-												//setTimeout(function() { loadModules(); }, 1000);
-												
-											}
-										});
+                                                                                        }
+                                                                                });
+                                                                        });
 
-					        		});
+							}
 
-					            }
-					        });
+						});
+						}
+
+					$(document).ready(function(){
+					    var list = $("#grid.electives");
+					    list.empty();
+					    $(document).bind('ajaxStart', function(){
+						    $(".load.Elec").show();
+						}).bind('ajaxStop', function(){
+						    $(".load.Elec").hide();
+						    $("#searchElecs").show();
+						});
+						loadElectives();
 					});
 				</script>
 
@@ -383,7 +388,9 @@
 
 					<div class="row">
 						<hr class="metro-hr">
-						<div class="col-sm-12">
+						<div class="col-sm-9">
+<div class="form-group">
+                                <i class="fa fa-calendar"></i>
 							<input type="text" name="electimes" id="elective" list="electives" class="form-control" placeholder="Elective Module" required="">
 							<datalist id="electives">
 							   <select onchange="$('#elective').val(this.value)">
@@ -403,6 +410,7 @@
 							<div id="classTimes">
 							</div>
 						</div>
+</div>
 						<div class="col-sm-3">
 							<ul class="check-our-work">
 								<a data-toggle="modal" class="submit btn btn-info btn-block" role="button" id="loadTT">Load Timetable</a>
@@ -503,7 +511,7 @@
 								<h4 class="h4">Settings</h4>
 								<div class="skill-q" id="changePass">
 									<p>Change Password</p>
-									<a data-toggle="modal" class="submit btn btn-info btn-block" role="button" href="#contact">Change Password Now</a>
+									<a data-toggle="modal" class="submit btn btn-info btn-block" role="button" href="#contact">Change Password</a>
 								</div>
 								@if(Session::has('pass'))
 									<div class="globalU warn arrowU">{{ Session::get('pass') }}</div>

@@ -1,16 +1,16 @@
-<div class="mix all {{$type=='edit' ? $elec->classid : ''}} col-sm-4"> 
+<div class="mix all {{$type=='edit' ? $elec->classid : ''}} col-sm-4 col-xs-6"> 
 	<a data-toggle="modal" role="button" href="{{ $type=='edit' ? '#editElec'.$elec->classid : '#newElec'}}"> 
 		<div class="feature-box">
 			<div class="department">
 				<div class="department-box">
-					<span>{{ $type=='edit' ? $elec->module->mshorttitle : 'Create new Elective'}}</span>
+					<span>{{ $type=='edit' ? $elec->module->mshorttitle : 'Create New Elective'}}</span>
 				</div>
 			</div>
 		</div>
 
 
 		<!--<div>
-			<span>{{ $type=='edit' ? $elec->module->mshorttitle : 'Create new Elective'}}</span>
+			<span>{{ $type=='edit' ? $elec->module->mshorttitle : 'Create New Elective'}}</span>
 		</div>-->
 	</a>
 	<div class="modal fade" id="{{ $type=='edit' ? 'editElec'.$elec->classid : 'newElec'}}" tabindex="-1" role="dialog" aria-hidden="true">
@@ -54,7 +54,7 @@
 	                    <input type="hidden" name="classid" value="{{$type=='edit' ? $elec->classid : ''}}">
 	                    <div class="form-group">
 	                        <i class="fa fa-arrow-right"></i>
-	                        <button type="submit" id="submit" class="btn btn-info btn-block">Save Elective</button>
+	                        <button type="submit" id="submit" class="btn btn-info btn-block">{{$type=='edit' ? 'Update Elective' : 'Create Elective'}}</button>
 	                		{{Form::token()}}
 	                    </div>
 	                </fieldset>

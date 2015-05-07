@@ -1,10 +1,10 @@
 <?php
 
 class StudentViewTest extends TestCase {
-	
+
 	// Define user login credentials.
 	private $username = 'student';
-	private $password = 'abc123';
+	private $password = 'password';
 
 	public function testController() {
 		// Log in so we have an authenticated user.
@@ -18,13 +18,31 @@ class StudentViewTest extends TestCase {
 		$class = $this->createDummyClass($elective->mid);
 
 		// Try registering to elective.
-		$this->register($elective->mid);
+		$this->register($elective->mid, true);
+
+		// Now try registering to the same elective again.
+		$this->register($elective->mid, false);
+
+		// Check if registered class shows in users profile.
+		$crawler = $this->client->request('GET', '/');
+		$this->assertTrue($this->client->getResponse()->isOk());
+		$this->assertCount(1, $crawler->filter('h3:contains("'. $elective->mshorttitle .'")'));
+
+		// Load timetable for class.
+		$crawler = $this->client->request('GET', '/timetables/'.$class->classid);
+		$this->assertTrue($this->client->getResponse()->isOk());
 
 		// Now unregister from elective.
-		$this->unregister($elective->mid);
+		$this->unregister($elective->mid, true);
+
+		// Try to unregister from the same elective.
+		$this->unregister($elective->mid, false);
 
 		// Now request a new class.
-		$this->request($elective->mid);
+		$this->request($elective->mid, true);
+
+		// Request again.
+		$this->request($elective->mid, false);
 
 		// Delete dummy data.
 		$class->delete();
@@ -34,28 +52,28 @@ class StudentViewTest extends TestCase {
 	/**
 	 * Function that registers user to elective.
 	 */
-	protected function register($id) {
+	protected function register($id, $expected) {
 		$response = $this->call('POST', '/account/register-elective', ['electiveId' => $id]);
 		$json = json_decode($response->getContent());
-		$this->assertEquals(true, $json->success);
+		$this->assertEquals($expected, $json->success);
 	}
 
 	/**
 	 * Function that unregisters user to elective.
 	 */
-	protected function unregister($id) {
+	protected function unregister($id, $expected) {
 		$response = $this->call('POST', '/account/unregister-elective', ['electiveId' => $id]);
 		$json = json_decode($response->getContent());
-		$this->assertEquals(true, $json->success);
+		$this->assertEquals($expected, $json->success);
 	}
 
 	/**
 	 * Function that requests a new class for elective.
 	 */
-	protected function request($id) {
+	protected function request($id, $expected) {
 		$response = $this->call('POST', '/account/request-elective', ['electiveId' => $id]);
 		$json = json_decode($response->getContent());
-		$this->assertEquals(true, $json->success);
+		$this->assertEquals($expected, $json->success);
 	}
 
 	/**
@@ -81,7 +99,8 @@ class StudentViewTest extends TestCase {
 	protected function createDummyClass($id) {
 		return Classes::create(array(
 		      'classlecturer'	=> 1,
-		      'classmodule'		=> $id,
-		      'classlimit'		=> 25));
+		      'classmodule'	=> $id,
+		      'classlimit'	=> 25));
 	}
 }
+

@@ -54,9 +54,9 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'alonica.net',
+			'host'      => 'localhost',
 			'database'  => 'modules',
-			'username'  => 'banana',
+			'username'  => 'root',
 			'password'  => 'P455w0Rd!@£$%^&*',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',

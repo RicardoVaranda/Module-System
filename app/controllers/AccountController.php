@@ -319,6 +319,27 @@ class AccountController extends BaseController{
 							));
 	}
 
+	public function backupDB(){
+		
+		if(Auth::user()->rank < 3){
+			return "Unauthorized Access.";
+		}
+
+		$DBUSER="root";
+		$DBPASSWD="P455w0Rd!@£$%^&*";
+		$DATABASE="modules";
+
+		$filename = "backup-" . date("d-m-Y") . ".sql.gz";
+		$mime = "application/x-gzip";
+
+		header( "Content-Type: " . $mime );
+		header( 'Content-Disposition: attachment; filename="' . $filename . '"' );
+
+		$cmd = "mysqldump -u $DBUSER --password=$DBPASSWD $DATABASE | gzip --best";   
+
+		passthru( $cmd );
+	}
+
 	/**
 	*	Function that receives a CSV file, and creates
 	*	users from it.

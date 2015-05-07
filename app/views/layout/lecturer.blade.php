@@ -119,11 +119,11 @@
 				<div class="container">
 					<h1 class="h1">Electives</h1>
 					<div class="row">
-						<div class="grid-controls">
+						<div class="grid-controls col-xs-12">
 							<ul>
-									<li class="filter active" id="all" data-filter="all"><a href="#">All</a></li>
+									<li class="filter active col-sm-3 col-xs-5" id="all" data-filter="all"><a href="#">All</a></li>
 								@foreach (Faculty::all() as $fac)
-									<li class="filter" id="{{ $fac->short() }}" data-filter="{{ $fac->short() }}"><a href="#">{{ $fac->facultyname }}</a></li>
+									<li class="filter col-sm-3 col-xs-5" id="{{ $fac->short() }}" data-filter="{{ $fac->short() }}"><a href="#">{{ $fac->facultyname }}</a></li>
 								@endforeach
 							</ul>
 
@@ -219,7 +219,7 @@
 					}
 				} 
 			?>
-			<section class="section about">
+			<section class="section">
 				<div class="container">
 					<h1 class="h1">Profile</h1>						
 					<div class="row">
@@ -251,7 +251,7 @@
 								<h4 class="h4">Settings</h4>
 								<div class="skill-q" id="changePass">
 									<p>Change Password</p>
-									<a data-toggle="modal" class="submit btn btn-info btn-block" role="button" href="#contact">Change Password Now</a>
+									<a data-toggle="modal" class="submit btn btn-info btn-block" role="button" href="#contact">Change Password</a>
 								</div>
 								@if(Session::has('pass'))
 									<div class="globalU warn arrowU">{{ Session::get('pass') }}</div>
@@ -288,6 +288,8 @@
 					<div class="row">
 						<hr class="metro-hr">
 						<div class="col-sm-9">
+<div class="form-group">
+                                <i class="fa fa-calendar"></i>
 							<input type="text" name="electimes" id="elective" list="electives" class="form-control" placeholder="Choose Elective Module to view Timetable" required="">
 							<datalist id="electives">
 							   <select onchange="$('#elective').val(this.value)">
@@ -304,6 +306,7 @@
 							    ?>
 							   </select>
 							</datalist>
+						</div>
 						</div>
 						<div class="col-sm-3">
 							<ul class="check-our-work">
@@ -323,7 +326,7 @@
 			$("#loadTimes").click(function() {
 						var opt = $('option[value="'+$('#elective').val()+'"]');
 						if(!opt.length){
-							alert('Error: No Elective Selected.')
+							failMessage('Error: No Elective Selected.')
 							return;
 						}
 
